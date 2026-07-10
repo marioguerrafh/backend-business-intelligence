@@ -67,6 +67,36 @@ uvicorn app.main:app --reload
 pytest -q
 ```
 
+## Rodar com Docker (um comando)
+
+No diretorio raiz do repositorio:
+
+```bash
+docker compose up -d
+```
+
+Servicos disponiveis:
+
+1. API FastAPI: `http://localhost:8000`
+2. Healthcheck: `http://localhost:8000/health`
+3. PostgreSQL: `localhost:5432`
+4. Redis: `localhost:6379`
+5. PgAdmin: `http://localhost:5050`
+
+Migracoes Alembic:
+
+1. Aplicar migracoes:
+
+```bash
+docker compose --profile tools run --rm migrate
+```
+
+2. Criar migration nova:
+
+```bash
+docker compose run --rm api alembic revision --autogenerate -m "descricao"
+```
+
 ## Qualidade atual
 
 1. Suite de testes automatizados verde.
@@ -81,6 +111,7 @@ pytest -q
 4. `docs/rfc-kpi-engine-v1.md`
 5. `docs/business-rules-catalog-v1.md`
 6. `docs/rfc-rule-engine-v1.md`
+7. `docs/docker-dev-setup-v1.md`
 
 ## Proximos passos
 

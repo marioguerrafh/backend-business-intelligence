@@ -19,6 +19,16 @@ O projeto ja possui base backend funcional com:
 2. `.ai/`: guias de direcionamento para evolucao da plataforma com IA.
 3. `.github/copilot-instructions.md`: principios arquiteturais e de engenharia.
 
+## Quickstart local (Docker)
+
+No diretorio raiz do repositorio:
+
+```bash
+docker compose up -d
+```
+
+Esse comando sobe API, PostgreSQL, Redis e PgAdmin para desenvolvimento.
+
 ## Documentacao chave
 
 1. `backend/docs/status-servidor-visao-plataforma-v1.md`: status atual e visao de como ficara pronto.
@@ -27,6 +37,7 @@ O projeto ja possui base backend funcional com:
 4. `backend/docs/rfc-kpi-engine-v1.md`: definicao do KPI Engine.
 5. `backend/docs/business-rules-catalog-v1.md`: catalogo oficial de regras de negocio.
 6. `backend/docs/rfc-rule-engine-v1.md`: definicao do Rule Engine.
+7. `backend/docs/docker-dev-setup-v1.md`: setup completo com Docker e Alembic.
 
 ## Proximo foco
 
