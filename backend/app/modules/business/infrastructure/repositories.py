@@ -29,6 +29,7 @@ class SqlAlchemyCustomerRepository(SqlAlchemyIdempotencyMixin, CustomerRepositor
 
     def save(self, customer: CustomerAggregate) -> None:
         model = self.session.get(CustomerModel, customer.customer_id)
+        is_existing = model is not None
         if model is None:
             model = CustomerModel(customer_id=customer.customer_id)
             self.session.add(model)
@@ -57,6 +58,13 @@ class SqlAlchemyCustomerRepository(SqlAlchemyIdempotencyMixin, CustomerRepositor
             model.billing_postal_code = None
 
         model.updated_at = datetime.now(timezone.utc)
+
+        # On re-import, remove old child rows first to avoid unique conflicts
+        # when the new payload contains the same contact/external ref values.
+        if is_existing:
+            model.contacts.clear()
+            model.external_refs.clear()
+            self.session.flush()
 
         model.contacts = [
             CustomerContactModel(

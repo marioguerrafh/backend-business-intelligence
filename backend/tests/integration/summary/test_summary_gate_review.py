@@ -7,12 +7,12 @@ from sqlalchemy.pool import StaticPool
 
 from app.config.dependencies import get_db
 from app.main import app
+from app.modules.rule.infrastructure.models import RuleResultModel
 from app.modules.summary.infrastructure.models import (
     ExecutiveScoreModel,
     InsightResultModel,
     KPIResultModel,
     RecommendationResultModel,
-    RuleEvaluationModel,
     SummaryAuditLogModel,
     SummaryProjectionModel,
     TimelineSnapshotModel,
@@ -33,7 +33,7 @@ def _build_session_factory():
         tables=[
             ExecutiveScoreModel.__table__,
             KPIResultModel.__table__,
-            RuleEvaluationModel.__table__,
+            RuleResultModel.__table__,
             InsightResultModel.__table__,
             RecommendationResultModel.__table__,
             TimelineSnapshotModel.__table__,
@@ -74,6 +74,7 @@ def _seed(session_factory) -> None:
                 financial_score=80,
                 commercial_score=80,
                 operational_score=80,
+                inventory_score=80,
                 overall_score=80,
                 score_version="v1",
                 calculated_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
@@ -87,6 +88,7 @@ def _seed(session_factory) -> None:
                 financial_score=10,
                 commercial_score=10,
                 operational_score=10,
+                inventory_score=10,
                 overall_score=10,
                 score_version="v1",
                 calculated_at=datetime(2026, 7, 10, tzinfo=timezone.utc),

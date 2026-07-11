@@ -7,12 +7,12 @@ from sqlalchemy.pool import StaticPool
 
 from app.config.dependencies import get_db
 from app.main import app
+from app.modules.rule.infrastructure.models import RuleResultModel
 from app.modules.summary.infrastructure.models import (
     ExecutiveScoreModel,
     InsightResultModel,
     KPIResultModel,
     RecommendationResultModel,
-    RuleEvaluationModel,
     SummaryAuditLogModel,
     SummaryProjectionModel,
     TimelineSnapshotModel,
@@ -49,7 +49,7 @@ def _build_session_factory():
         tables=[
             ExecutiveScoreModel.__table__,
             KPIResultModel.__table__,
-            RuleEvaluationModel.__table__,
+            RuleResultModel.__table__,
             InsightResultModel.__table__,
             RecommendationResultModel.__table__,
             TimelineSnapshotModel.__table__,
@@ -92,6 +92,7 @@ def test_summary_contract_v1_shape_is_stable() -> None:
                 financial_score=80,
                 commercial_score=80,
                 operational_score=80,
+                inventory_score=80,
                 overall_score=80,
                 score_version="v1",
                 calculated_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
@@ -112,19 +113,19 @@ def test_summary_contract_v1_shape_is_stable() -> None:
             )
         )
         session.add(
-            RuleEvaluationModel(
-                rule_evaluation_id="r_1",
+            RuleResultModel(
+                rule_result_id="rr_1",
                 company_id="cmp_acme",
                 period_ref="2026-07",
+                kpi_id="FIN-03",
                 rule_id="rule.cash",
-                severity="high",
+                severity="HIGH",
                 priority="p1",
-                title="Risco de caixa",
-                description="desc",
-                risk_code="cash.low",
-                probability=0.7,
-                potential_impact=5000,
+                alert_title="Risco de caixa",
+                alert_description="desc",
+                metric_value=-100.0,
                 fired_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
+                orchestrator_run_id="run_rule_1",
             )
         )
         session.add(

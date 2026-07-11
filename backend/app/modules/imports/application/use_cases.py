@@ -81,11 +81,26 @@ class UpsertProductPort(Protocol):
         ...
 
 
+class PipelineCoordinatorPort(Protocol):
+    def consume_ingest_completed(
+        self,
+        *,
+        company_id: str,
+        import_job_id: str,
+        template: str,
+        source_system: str,
+        event_id: str | None,
+        correlation_id: str | None,
+    ):
+        ...
+
+
 @dataclass(slots=True)
 class ImportCsvUseCase:
     repository: ImportRepositoryPort
     upsert_customer: UpsertCustomerPort
     upsert_product: UpsertProductPort
+    pipeline_coordinator: PipelineCoordinatorPort | None = None
 
     def execute(self, command: ImportCsvCommand) -> ImportCsvResult:
         job_id = self.repository.create_job(
@@ -147,6 +162,20 @@ class ImportCsvUseCase:
                 "canonical_schema_version": command.canonical_schema_version,
             },
         )
+
+        if self.pipeline_coordinator is not None and status != "failed":
+            try:
+                self.pipeline_coordinator.consume_ingest_completed(
+                    company_id=command.company_id,
+                    import_job_id=job_id,
+                    template=command.template,
+                    source_system=command.source_system,
+                    event_id=event.event_id,
+                    correlation_id=command.correlation_id,
+                )
+            except Exception:
+                # Import consistency takes precedence; pipeline execution can be retried by internal API.
+                pass
 
         return ImportCsvResult(
             job_id=job_id,

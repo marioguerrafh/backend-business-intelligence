@@ -3,7 +3,7 @@
     "_postman_id": "4fe84f49-7f55-4606-afce-2a22f0ac7f8f",
     "name": "BI Platform APIs",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Colecao completa para validar os endpoints atuais da plataforma BI em ambiente local.\n\nFluxo sugerido:\n1) Auth > Login\n2) Health endpoints\n3) Business create/get\n4) Imports CSV\n5) Summary\n6) KPI Evaluate\n7) Auth > Logout"
+    "description": "Colecao completa para validar os endpoints atuais da plataforma BI em ambiente local.\n\nFluxo sugerido:\n1) Auth > Login\n2) Health endpoints\n3) Business create/get\n4) Imports CSV (customers, products, sales, financial)\n5) Internal Pipeline (KPI -> Rule -> Recommendation -> Insight -> Executive Score)\n6) Summary\n7) KPI Evaluate\n8) Auth > Logout"
   },
   "item": [
     {
@@ -521,7 +521,210 @@
       "name": "Imports",
       "item": [
         {
+          "name": "Import Customers CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdCustomers', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdCustomers', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "customers",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/data/demo/nova_distribuidora/customers.csv)."
+          }
+        },
+        {
+          "name": "Import Products CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdProducts', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdProducts', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "products",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/data/demo/nova_distribuidora/products.csv)."
+          }
+        },
+        {
+          "name": "Import Sales CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdSales', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdSales', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "sales",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/data/demo/nova_distribuidora/sales.csv)."
+          }
+        },
+        {
           "name": "Import Financial CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdFinancial', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdFinancial', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -572,6 +775,214 @@
       ]
     },
     {
+      "name": "Internal Pipeline",
+      "item": [
+        {
+          "name": "KPI Orchestrator Ingest Completed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.periods && json.periods.length > 0) {",
+                  "  const first = json.periods[0];",
+                  "  if (first.orchestrator_run_id) { pm.environment.set('orchestratorRunId', first.orchestrator_run_id); }",
+                  "  if (first.period_ref) { pm.environment.set('periodRef', first.period_ref); }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{companyId}}\",\n  \"import_job_id\": \"{{importJobIdSales}}\",\n  \"template\": \"sales\",\n  \"source_system\": \"postman_manual\",\n  \"event_id\": \"{{ingestEventIdSales}}\",\n  \"orchestrator_run_id\": \"{{orchestratorRunId}}\",\n  \"period_ref\": \"{{periodRef}}\",\n  \"correlation_id\": \"{{correlationId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/kpi/internal/orchestrator/ingest-completed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "kpi",
+                "internal",
+                "orchestrator",
+                "ingest-completed"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Rule Execute",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{companyId}}\",\n  \"period_ref\": \"{{periodRef}}\",\n  \"orchestrator_run_id\": \"{{orchestratorRunId}}\",\n  \"correlation_id\": \"{{correlationId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/rule/internal/execute",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "rule",
+                "internal",
+                "execute"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Recommendation Generate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{companyId}}\",\n  \"period_ref\": \"{{periodRef}}\",\n  \"orchestrator_run_id\": \"{{orchestratorRunId}}\",\n  \"correlation_id\": \"{{correlationId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/recommendation/internal/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "recommendation",
+                "internal",
+                "generate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Insight Generate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{companyId}}\",\n  \"period_ref\": \"{{periodRef}}\",\n  \"orchestrator_run_id\": \"{{orchestratorRunId}}\",\n  \"correlation_id\": \"{{correlationId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/insight/internal/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "insight",
+                "internal",
+                "generate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Executive Score Calculate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{companyId}}\",\n  \"period_ref\": \"{{periodRef}}\",\n  \"orchestrator_run_id\": \"{{orchestratorRunId}}\",\n  \"correlation_id\": \"{{correlationId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/executive-score/internal/calculate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "executive-score",
+                "internal",
+                "calculate"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Summary",
       "item": [
         {
@@ -616,6 +1027,10 @@
           "request": {
             "method": "POST",
             "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              },
               {
                 "key": "Content-Type",
                 "value": "application/json"

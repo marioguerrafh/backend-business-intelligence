@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel
@@ -21,3 +22,13 @@ class ImportCsvResponse(BaseModel):
     failed_rows: int
     ingest_event_id: str | None
     inconsistencies: list[ImportInconsistencyResponse]
+
+
+class ImportJobStatusResponse(BaseModel):
+    job_id: str
+    status: str
+    progress: int
+    current_step: str | None
+    started_at: datetime
+    estimated_remaining_seconds: int
+    summary_updated: bool

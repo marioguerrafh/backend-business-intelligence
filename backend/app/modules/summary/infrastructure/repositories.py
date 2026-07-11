@@ -6,6 +6,7 @@ from uuid import uuid4
 from sqlalchemy import Select, select
 from sqlalchemy.orm import Session
 
+from app.modules.rule.infrastructure.models import RuleResultModel
 from app.modules.summary.application.ports.repository import (
     SummaryProjectionRecord,
     SummaryRepository,
@@ -17,7 +18,6 @@ from app.modules.summary.infrastructure.models import (
     InsightResultModel,
     KPIResultModel,
     RecommendationResultModel,
-    RuleEvaluationModel,
     SummaryAuditLogModel,
     SummaryProjectionModel,
     TimelineSnapshotModel,
@@ -70,6 +70,7 @@ class SqlAlchemySummaryRepository(SummaryRepository):
                 "financial": score.financial_score,
                 "commercial": score.commercial_score,
                 "operational": score.operational_score,
+                "inventory": float(score.inventory_score or 0.0),
             },
             kpis=tuple(
                 {
@@ -92,19 +93,19 @@ class SqlAlchemySummaryRepository(SummaryRepository):
             ),
             alerts=tuple(
                 {
-                    "alert_id": item.rule_evaluation_id,
+                    "alert_id": item.rule_result_id,
                     "severity": item.severity,
                     "priority": item.priority,
-                    "title": item.title,
-                    "description": item.description,
+                    "title": item.alert_title,
+                    "description": item.alert_description,
                 }
                 for item in self.session.execute(
-                    select(RuleEvaluationModel)
+                    select(RuleResultModel)
                     .where(
-                        RuleEvaluationModel.company_id == company_id,
-                        RuleEvaluationModel.period_ref == effective_period,
+                        RuleResultModel.company_id == company_id,
+                        RuleResultModel.period_ref == effective_period,
                     )
-                    .order_by(RuleEvaluationModel.fired_at.desc())
+                    .order_by(RuleResultModel.fired_at.desc())
                     .limit(10)
                 ).scalars()
             ),

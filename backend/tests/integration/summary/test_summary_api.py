@@ -8,12 +8,12 @@ from sqlalchemy.pool import StaticPool
 
 from app.config.dependencies import get_db
 from app.main import app
+from app.modules.rule.infrastructure.models import RuleResultModel
 from app.modules.summary.infrastructure.models import (
     ExecutiveScoreModel,
     InsightResultModel,
     KPIResultModel,
     RecommendationResultModel,
-    RuleEvaluationModel,
     SummaryAuditLogModel,
     SummaryProjectionModel,
     TimelineSnapshotModel,
@@ -34,7 +34,7 @@ def _build_session_factory():
         tables=[
             ExecutiveScoreModel.__table__,
             KPIResultModel.__table__,
-            RuleEvaluationModel.__table__,
+            RuleResultModel.__table__,
             InsightResultModel.__table__,
             RecommendationResultModel.__table__,
             TimelineSnapshotModel.__table__,
@@ -79,6 +79,7 @@ def _seed(session_factory) -> None:
                 financial_score=81.0,
                 commercial_score=79.0,
                 operational_score=78.0,
+                inventory_score=77.0,
                 overall_score=80.0,
                 score_version="v1",
                 calculated_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
@@ -99,19 +100,19 @@ def _seed(session_factory) -> None:
             )
         )
         session.add(
-            RuleEvaluationModel(
-                rule_evaluation_id="al_1",
+            RuleResultModel(
+                rule_result_id="rr_1",
                 company_id="cmp_acme",
                 period_ref="2026-07",
+                kpi_id="FIN-03",
                 rule_id="r.cash",
-                severity="high",
+                severity="HIGH",
                 priority="p1",
-                title="Fluxo de caixa pressionado",
-                description="Quebra de margem de segurança",
-                risk_code="cash.low",
-                probability=0.8,
-                potential_impact=15000,
+                alert_title="Fluxo de caixa pressionado",
+                alert_description="Quebra de margem de seguranca",
+                metric_value=-1200.0,
                 fired_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
+                orchestrator_run_id="run_rule_1",
             )
         )
         session.add(
@@ -162,6 +163,7 @@ def _seed(session_factory) -> None:
                 financial_score=10.0,
                 commercial_score=10.0,
                 operational_score=10.0,
+                inventory_score=10.0,
                 overall_score=10.0,
                 score_version="v1",
                 calculated_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
