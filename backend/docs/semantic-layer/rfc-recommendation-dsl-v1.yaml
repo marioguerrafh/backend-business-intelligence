@@ -1,0 +1,54 @@
+rfc:
+  id: RFC-RECOMMENDATION-DSL-V1
+  title: Recommendation DSL v1.0
+  date: 2026-07-10
+  status: proposed
+  owners:
+    - chief_bi_officer
+    - cfo
+    - data_architect
+
+problem:
+  statement: Recommendations must evolve continuously without recompiling backend services.
+
+decision:
+  adopt_recommendation_dsl: true
+  source_of_truth: recommendation-dsl.v1.yaml
+  runtime_model: trigger_linked_prioritized_recommendations
+
+goals:
+  - recommendation_authoring_without_code
+  - explicit_impact_estimation
+  - deterministic_ranking_by_impact_and_confidence
+
+non_goals:
+  - free_text_unbounded_recommendations
+  - recommendations_without_owner_or_sla
+
+architecture_impact:
+  affected_layers:
+    - recommendation_engine
+    - rule_engine
+    - ai_explanation_layer
+  runtime_requirements:
+    - recommendation_catalog_loader
+    - applicability_evaluator
+    - ranking_engine
+
+governance:
+  versioning: semantic_versioned
+  approval_flow:
+    - business_owner
+    - controller
+    - architecture
+
+acceptance_criteria:
+  - every_critical_rule_has_at_least_one_active_recommendation
+  - recommendation_change_requires_no_recompile
+  - top_3_recommendations_generated_per_context
+
+risks_and_mitigations:
+  - risk: low_actionability
+    mitigation: mandatory_playbook_steps_and_owner_role
+  - risk: optimistic_impact_estimation
+    mitigation: observed_vs_expected_impact_feedback_loop

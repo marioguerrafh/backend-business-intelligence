@@ -1,0 +1,113 @@
+metadata:
+  artifact: recommendation_dsl
+  version: 1.0.0
+  status: approved
+  purpose: declarative_recommendations_without_recompile
+
+recommendation_contract:
+  fields:
+    - recommendation_id
+    - name
+    - trigger_ref
+    - applicability_conditions
+    - impact_model
+    - effort_level
+    - confidence_score
+    - owner_role
+    - sla_target
+    - message_template
+    - action_playbook
+    - enabled
+
+syntax:
+  impact_dimensions:
+    - revenue
+    - margin
+    - cash
+    - risk
+    - customer_experience
+    - operational_efficiency
+  effort_levels:
+    - low
+    - medium
+    - high
+
+recommendation_examples:
+  - recommendation_id: rec.cash.001
+    name: acelerar_recebiveis_criticos
+    trigger_ref:
+      rule_id: r.fin03.cash_negative_3d
+    applicability_conditions:
+      - gt(open_receivables_over_30d,0)
+    impact_model:
+      primary_dimension: cash
+      expected_impact_formula: mul(open_receivables_over_30d, collection_success_rate)
+      expected_impact_unit: BRL
+      impact_horizon: 7d
+    effort_level: medium
+    confidence_score: 0.82
+    owner_role: treasury_manager
+    sla_target: 48h
+    message_template: >
+      Priorizar cobranca de clientes com maior atraso pode liberar caixa estimado
+      de {expected_impact_value} em ate {impact_horizon}.
+    action_playbook:
+      - segment_receivables_by_amount_and_delay
+      - contact_top_20_accounts
+      - offer_structured_settlement_terms
+    enabled: true
+
+  - recommendation_id: rec.stockout.001
+    name: reposicao_urgente_sku_critico
+    trigger_ref:
+      rule_id: r.est02.stockout_over_5
+    applicability_conditions:
+      - eq(is_critical_sku,true)
+    impact_model:
+      primary_dimension: revenue
+      expected_impact_formula: mul(daily_lost_sales_estimate, 7)
+      expected_impact_unit: BRL
+      impact_horizon: 7d
+    effort_level: low
+    confidence_score: 0.88
+    owner_role: supply_chain_manager
+    sla_target: 12h
+    message_template: >
+      Repor SKU critico pode recuperar ate {expected_impact_value} em receita
+      potencial nos proximos {impact_horizon}.
+    action_playbook:
+      - transfer_stock_between_locations
+      - expedite_supplier_order
+      - update_sales_allocation_rules
+    enabled: true
+
+  - recommendation_id: rec.exec.001
+    name: plano_tatico_multifuncional_30d
+    trigger_ref:
+      rule_id: r.exe04.health_drop_10p
+    applicability_conditions:
+      - lte(business_health_index,70)
+    impact_model:
+      primary_dimension: risk
+      expected_impact_formula: sub(current_risk_score, projected_risk_score)
+      expected_impact_unit: score
+      impact_horizon: 30d
+    effort_level: high
+    confidence_score: 0.74
+    owner_role: executive_committee
+    sla_target: 24h
+    message_template: >
+      Implantar plano tatico de 30 dias pode reduzir risco agregado em
+      {expected_impact_value} pontos e estabilizar a operacao.
+    action_playbook:
+      - assemble_cross_functional_team
+      - prioritize_top_3_negative_drivers
+      - execute_weekly_value_tracking
+    enabled: true
+
+runtime_policy:
+  ranking_strategy:
+    expression: mul(expected_impact_normalized, confidence_score)
+  limit_per_context: 3
+  deprecation_policy:
+    requires_replacement_recommendation: true

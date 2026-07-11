@@ -11,6 +11,8 @@ from app.shared.infrastructure.db.base import Base
 # Import models so metadata is loaded for autogenerate support.
 from app.modules.auth.infrastructure import models as auth_models  # noqa: F401
 from app.modules.business.infrastructure import models as business_models  # noqa: F401
+from app.modules.imports.infrastructure import models as imports_models  # noqa: F401
+from app.modules.summary.infrastructure import models as summary_models  # noqa: F401
 
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.database_url)

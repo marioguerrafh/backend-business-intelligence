@@ -1,0 +1,191 @@
+﻿{
+    "generated_at_utc":  "2026-07-10T23:52:10.0525442+00:00",
+    "started_at_utc":  "2026-07-10T23:52:08.2831648+00:00",
+    "duration_seconds":  1.769,
+    "base_url":  "http://localhost:8000",
+    "company_id":  "cmp_acme",
+    "summary":  {
+                    "total":  22,
+                    "ok":  21,
+                    "fail":  null,
+                    "success":  false
+                },
+    "results":  [
+                    {
+                        "endpoint":  "platform.health",
+                        "method":  "GET",
+                        "path":  "/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/company/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/imports/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/kpi/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/alert/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/insight/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/recommendation/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/ai/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/notification/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "module.health",
+                        "method":  "GET",
+                        "path":  "/v1/omie/health",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "auth.login",
+                        "method":  "POST",
+                        "path":  "/v1/auth/login",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "auth.me",
+                        "method":  "GET",
+                        "path":  "/v1/auth/me",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "auth.users",
+                        "method":  "GET",
+                        "path":  "/v1/auth/users",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "auth.refresh",
+                        "method":  "POST",
+                        "path":  "/v1/auth/refresh",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "business.customers.create",
+                        "method":  "POST",
+                        "path":  "/v1/business/customers",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "business.customers.get",
+                        "method":  "GET",
+                        "path":  "/v1/business/customers/cmp_acme/376ffafd-e373-43f0-b5d5-0eae9524dd21",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "business.products.create",
+                        "method":  "POST",
+                        "path":  "/v1/business/products",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "business.products.get",
+                        "method":  "GET",
+                        "path":  "/v1/business/products/cmp_acme/86c64cb2-e155-47a4-833d-b8af700bda30",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "imports.csv (financial)",
+                        "method":  "POST",
+                        "path":  "/v1/imports/csv",
+                        "status":  200,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    },
+                    {
+                        "endpoint":  "summary.get",
+                        "method":  "GET",
+                        "path":  "/v1/summary?company_id=cmp_acme",
+                        "status":  404,
+                        "outcome":  "ok",
+                        "detail":  "expected handled error"
+                    },
+                    {
+                        "endpoint":  "kpi.evaluate_formula",
+                        "method":  "POST",
+                        "path":  "/v1/kpi/internal/formulas/evaluate",
+                        "status":  500,
+                        "outcome":  "fail",
+                        "detail":  "O servidor remoto retornou um erro: (500) Erro Interno do Servidor."
+                    },
+                    {
+                        "endpoint":  "auth.logout",
+                        "method":  "POST",
+                        "path":  "/v1/auth/logout",
+                        "status":  204,
+                        "outcome":  "ok",
+                        "detail":  "expected"
+                    }
+                ]
+}

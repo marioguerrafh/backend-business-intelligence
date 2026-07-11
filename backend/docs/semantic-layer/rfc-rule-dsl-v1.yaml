@@ -1,0 +1,54 @@
+rfc:
+  id: RFC-RULE-DSL-V1
+  title: Rule DSL v1.0
+  date: 2026-07-10
+  status: proposed
+  owners:
+    - principal_ddd_architect
+    - controller
+    - chief_bi_officer
+
+problem:
+  statement: Health rules, triggers, and escalation must be modified without code changes.
+
+decision:
+  adopt_rule_dsl: true
+  source_of_truth: rule-dsl.v1.yaml
+  execution_model: declarative_rule_evaluation
+
+goals:
+  - runtime_rule_changes
+  - consistent_severity_and_priority
+  - deterministic_trigger_and_escalation
+
+non_goals:
+  - hardcoded_alert_logic
+  - cross_tenant_rule_execution
+
+architecture_impact:
+  affected_layers:
+    - rule_engine
+    - alerting
+    - recommendation_selection
+  runtime_requirements:
+    - rule_parser
+    - trigger_evaluator
+    - escalation_orchestrator
+
+governance:
+  versioning: semantic_versioned
+  approval_flow:
+    - domain_owner_approval
+    - controller_approval
+    - architecture_approval
+
+acceptance_criteria:
+  - all_priority_p0_p1_rules_declared_in_dsl
+  - rule_changes_applied_without_redeploy
+  - conflict_resolution_policy_enforced
+
+risks_and_mitigations:
+  - risk: alert_fatigue
+    mitigation: deduplication_and_priority_policies
+  - risk: inconsistent_rule_quality
+    mitigation: mandatory_rule_contract_validation

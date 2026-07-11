@@ -1,0 +1,86 @@
+supplier_id,company_id,legal_name,document_number,city,state,lead_time_days,delivery_delay_profile,payment_term_days,category_focus
+SUP-001,cmp_nova_distribuidora,Fornecedor 001 Industria e Comercio Ltda,22000000000001,Jundiai,SP,8,baixo,22,Hidraulico
+SUP-002,cmp_nova_distribuidora,Fornecedor 002 Industria e Comercio Ltda,22000000000002,Sao Paulo,SP,9,baixo,23,Ferramentas
+SUP-003,cmp_nova_distribuidora,Fornecedor 003 Industria e Comercio Ltda,22000000000003,Sorocaba,SP,10,alto,24,Iluminacao
+SUP-004,cmp_nova_distribuidora,Fornecedor 004 Industria e Comercio Ltda,22000000000004,Campinas,SP,11,baixo,25,Eletrico
+SUP-005,cmp_nova_distribuidora,Fornecedor 005 Industria e Comercio Ltda,22000000000005,Jundiai,SP,12,baixo,26,Hidraulico
+SUP-006,cmp_nova_distribuidora,Fornecedor 006 Industria e Comercio Ltda,22000000000006,Sao Paulo,SP,13,medio,27,Ferramentas
+SUP-007,cmp_nova_distribuidora,Fornecedor 007 Industria e Comercio Ltda,22000000000007,Sorocaba,SP,14,alto,28,Iluminacao
+SUP-008,cmp_nova_distribuidora,Fornecedor 008 Industria e Comercio Ltda,22000000000008,Campinas,SP,15,baixo,29,Eletrico
+SUP-009,cmp_nova_distribuidora,Fornecedor 009 Industria e Comercio Ltda,22000000000009,Jundiai,SP,16,baixo,30,Hidraulico
+SUP-010,cmp_nova_distribuidora,Fornecedor 010 Industria e Comercio Ltda,22000000000010,Sao Paulo,SP,17,baixo,31,Ferramentas
+SUP-011,cmp_nova_distribuidora,Fornecedor 011 Industria e Comercio Ltda,22000000000011,Sorocaba,SP,18,alto,32,Iluminacao
+SUP-012,cmp_nova_distribuidora,Fornecedor 012 Industria e Comercio Ltda,22000000000012,Campinas,SP,19,medio,33,Eletrico
+SUP-013,cmp_nova_distribuidora,Fornecedor 013 Industria e Comercio Ltda,22000000000013,Jundiai,SP,20,baixo,34,Hidraulico
+SUP-014,cmp_nova_distribuidora,Fornecedor 014 Industria e Comercio Ltda,22000000000014,Sao Paulo,SP,21,baixo,35,Ferramentas
+SUP-015,cmp_nova_distribuidora,Fornecedor 015 Industria e Comercio Ltda,22000000000015,Sorocaba,SP,22,baixo,36,Iluminacao
+SUP-016,cmp_nova_distribuidora,Fornecedor 016 Industria e Comercio Ltda,22000000000016,Campinas,SP,23,baixo,37,Eletrico
+SUP-017,cmp_nova_distribuidora,Fornecedor 017 Industria e Comercio Ltda,22000000000017,Jundiai,SP,24,baixo,38,Hidraulico
+SUP-018,cmp_nova_distribuidora,Fornecedor 018 Industria e Comercio Ltda,22000000000018,Sao Paulo,SP,7,medio,39,Ferramentas
+SUP-019,cmp_nova_distribuidora,Fornecedor 019 Industria e Comercio Ltda,22000000000019,Sorocaba,SP,8,alto,40,Iluminacao
+SUP-020,cmp_nova_distribuidora,Fornecedor 020 Industria e Comercio Ltda,22000000000020,Campinas,SP,9,baixo,41,Eletrico
+SUP-021,cmp_nova_distribuidora,Fornecedor 021 Industria e Comercio Ltda,22000000000021,Jundiai,SP,10,baixo,42,Hidraulico
+SUP-022,cmp_nova_distribuidora,Fornecedor 022 Industria e Comercio Ltda,22000000000022,Sao Paulo,SP,11,baixo,43,Ferramentas
+SUP-023,cmp_nova_distribuidora,Fornecedor 023 Industria e Comercio Ltda,22000000000023,Sorocaba,SP,12,alto,44,Iluminacao
+SUP-024,cmp_nova_distribuidora,Fornecedor 024 Industria e Comercio Ltda,22000000000024,Campinas,SP,13,medio,45,Eletrico
+SUP-025,cmp_nova_distribuidora,Fornecedor 025 Industria e Comercio Ltda,22000000000025,Jundiai,SP,14,baixo,46,Hidraulico
+SUP-026,cmp_nova_distribuidora,Fornecedor 026 Industria e Comercio Ltda,22000000000026,Sao Paulo,SP,15,baixo,47,Ferramentas
+SUP-027,cmp_nova_distribuidora,Fornecedor 027 Industria e Comercio Ltda,22000000000027,Sorocaba,SP,16,baixo,48,Iluminacao
+SUP-028,cmp_nova_distribuidora,Fornecedor 028 Industria e Comercio Ltda,22000000000028,Campinas,SP,17,baixo,49,Eletrico
+SUP-029,cmp_nova_distribuidora,Fornecedor 029 Industria e Comercio Ltda,22000000000029,Jundiai,SP,18,baixo,50,Hidraulico
+SUP-030,cmp_nova_distribuidora,Fornecedor 030 Industria e Comercio Ltda,22000000000030,Sao Paulo,SP,19,medio,51,Ferramentas
+SUP-031,cmp_nova_distribuidora,Fornecedor 031 Industria e Comercio Ltda,22000000000031,Sorocaba,SP,20,baixo,52,Iluminacao
+SUP-032,cmp_nova_distribuidora,Fornecedor 032 Industria e Comercio Ltda,22000000000032,Campinas,SP,21,baixo,53,Eletrico
+SUP-033,cmp_nova_distribuidora,Fornecedor 033 Industria e Comercio Ltda,22000000000033,Jundiai,SP,22,baixo,54,Hidraulico
+SUP-034,cmp_nova_distribuidora,Fornecedor 034 Industria e Comercio Ltda,22000000000034,Sao Paulo,SP,23,baixo,55,Ferramentas
+SUP-035,cmp_nova_distribuidora,Fornecedor 035 Industria e Comercio Ltda,22000000000035,Sorocaba,SP,24,baixo,56,Iluminacao
+SUP-036,cmp_nova_distribuidora,Fornecedor 036 Industria e Comercio Ltda,22000000000036,Campinas,SP,7,medio,57,Eletrico
+SUP-037,cmp_nova_distribuidora,Fornecedor 037 Industria e Comercio Ltda,22000000000037,Jundiai,SP,8,baixo,58,Hidraulico
+SUP-038,cmp_nova_distribuidora,Fornecedor 038 Industria e Comercio Ltda,22000000000038,Sao Paulo,SP,9,baixo,59,Ferramentas
+SUP-039,cmp_nova_distribuidora,Fornecedor 039 Industria e Comercio Ltda,22000000000039,Sorocaba,SP,10,baixo,60,Iluminacao
+SUP-040,cmp_nova_distribuidora,Fornecedor 040 Industria e Comercio Ltda,22000000000040,Campinas,SP,11,baixo,61,Eletrico
+SUP-041,cmp_nova_distribuidora,Fornecedor 041 Industria e Comercio Ltda,22000000000041,Jundiai,SP,12,baixo,62,Hidraulico
+SUP-042,cmp_nova_distribuidora,Fornecedor 042 Industria e Comercio Ltda,22000000000042,Sao Paulo,SP,13,medio,63,Ferramentas
+SUP-043,cmp_nova_distribuidora,Fornecedor 043 Industria e Comercio Ltda,22000000000043,Sorocaba,SP,14,baixo,64,Iluminacao
+SUP-044,cmp_nova_distribuidora,Fornecedor 044 Industria e Comercio Ltda,22000000000044,Campinas,SP,15,baixo,65,Eletrico
+SUP-045,cmp_nova_distribuidora,Fornecedor 045 Industria e Comercio Ltda,22000000000045,Jundiai,SP,16,baixo,21,Hidraulico
+SUP-046,cmp_nova_distribuidora,Fornecedor 046 Industria e Comercio Ltda,22000000000046,Sao Paulo,SP,17,baixo,22,Ferramentas
+SUP-047,cmp_nova_distribuidora,Fornecedor 047 Industria e Comercio Ltda,22000000000047,Sorocaba,SP,18,baixo,23,Iluminacao
+SUP-048,cmp_nova_distribuidora,Fornecedor 048 Industria e Comercio Ltda,22000000000048,Campinas,SP,19,medio,24,Eletrico
+SUP-049,cmp_nova_distribuidora,Fornecedor 049 Industria e Comercio Ltda,22000000000049,Jundiai,SP,20,baixo,25,Hidraulico
+SUP-050,cmp_nova_distribuidora,Fornecedor 050 Industria e Comercio Ltda,22000000000050,Sao Paulo,SP,21,baixo,26,Ferramentas
+SUP-051,cmp_nova_distribuidora,Fornecedor 051 Industria e Comercio Ltda,22000000000051,Sorocaba,SP,22,baixo,27,Iluminacao
+SUP-052,cmp_nova_distribuidora,Fornecedor 052 Industria e Comercio Ltda,22000000000052,Campinas,SP,23,baixo,28,Eletrico
+SUP-053,cmp_nova_distribuidora,Fornecedor 053 Industria e Comercio Ltda,22000000000053,Jundiai,SP,24,baixo,29,Hidraulico
+SUP-054,cmp_nova_distribuidora,Fornecedor 054 Industria e Comercio Ltda,22000000000054,Sao Paulo,SP,7,medio,30,Ferramentas
+SUP-055,cmp_nova_distribuidora,Fornecedor 055 Industria e Comercio Ltda,22000000000055,Sorocaba,SP,8,baixo,31,Iluminacao
+SUP-056,cmp_nova_distribuidora,Fornecedor 056 Industria e Comercio Ltda,22000000000056,Campinas,SP,9,baixo,32,Eletrico
+SUP-057,cmp_nova_distribuidora,Fornecedor 057 Industria e Comercio Ltda,22000000000057,Jundiai,SP,10,baixo,33,Hidraulico
+SUP-058,cmp_nova_distribuidora,Fornecedor 058 Industria e Comercio Ltda,22000000000058,Sao Paulo,SP,11,baixo,34,Ferramentas
+SUP-059,cmp_nova_distribuidora,Fornecedor 059 Industria e Comercio Ltda,22000000000059,Sorocaba,SP,12,baixo,35,Iluminacao
+SUP-060,cmp_nova_distribuidora,Fornecedor 060 Industria e Comercio Ltda,22000000000060,Campinas,SP,13,medio,36,Eletrico
+SUP-061,cmp_nova_distribuidora,Fornecedor 061 Industria e Comercio Ltda,22000000000061,Jundiai,SP,14,baixo,37,Hidraulico
+SUP-062,cmp_nova_distribuidora,Fornecedor 062 Industria e Comercio Ltda,22000000000062,Sao Paulo,SP,15,baixo,38,Ferramentas
+SUP-063,cmp_nova_distribuidora,Fornecedor 063 Industria e Comercio Ltda,22000000000063,Sorocaba,SP,16,baixo,39,Iluminacao
+SUP-064,cmp_nova_distribuidora,Fornecedor 064 Industria e Comercio Ltda,22000000000064,Campinas,SP,17,baixo,40,Eletrico
+SUP-065,cmp_nova_distribuidora,Fornecedor 065 Industria e Comercio Ltda,22000000000065,Jundiai,SP,18,baixo,41,Hidraulico
+SUP-066,cmp_nova_distribuidora,Fornecedor 066 Industria e Comercio Ltda,22000000000066,Sao Paulo,SP,19,medio,42,Ferramentas
+SUP-067,cmp_nova_distribuidora,Fornecedor 067 Industria e Comercio Ltda,22000000000067,Sorocaba,SP,20,baixo,43,Iluminacao
+SUP-068,cmp_nova_distribuidora,Fornecedor 068 Industria e Comercio Ltda,22000000000068,Campinas,SP,21,baixo,44,Eletrico
+SUP-069,cmp_nova_distribuidora,Fornecedor 069 Industria e Comercio Ltda,22000000000069,Jundiai,SP,22,baixo,45,Hidraulico
+SUP-070,cmp_nova_distribuidora,Fornecedor 070 Industria e Comercio Ltda,22000000000070,Sao Paulo,SP,23,baixo,46,Ferramentas
+SUP-071,cmp_nova_distribuidora,Fornecedor 071 Industria e Comercio Ltda,22000000000071,Sorocaba,SP,24,baixo,47,Iluminacao
+SUP-072,cmp_nova_distribuidora,Fornecedor 072 Industria e Comercio Ltda,22000000000072,Campinas,SP,7,medio,48,Eletrico
+SUP-073,cmp_nova_distribuidora,Fornecedor 073 Industria e Comercio Ltda,22000000000073,Jundiai,SP,8,baixo,49,Hidraulico
+SUP-074,cmp_nova_distribuidora,Fornecedor 074 Industria e Comercio Ltda,22000000000074,Sao Paulo,SP,9,baixo,50,Ferramentas
+SUP-075,cmp_nova_distribuidora,Fornecedor 075 Industria e Comercio Ltda,22000000000075,Sorocaba,SP,10,baixo,51,Iluminacao
+SUP-076,cmp_nova_distribuidora,Fornecedor 076 Industria e Comercio Ltda,22000000000076,Campinas,SP,11,baixo,52,Eletrico
+SUP-077,cmp_nova_distribuidora,Fornecedor 077 Industria e Comercio Ltda,22000000000077,Jundiai,SP,12,baixo,53,Hidraulico
+SUP-078,cmp_nova_distribuidora,Fornecedor 078 Industria e Comercio Ltda,22000000000078,Sao Paulo,SP,13,medio,54,Ferramentas
+SUP-079,cmp_nova_distribuidora,Fornecedor 079 Industria e Comercio Ltda,22000000000079,Sorocaba,SP,14,baixo,55,Iluminacao
+SUP-080,cmp_nova_distribuidora,Fornecedor 080 Industria e Comercio Ltda,22000000000080,Campinas,SP,15,baixo,56,Eletrico
+SUP-081,cmp_nova_distribuidora,Fornecedor 081 Industria e Comercio Ltda,22000000000081,Jundiai,SP,16,baixo,57,Hidraulico
+SUP-082,cmp_nova_distribuidora,Fornecedor 082 Industria e Comercio Ltda,22000000000082,Sao Paulo,SP,17,baixo,58,Ferramentas
+SUP-083,cmp_nova_distribuidora,Fornecedor 083 Industria e Comercio Ltda,22000000000083,Sorocaba,SP,18,baixo,59,Iluminacao
+SUP-084,cmp_nova_distribuidora,Fornecedor 084 Industria e Comercio Ltda,22000000000084,Campinas,SP,19,medio,60,Eletrico
+SUP-085,cmp_nova_distribuidora,Fornecedor 085 Industria e Comercio Ltda,22000000000085,Jundiai,SP,20,baixo,61,Hidraulico

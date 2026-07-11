@@ -1,0 +1,155 @@
+metadata:
+  artifact: formula_dsl
+  version: 1.0.0
+  status: approved
+  purpose: declarative_kpi_calculation_without_code_changes
+
+syntax:
+  grammar_version: 1
+  expression_style: functional
+  allowed_functions:
+    arithmetic:
+      - add
+      - sub
+      - mul
+      - div
+      - abs
+      - round
+    aggregations:
+      - sum
+      - avg
+      - min
+      - max
+      - count
+      - count_distinct
+      - weighted_avg
+    window:
+      - rolling_sum
+      - rolling_avg
+      - period_over_period
+      - trend_slope
+    conditional:
+      - if
+      - coalesce
+      - clamp
+
+semantic_constraints:
+  - formulas_must_reference_canonical_fields_only
+  - units_must_be_compatible_for_operations
+  - each_formula_must_define_result_type_and_unit
+
+formula_contract:
+  fields:
+    - formula_id
+    - kpi_id
+    - name
+    - expression
+    - input_metrics
+    - filters
+    - dimensions
+    - time_grain
+    - output_type
+    - output_unit
+    - precision
+    - owner
+    - version
+    - effective_from
+
+formula_examples:
+  - formula_id: f.net_revenue
+    kpi_id: FIN-01
+    name: receita_liquida
+    expression: sub(sub(sub(sum(gross_revenue), sum(tax_amount)), sum(return_amount)), sum(discount_amount))
+    input_metrics:
+      - fact_sales.gross_revenue
+      - fact_sales.tax_amount
+      - fact_sales.return_amount
+      - fact_sales.discount_amount
+    filters:
+      - fact_sales.document_status in [issued, settled]
+    dimensions:
+      - company_id
+      - date
+    time_grain: day
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: financeiro
+    version: 1
+    effective_from: 2026-07-10
+
+  - formula_id: f.ebitda_margin
+    kpi_id: FIN-02
+    name: margem_ebitda
+    expression: mul(div(sum(ebitda), sum(net_revenue)), 100)
+    input_metrics:
+      - fact_finance_cashflow.operating_cash_flow_amount
+      - fact_sales.net_revenue
+    filters:
+      - none
+    dimensions:
+      - company_id
+      - month
+    time_grain: month
+    output_type: decimal
+    output_unit: percent
+    precision: 2
+    owner: controladoria
+    version: 1
+    effective_from: 2026-07-10
+
+  - formula_id: f.sales_conversion
+    kpi_id: COM-01
+    name: taxa_conversao
+    expression: mul(div(sum(sales_closed), sum(sales_opportunity)), 100)
+    input_metrics:
+      - fact_sales.sales_closed
+      - fact_sales.sales_opportunity
+    filters:
+      - fact_sales.channel_id is not null
+    dimensions:
+      - company_id
+      - channel_id
+      - week
+    time_grain: week
+    output_type: decimal
+    output_unit: percent
+    precision: 2
+    owner: comercial
+    version: 1
+    effective_from: 2026-07-10
+
+  - formula_id: f.business_health_index
+    kpi_id: EXE-04
+    name: business_health_index
+    expression: weighted_avg(metric_value, metric_weight)
+    input_metrics:
+      - kpi_score.FIN-03
+      - kpi_score.FIN-02
+      - kpi_score.COM-01
+      - kpi_score.EST-02
+      - kpi_score.PRD-01
+    filters:
+      - score_confidence >= 0.8
+    dimensions:
+      - company_id
+      - day
+    time_grain: day
+    output_type: decimal
+    output_unit: score_0_100
+    precision: 2
+    owner: executivo
+    version: 1
+    effective_from: 2026-07-10
+
+validation:
+  compile_checks:
+    - ast_is_valid
+    - function_whitelist_only
+    - semantic_field_resolution
+    - type_compatibility
+    - unit_compatibility
+  runtime_checks:
+    - divide_by_zero_guard
+    - null_input_guard
+    - min_sample_size_guard

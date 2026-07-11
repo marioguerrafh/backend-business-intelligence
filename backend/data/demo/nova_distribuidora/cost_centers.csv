@@ -1,0 +1,6 @@
+cost_center_id,name,type
+CC-ADM,Administrativo,despesa
+CC-COM,Comercial,despesa
+CC-LOG,Logistica,custo
+CC-EST,Estoque,custo
+CC-FIN,Financeiro,despesa

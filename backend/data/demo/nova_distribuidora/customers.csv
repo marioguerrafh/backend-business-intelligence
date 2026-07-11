@@ -1,0 +1,621 @@
+source_record_id,legal_name,trade_name,document_number,status,billing_street,billing_number,billing_district,billing_city,billing_state,billing_country,billing_postal_code,contact_email,contact_phone,external_id
+SRC-CUST-00001,Cliente 0001 Comercio e Servicos Ltda,Cliente 0001,13000000000001,active,Rua Comercial 1,2,Centro,Sumare,SP,Brasil,13001001,financeiro0001@cliente.com.br,19900000001,CLI-0001
+SRC-CUST-00002,Cliente 0002 Comercio e Servicos Ltda,Cliente 0002,13000000000002,active,Rua Comercial 2,3,Centro,Valinhos,SP,Brasil,13002002,financeiro0002@cliente.com.br,19900000002,CLI-0002
+SRC-CUST-00003,Cliente 0003 Comercio e Servicos Ltda,Cliente 0003,13000000000003,active,Rua Comercial 3,4,Centro,Hortolandia,SP,Brasil,13003003,financeiro0003@cliente.com.br,19900000003,CLI-0003
+SRC-CUST-00004,Cliente 0004 Comercio e Servicos Ltda,Cliente 0004,13000000000004,active,Rua Comercial 4,5,Distrito Industrial,Paulinia,SP,Brasil,13004004,financeiro0004@cliente.com.br,19900000004,CLI-0004
+SRC-CUST-00005,Cliente 0005 Comercio e Servicos Ltda,Cliente 0005,13000000000005,active,Rua Comercial 5,6,Centro,Campinas,SP,Brasil,13005005,financeiro0005@cliente.com.br,19900000005,CLI-0005
+SRC-CUST-00006,Cliente 0006 Comercio e Servicos Ltda,Cliente 0006,13000000000006,active,Rua Comercial 6,7,Centro,Sumare,SP,Brasil,13006006,financeiro0006@cliente.com.br,19900000006,CLI-0006
+SRC-CUST-00007,Cliente 0007 Comercio e Servicos Ltda,Cliente 0007,13000000000007,active,Rua Comercial 7,8,Centro,Valinhos,SP,Brasil,13007007,financeiro0007@cliente.com.br,19900000007,CLI-0007
+SRC-CUST-00008,Cliente 0008 Comercio e Servicos Ltda,Cliente 0008,13000000000008,active,Rua Comercial 8,9,Distrito Industrial,Hortolandia,SP,Brasil,13008008,financeiro0008@cliente.com.br,19900000008,CLI-0008
+SRC-CUST-00009,Cliente 0009 Comercio e Servicos Ltda,Cliente 0009,13000000000009,active,Rua Comercial 9,10,Centro,Paulinia,SP,Brasil,13009009,financeiro0009@cliente.com.br,19900000009,CLI-0009
+SRC-CUST-00010,Cliente 0010 Comercio e Servicos Ltda,Cliente 0010,13000000000010,active,Rua Comercial 10,11,Centro,Campinas,SP,Brasil,13010010,financeiro0010@cliente.com.br,19900000010,CLI-0010
+SRC-CUST-00011,Cliente 0011 Comercio e Servicos Ltda,Cliente 0011,13000000000011,active,Rua Comercial 11,12,Centro,Sumare,SP,Brasil,13011011,financeiro0011@cliente.com.br,19900000011,CLI-0011
+SRC-CUST-00012,Cliente 0012 Comercio e Servicos Ltda,Cliente 0012,13000000000012,active,Rua Comercial 12,13,Distrito Industrial,Valinhos,SP,Brasil,13012012,financeiro0012@cliente.com.br,19900000012,CLI-0012
+SRC-CUST-00013,Cliente 0013 Comercio e Servicos Ltda,Cliente 0013,13000000000013,active,Rua Comercial 13,14,Centro,Hortolandia,SP,Brasil,13013013,financeiro0013@cliente.com.br,19900000013,CLI-0013
+SRC-CUST-00014,Cliente 0014 Comercio e Servicos Ltda,Cliente 0014,13000000000014,active,Rua Comercial 14,15,Centro,Paulinia,SP,Brasil,13014014,financeiro0014@cliente.com.br,19900000014,CLI-0014
+SRC-CUST-00015,Cliente 0015 Comercio e Servicos Ltda,Cliente 0015,13000000000015,active,Rua Comercial 15,16,Centro,Campinas,SP,Brasil,13015015,financeiro0015@cliente.com.br,19900000015,CLI-0015
+SRC-CUST-00016,Cliente 0016 Comercio e Servicos Ltda,Cliente 0016,13000000000016,active,Rua Comercial 16,17,Distrito Industrial,Sumare,SP,Brasil,13016016,financeiro0016@cliente.com.br,19900000016,CLI-0016
+SRC-CUST-00017,Cliente 0017 Comercio e Servicos Ltda,Cliente 0017,13000000000017,active,Rua Comercial 17,18,Centro,Valinhos,SP,Brasil,13017017,financeiro0017@cliente.com.br,19900000017,CLI-0017
+SRC-CUST-00018,Cliente 0018 Comercio e Servicos Ltda,Cliente 0018,13000000000018,active,Rua Comercial 18,19,Centro,Hortolandia,SP,Brasil,13018018,financeiro0018@cliente.com.br,19900000018,CLI-0018
+SRC-CUST-00019,Cliente 0019 Comercio e Servicos Ltda,Cliente 0019,13000000000019,active,Rua Comercial 19,20,Centro,Paulinia,SP,Brasil,13019019,financeiro0019@cliente.com.br,19900000019,CLI-0019
+SRC-CUST-00020,Cliente 0020 Comercio e Servicos Ltda,Cliente 0020,13000000000020,active,Rua Comercial 20,21,Distrito Industrial,Campinas,SP,Brasil,13020020,financeiro0020@cliente.com.br,19900000020,CLI-0020
+SRC-CUST-00021,Cliente 0021 Comercio e Servicos Ltda,Cliente 0021,13000000000021,active,Rua Comercial 21,22,Centro,Sumare,SP,Brasil,13021021,financeiro0021@cliente.com.br,19900000021,CLI-0021
+SRC-CUST-00022,Cliente 0022 Comercio e Servicos Ltda,Cliente 0022,13000000000022,active,Rua Comercial 22,23,Centro,Valinhos,SP,Brasil,13022022,financeiro0022@cliente.com.br,19900000022,CLI-0022
+SRC-CUST-00023,Cliente 0023 Comercio e Servicos Ltda,Cliente 0023,13000000000023,active,Rua Comercial 23,24,Centro,Hortolandia,SP,Brasil,13023023,financeiro0023@cliente.com.br,19900000023,CLI-0023
+SRC-CUST-00024,Cliente 0024 Comercio e Servicos Ltda,Cliente 0024,13000000000024,active,Rua Comercial 24,25,Distrito Industrial,Paulinia,SP,Brasil,13024024,financeiro0024@cliente.com.br,19900000024,CLI-0024
+SRC-CUST-00025,Cliente 0025 Comercio e Servicos Ltda,Cliente 0025,13000000000025,active,Rua Comercial 25,26,Centro,Campinas,SP,Brasil,13025025,financeiro0025@cliente.com.br,19900000025,CLI-0025
+SRC-CUST-00026,Cliente 0026 Comercio e Servicos Ltda,Cliente 0026,13000000000026,active,Rua Comercial 26,27,Centro,Sumare,SP,Brasil,13026026,financeiro0026@cliente.com.br,19900000026,CLI-0026
+SRC-CUST-00027,Cliente 0027 Comercio e Servicos Ltda,Cliente 0027,13000000000027,active,Rua Comercial 27,28,Centro,Valinhos,SP,Brasil,13027027,financeiro0027@cliente.com.br,19900000027,CLI-0027
+SRC-CUST-00028,Cliente 0028 Comercio e Servicos Ltda,Cliente 0028,13000000000028,active,Rua Comercial 28,29,Distrito Industrial,Hortolandia,SP,Brasil,13028028,financeiro0028@cliente.com.br,19900000028,CLI-0028
+SRC-CUST-00029,Cliente 0029 Comercio e Servicos Ltda,Cliente 0029,13000000000029,inactive,Rua Comercial 29,30,Centro,Paulinia,SP,Brasil,13029029,financeiro0029@cliente.com.br,19900000029,CLI-0029
+SRC-CUST-00030,Cliente 0030 Comercio e Servicos Ltda,Cliente 0030,13000000000030,active,Rua Comercial 30,31,Centro,Campinas,SP,Brasil,13030030,financeiro0030@cliente.com.br,19900000030,CLI-0030
+SRC-CUST-00031,Cliente 0031 Comercio e Servicos Ltda,Cliente 0031,13000000000031,active,Rua Comercial 31,32,Centro,Sumare,SP,Brasil,13031031,financeiro0031@cliente.com.br,19900000031,CLI-0031
+SRC-CUST-00032,Cliente 0032 Comercio e Servicos Ltda,Cliente 0032,13000000000032,active,Rua Comercial 32,33,Distrito Industrial,Valinhos,SP,Brasil,13032032,financeiro0032@cliente.com.br,19900000032,CLI-0032
+SRC-CUST-00033,Cliente 0033 Comercio e Servicos Ltda,Cliente 0033,13000000000033,active,Rua Comercial 33,34,Centro,Hortolandia,SP,Brasil,13033033,financeiro0033@cliente.com.br,19900000033,CLI-0033
+SRC-CUST-00034,Cliente 0034 Comercio e Servicos Ltda,Cliente 0034,13000000000034,active,Rua Comercial 34,35,Centro,Paulinia,SP,Brasil,13034034,financeiro0034@cliente.com.br,19900000034,CLI-0034
+SRC-CUST-00035,Cliente 0035 Comercio e Servicos Ltda,Cliente 0035,13000000000035,active,Rua Comercial 35,36,Centro,Campinas,SP,Brasil,13035035,financeiro0035@cliente.com.br,19900000035,CLI-0035
+SRC-CUST-00036,Cliente 0036 Comercio e Servicos Ltda,Cliente 0036,13000000000036,active,Rua Comercial 36,37,Distrito Industrial,Sumare,SP,Brasil,13036036,financeiro0036@cliente.com.br,19900000036,CLI-0036
+SRC-CUST-00037,Cliente 0037 Comercio e Servicos Ltda,Cliente 0037,13000000000037,active,Rua Comercial 37,38,Centro,Valinhos,SP,Brasil,13037037,financeiro0037@cliente.com.br,19900000037,CLI-0037
+SRC-CUST-00038,Cliente 0038 Comercio e Servicos Ltda,Cliente 0038,13000000000038,active,Rua Comercial 38,39,Centro,Hortolandia,SP,Brasil,13038038,financeiro0038@cliente.com.br,19900000038,CLI-0038
+SRC-CUST-00039,Cliente 0039 Comercio e Servicos Ltda,Cliente 0039,13000000000039,active,Rua Comercial 39,40,Centro,Paulinia,SP,Brasil,13039039,financeiro0039@cliente.com.br,19900000039,CLI-0039
+SRC-CUST-00040,Cliente 0040 Comercio e Servicos Ltda,Cliente 0040,13000000000040,active,Rua Comercial 40,41,Distrito Industrial,Campinas,SP,Brasil,13040040,financeiro0040@cliente.com.br,19900000040,CLI-0040
+SRC-CUST-00041,Cliente 0041 Comercio e Servicos Ltda,Cliente 0041,13000000000041,active,Rua Comercial 41,42,Centro,Sumare,SP,Brasil,13041041,financeiro0041@cliente.com.br,19900000041,CLI-0041
+SRC-CUST-00042,Cliente 0042 Comercio e Servicos Ltda,Cliente 0042,13000000000042,active,Rua Comercial 42,43,Centro,Valinhos,SP,Brasil,13042042,financeiro0042@cliente.com.br,19900000042,CLI-0042
+SRC-CUST-00043,Cliente 0043 Comercio e Servicos Ltda,Cliente 0043,13000000000043,active,Rua Comercial 43,44,Centro,Hortolandia,SP,Brasil,13043043,financeiro0043@cliente.com.br,19900000043,CLI-0043
+SRC-CUST-00044,Cliente 0044 Comercio e Servicos Ltda,Cliente 0044,13000000000044,active,Rua Comercial 44,45,Distrito Industrial,Paulinia,SP,Brasil,13044044,financeiro0044@cliente.com.br,19900000044,CLI-0044
+SRC-CUST-00045,Cliente 0045 Comercio e Servicos Ltda,Cliente 0045,13000000000045,active,Rua Comercial 45,46,Centro,Campinas,SP,Brasil,13045045,financeiro0045@cliente.com.br,19900000045,CLI-0045
+SRC-CUST-00046,Cliente 0046 Comercio e Servicos Ltda,Cliente 0046,13000000000046,active,Rua Comercial 46,47,Centro,Sumare,SP,Brasil,13046046,financeiro0046@cliente.com.br,19900000046,CLI-0046
+SRC-CUST-00047,Cliente 0047 Comercio e Servicos Ltda,Cliente 0047,13000000000047,active,Rua Comercial 47,48,Centro,Valinhos,SP,Brasil,13047047,financeiro0047@cliente.com.br,19900000047,CLI-0047
+SRC-CUST-00048,Cliente 0048 Comercio e Servicos Ltda,Cliente 0048,13000000000048,active,Rua Comercial 48,49,Distrito Industrial,Hortolandia,SP,Brasil,13048048,financeiro0048@cliente.com.br,19900000048,CLI-0048
+SRC-CUST-00049,Cliente 0049 Comercio e Servicos Ltda,Cliente 0049,13000000000049,active,Rua Comercial 49,50,Centro,Paulinia,SP,Brasil,13049049,financeiro0049@cliente.com.br,19900000049,CLI-0049
+SRC-CUST-00050,Cliente 0050 Comercio e Servicos Ltda,Cliente 0050,13000000000050,active,Rua Comercial 50,51,Centro,Campinas,SP,Brasil,13050050,financeiro0050@cliente.com.br,19900000050,CLI-0050
+SRC-CUST-00051,Cliente 0051 Comercio e Servicos Ltda,Cliente 0051,13000000000051,active,Rua Comercial 51,52,Centro,Sumare,SP,Brasil,13051051,financeiro0051@cliente.com.br,19900000051,CLI-0051
+SRC-CUST-00052,Cliente 0052 Comercio e Servicos Ltda,Cliente 0052,13000000000052,active,Rua Comercial 52,53,Distrito Industrial,Valinhos,SP,Brasil,13052052,financeiro0052@cliente.com.br,19900000052,CLI-0052
+SRC-CUST-00053,Cliente 0053 Comercio e Servicos Ltda,Cliente 0053,13000000000053,active,Rua Comercial 53,54,Centro,Hortolandia,SP,Brasil,13053053,financeiro0053@cliente.com.br,19900000053,CLI-0053
+SRC-CUST-00054,Cliente 0054 Comercio e Servicos Ltda,Cliente 0054,13000000000054,active,Rua Comercial 54,55,Centro,Paulinia,SP,Brasil,13054054,financeiro0054@cliente.com.br,19900000054,CLI-0054
+SRC-CUST-00055,Cliente 0055 Comercio e Servicos Ltda,Cliente 0055,13000000000055,active,Rua Comercial 55,56,Centro,Campinas,SP,Brasil,13055055,financeiro0055@cliente.com.br,19900000055,CLI-0055
+SRC-CUST-00056,Cliente 0056 Comercio e Servicos Ltda,Cliente 0056,13000000000056,active,Rua Comercial 56,57,Distrito Industrial,Sumare,SP,Brasil,13056056,financeiro0056@cliente.com.br,19900000056,CLI-0056
+SRC-CUST-00057,Cliente 0057 Comercio e Servicos Ltda,Cliente 0057,13000000000057,active,Rua Comercial 57,58,Centro,Valinhos,SP,Brasil,13057057,financeiro0057@cliente.com.br,19900000057,CLI-0057
+SRC-CUST-00058,Cliente 0058 Comercio e Servicos Ltda,Cliente 0058,13000000000058,inactive,Rua Comercial 58,59,Centro,Hortolandia,SP,Brasil,13058058,financeiro0058@cliente.com.br,19900000058,CLI-0058
+SRC-CUST-00059,Cliente 0059 Comercio e Servicos Ltda,Cliente 0059,13000000000059,active,Rua Comercial 59,60,Centro,Paulinia,SP,Brasil,13059059,financeiro0059@cliente.com.br,19900000059,CLI-0059
+SRC-CUST-00060,Cliente 0060 Comercio e Servicos Ltda,Cliente 0060,13000000000060,active,Rua Comercial 60,61,Distrito Industrial,Campinas,SP,Brasil,13060060,financeiro0060@cliente.com.br,19900000060,CLI-0060
+SRC-CUST-00061,Cliente 0061 Comercio e Servicos Ltda,Cliente 0061,13000000000061,active,Rua Comercial 61,62,Centro,Sumare,SP,Brasil,13061061,financeiro0061@cliente.com.br,19900000061,CLI-0061
+SRC-CUST-00062,Cliente 0062 Comercio e Servicos Ltda,Cliente 0062,13000000000062,active,Rua Comercial 62,63,Centro,Valinhos,SP,Brasil,13062062,financeiro0062@cliente.com.br,19900000062,CLI-0062
+SRC-CUST-00063,Cliente 0063 Comercio e Servicos Ltda,Cliente 0063,13000000000063,active,Rua Comercial 63,64,Centro,Hortolandia,SP,Brasil,13063063,financeiro0063@cliente.com.br,19900000063,CLI-0063
+SRC-CUST-00064,Cliente 0064 Comercio e Servicos Ltda,Cliente 0064,13000000000064,active,Rua Comercial 64,65,Distrito Industrial,Paulinia,SP,Brasil,13064064,financeiro0064@cliente.com.br,19900000064,CLI-0064
+SRC-CUST-00065,Cliente 0065 Comercio e Servicos Ltda,Cliente 0065,13000000000065,active,Rua Comercial 65,66,Centro,Campinas,SP,Brasil,13065065,financeiro0065@cliente.com.br,19900000065,CLI-0065
+SRC-CUST-00066,Cliente 0066 Comercio e Servicos Ltda,Cliente 0066,13000000000066,active,Rua Comercial 66,67,Centro,Sumare,SP,Brasil,13066066,financeiro0066@cliente.com.br,19900000066,CLI-0066
+SRC-CUST-00067,Cliente 0067 Comercio e Servicos Ltda,Cliente 0067,13000000000067,active,Rua Comercial 67,68,Centro,Valinhos,SP,Brasil,13067067,financeiro0067@cliente.com.br,19900000067,CLI-0067
+SRC-CUST-00068,Cliente 0068 Comercio e Servicos Ltda,Cliente 0068,13000000000068,active,Rua Comercial 68,69,Distrito Industrial,Hortolandia,SP,Brasil,13068068,financeiro0068@cliente.com.br,19900000068,CLI-0068
+SRC-CUST-00069,Cliente 0069 Comercio e Servicos Ltda,Cliente 0069,13000000000069,active,Rua Comercial 69,70,Centro,Paulinia,SP,Brasil,13069069,financeiro0069@cliente.com.br,19900000069,CLI-0069
+SRC-CUST-00070,Cliente 0070 Comercio e Servicos Ltda,Cliente 0070,13000000000070,active,Rua Comercial 70,71,Centro,Campinas,SP,Brasil,13070070,financeiro0070@cliente.com.br,19900000070,CLI-0070
+SRC-CUST-00071,Cliente 0071 Comercio e Servicos Ltda,Cliente 0071,13000000000071,active,Rua Comercial 71,72,Centro,Sumare,SP,Brasil,13071071,financeiro0071@cliente.com.br,19900000071,CLI-0071
+SRC-CUST-00072,Cliente 0072 Comercio e Servicos Ltda,Cliente 0072,13000000000072,active,Rua Comercial 72,73,Distrito Industrial,Valinhos,SP,Brasil,13072072,financeiro0072@cliente.com.br,19900000072,CLI-0072
+SRC-CUST-00073,Cliente 0073 Comercio e Servicos Ltda,Cliente 0073,13000000000073,active,Rua Comercial 73,74,Centro,Hortolandia,SP,Brasil,13073073,financeiro0073@cliente.com.br,19900000073,CLI-0073
+SRC-CUST-00074,Cliente 0074 Comercio e Servicos Ltda,Cliente 0074,13000000000074,active,Rua Comercial 74,75,Centro,Paulinia,SP,Brasil,13074074,financeiro0074@cliente.com.br,19900000074,CLI-0074
+SRC-CUST-00075,Cliente 0075 Comercio e Servicos Ltda,Cliente 0075,13000000000075,active,Rua Comercial 75,76,Centro,Campinas,SP,Brasil,13075075,financeiro0075@cliente.com.br,19900000075,CLI-0075
+SRC-CUST-00076,Cliente 0076 Comercio e Servicos Ltda,Cliente 0076,13000000000076,active,Rua Comercial 76,77,Distrito Industrial,Sumare,SP,Brasil,13076076,financeiro0076@cliente.com.br,19900000076,CLI-0076
+SRC-CUST-00077,Cliente 0077 Comercio e Servicos Ltda,Cliente 0077,13000000000077,active,Rua Comercial 77,78,Centro,Valinhos,SP,Brasil,13077077,financeiro0077@cliente.com.br,19900000077,CLI-0077
+SRC-CUST-00078,Cliente 0078 Comercio e Servicos Ltda,Cliente 0078,13000000000078,active,Rua Comercial 78,79,Centro,Hortolandia,SP,Brasil,13078078,financeiro0078@cliente.com.br,19900000078,CLI-0078
+SRC-CUST-00079,Cliente 0079 Comercio e Servicos Ltda,Cliente 0079,13000000000079,active,Rua Comercial 79,80,Centro,Paulinia,SP,Brasil,13079079,financeiro0079@cliente.com.br,19900000079,CLI-0079
+SRC-CUST-00080,Cliente 0080 Comercio e Servicos Ltda,Cliente 0080,13000000000080,active,Rua Comercial 80,81,Distrito Industrial,Campinas,SP,Brasil,13080080,financeiro0080@cliente.com.br,19900000080,CLI-0080
+SRC-CUST-00081,Cliente 0081 Comercio e Servicos Ltda,Cliente 0081,13000000000081,active,Rua Comercial 81,82,Centro,Sumare,SP,Brasil,13081081,financeiro0081@cliente.com.br,19900000081,CLI-0081
+SRC-CUST-00082,Cliente 0082 Comercio e Servicos Ltda,Cliente 0082,13000000000082,active,Rua Comercial 82,83,Centro,Valinhos,SP,Brasil,13082082,financeiro0082@cliente.com.br,19900000082,CLI-0082
+SRC-CUST-00083,Cliente 0083 Comercio e Servicos Ltda,Cliente 0083,13000000000083,active,Rua Comercial 83,84,Centro,Hortolandia,SP,Brasil,13083083,financeiro0083@cliente.com.br,19900000083,CLI-0083
+SRC-CUST-00084,Cliente 0084 Comercio e Servicos Ltda,Cliente 0084,13000000000084,active,Rua Comercial 84,85,Distrito Industrial,Paulinia,SP,Brasil,13084084,financeiro0084@cliente.com.br,19900000084,CLI-0084
+SRC-CUST-00085,Cliente 0085 Comercio e Servicos Ltda,Cliente 0085,13000000000085,active,Rua Comercial 85,86,Centro,Campinas,SP,Brasil,13085085,financeiro0085@cliente.com.br,19900000085,CLI-0085
+SRC-CUST-00086,Cliente 0086 Comercio e Servicos Ltda,Cliente 0086,13000000000086,active,Rua Comercial 86,87,Centro,Sumare,SP,Brasil,13086086,financeiro0086@cliente.com.br,19900000086,CLI-0086
+SRC-CUST-00087,Cliente 0087 Comercio e Servicos Ltda,Cliente 0087,13000000000087,inactive,Rua Comercial 87,88,Centro,Valinhos,SP,Brasil,13087087,financeiro0087@cliente.com.br,19900000087,CLI-0087
+SRC-CUST-00088,Cliente 0088 Comercio e Servicos Ltda,Cliente 0088,13000000000088,active,Rua Comercial 88,89,Distrito Industrial,Hortolandia,SP,Brasil,13088088,financeiro0088@cliente.com.br,19900000088,CLI-0088
+SRC-CUST-00089,Cliente 0089 Comercio e Servicos Ltda,Cliente 0089,13000000000089,active,Rua Comercial 89,90,Centro,Paulinia,SP,Brasil,13089089,financeiro0089@cliente.com.br,19900000089,CLI-0089
+SRC-CUST-00090,Cliente 0090 Comercio e Servicos Ltda,Cliente 0090,13000000000090,active,Rua Comercial 90,91,Centro,Campinas,SP,Brasil,13000090,financeiro0090@cliente.com.br,19900000090,CLI-0090
+SRC-CUST-00091,Cliente 0091 Comercio e Servicos Ltda,Cliente 0091,13000000000091,active,Rua Comercial 91,92,Centro,Sumare,SP,Brasil,13001091,financeiro0091@cliente.com.br,19900000091,CLI-0091
+SRC-CUST-00092,Cliente 0092 Comercio e Servicos Ltda,Cliente 0092,13000000000092,active,Rua Comercial 92,93,Distrito Industrial,Valinhos,SP,Brasil,13002092,financeiro0092@cliente.com.br,19900000092,CLI-0092
+SRC-CUST-00093,Cliente 0093 Comercio e Servicos Ltda,Cliente 0093,13000000000093,active,Rua Comercial 93,94,Centro,Hortolandia,SP,Brasil,13003093,financeiro0093@cliente.com.br,19900000093,CLI-0093
+SRC-CUST-00094,Cliente 0094 Comercio e Servicos Ltda,Cliente 0094,13000000000094,active,Rua Comercial 94,95,Centro,Paulinia,SP,Brasil,13004094,financeiro0094@cliente.com.br,19900000094,CLI-0094
+SRC-CUST-00095,Cliente 0095 Comercio e Servicos Ltda,Cliente 0095,13000000000095,active,Rua Comercial 95,96,Centro,Campinas,SP,Brasil,13005095,financeiro0095@cliente.com.br,19900000095,CLI-0095
+SRC-CUST-00096,Cliente 0096 Comercio e Servicos Ltda,Cliente 0096,13000000000096,active,Rua Comercial 96,97,Distrito Industrial,Sumare,SP,Brasil,13006096,financeiro0096@cliente.com.br,19900000096,CLI-0096
+SRC-CUST-00097,Cliente 0097 Comercio e Servicos Ltda,Cliente 0097,13000000000097,active,Rua Comercial 97,98,Centro,Valinhos,SP,Brasil,13007097,financeiro0097@cliente.com.br,19900000097,CLI-0097
+SRC-CUST-00098,Cliente 0098 Comercio e Servicos Ltda,Cliente 0098,13000000000098,active,Rua Comercial 98,99,Centro,Hortolandia,SP,Brasil,13008098,financeiro0098@cliente.com.br,19900000098,CLI-0098
+SRC-CUST-00099,Cliente 0099 Comercio e Servicos Ltda,Cliente 0099,13000000000099,active,Rua Comercial 99,100,Centro,Paulinia,SP,Brasil,13009099,financeiro0099@cliente.com.br,19900000099,CLI-0099
+SRC-CUST-00100,Cliente 0100 Comercio e Servicos Ltda,Cliente 0100,13000000000100,active,Rua Comercial 100,101,Distrito Industrial,Campinas,SP,Brasil,13010000,financeiro0100@cliente.com.br,19900000100,CLI-0100
+SRC-CUST-00101,Cliente 0101 Comercio e Servicos Ltda,Cliente 0101,13000000000101,active,Rua Comercial 101,102,Centro,Sumare,SP,Brasil,13011001,financeiro0101@cliente.com.br,19900000101,CLI-0101
+SRC-CUST-00102,Cliente 0102 Comercio e Servicos Ltda,Cliente 0102,13000000000102,active,Rua Comercial 102,103,Centro,Valinhos,SP,Brasil,13012002,financeiro0102@cliente.com.br,19900000102,CLI-0102
+SRC-CUST-00103,Cliente 0103 Comercio e Servicos Ltda,Cliente 0103,13000000000103,active,Rua Comercial 103,104,Centro,Hortolandia,SP,Brasil,13013003,financeiro0103@cliente.com.br,19900000103,CLI-0103
+SRC-CUST-00104,Cliente 0104 Comercio e Servicos Ltda,Cliente 0104,13000000000104,active,Rua Comercial 104,105,Distrito Industrial,Paulinia,SP,Brasil,13014004,financeiro0104@cliente.com.br,19900000104,CLI-0104
+SRC-CUST-00105,Cliente 0105 Comercio e Servicos Ltda,Cliente 0105,13000000000105,active,Rua Comercial 105,106,Centro,Campinas,SP,Brasil,13015005,financeiro0105@cliente.com.br,19900000105,CLI-0105
+SRC-CUST-00106,Cliente 0106 Comercio e Servicos Ltda,Cliente 0106,13000000000106,active,Rua Comercial 106,107,Centro,Sumare,SP,Brasil,13016006,financeiro0106@cliente.com.br,19900000106,CLI-0106
+SRC-CUST-00107,Cliente 0107 Comercio e Servicos Ltda,Cliente 0107,13000000000107,active,Rua Comercial 107,108,Centro,Valinhos,SP,Brasil,13017007,financeiro0107@cliente.com.br,19900000107,CLI-0107
+SRC-CUST-00108,Cliente 0108 Comercio e Servicos Ltda,Cliente 0108,13000000000108,active,Rua Comercial 108,109,Distrito Industrial,Hortolandia,SP,Brasil,13018008,financeiro0108@cliente.com.br,19900000108,CLI-0108
+SRC-CUST-00109,Cliente 0109 Comercio e Servicos Ltda,Cliente 0109,13000000000109,active,Rua Comercial 109,110,Centro,Paulinia,SP,Brasil,13019009,financeiro0109@cliente.com.br,19900000109,CLI-0109
+SRC-CUST-00110,Cliente 0110 Comercio e Servicos Ltda,Cliente 0110,13000000000110,active,Rua Comercial 110,111,Centro,Campinas,SP,Brasil,13020010,financeiro0110@cliente.com.br,19900000110,CLI-0110
+SRC-CUST-00111,Cliente 0111 Comercio e Servicos Ltda,Cliente 0111,13000000000111,active,Rua Comercial 111,112,Centro,Sumare,SP,Brasil,13021011,financeiro0111@cliente.com.br,19900000111,CLI-0111
+SRC-CUST-00112,Cliente 0112 Comercio e Servicos Ltda,Cliente 0112,13000000000112,active,Rua Comercial 112,113,Distrito Industrial,Valinhos,SP,Brasil,13022012,financeiro0112@cliente.com.br,19900000112,CLI-0112
+SRC-CUST-00113,Cliente 0113 Comercio e Servicos Ltda,Cliente 0113,13000000000113,active,Rua Comercial 113,114,Centro,Hortolandia,SP,Brasil,13023013,financeiro0113@cliente.com.br,19900000113,CLI-0113
+SRC-CUST-00114,Cliente 0114 Comercio e Servicos Ltda,Cliente 0114,13000000000114,active,Rua Comercial 114,115,Centro,Paulinia,SP,Brasil,13024014,financeiro0114@cliente.com.br,19900000114,CLI-0114
+SRC-CUST-00115,Cliente 0115 Comercio e Servicos Ltda,Cliente 0115,13000000000115,active,Rua Comercial 115,116,Centro,Campinas,SP,Brasil,13025015,financeiro0115@cliente.com.br,19900000115,CLI-0115
+SRC-CUST-00116,Cliente 0116 Comercio e Servicos Ltda,Cliente 0116,13000000000116,inactive,Rua Comercial 116,117,Distrito Industrial,Sumare,SP,Brasil,13026016,financeiro0116@cliente.com.br,19900000116,CLI-0116
+SRC-CUST-00117,Cliente 0117 Comercio e Servicos Ltda,Cliente 0117,13000000000117,active,Rua Comercial 117,118,Centro,Valinhos,SP,Brasil,13027017,financeiro0117@cliente.com.br,19900000117,CLI-0117
+SRC-CUST-00118,Cliente 0118 Comercio e Servicos Ltda,Cliente 0118,13000000000118,active,Rua Comercial 118,119,Centro,Hortolandia,SP,Brasil,13028018,financeiro0118@cliente.com.br,19900000118,CLI-0118
+SRC-CUST-00119,Cliente 0119 Comercio e Servicos Ltda,Cliente 0119,13000000000119,active,Rua Comercial 119,120,Centro,Paulinia,SP,Brasil,13029019,financeiro0119@cliente.com.br,19900000119,CLI-0119
+SRC-CUST-00120,Cliente 0120 Comercio e Servicos Ltda,Cliente 0120,13000000000120,active,Rua Comercial 120,121,Distrito Industrial,Campinas,SP,Brasil,13030020,financeiro0120@cliente.com.br,19900000120,CLI-0120
+SRC-CUST-00121,Cliente 0121 Comercio e Servicos Ltda,Cliente 0121,13000000000121,active,Rua Comercial 121,122,Centro,Sumare,SP,Brasil,13031021,financeiro0121@cliente.com.br,19900000121,CLI-0121
+SRC-CUST-00122,Cliente 0122 Comercio e Servicos Ltda,Cliente 0122,13000000000122,active,Rua Comercial 122,123,Centro,Valinhos,SP,Brasil,13032022,financeiro0122@cliente.com.br,19900000122,CLI-0122
+SRC-CUST-00123,Cliente 0123 Comercio e Servicos Ltda,Cliente 0123,13000000000123,active,Rua Comercial 123,124,Centro,Hortolandia,SP,Brasil,13033023,financeiro0123@cliente.com.br,19900000123,CLI-0123
+SRC-CUST-00124,Cliente 0124 Comercio e Servicos Ltda,Cliente 0124,13000000000124,active,Rua Comercial 124,125,Distrito Industrial,Paulinia,SP,Brasil,13034024,financeiro0124@cliente.com.br,19900000124,CLI-0124
+SRC-CUST-00125,Cliente 0125 Comercio e Servicos Ltda,Cliente 0125,13000000000125,active,Rua Comercial 125,126,Centro,Campinas,SP,Brasil,13035025,financeiro0125@cliente.com.br,19900000125,CLI-0125
+SRC-CUST-00126,Cliente 0126 Comercio e Servicos Ltda,Cliente 0126,13000000000126,active,Rua Comercial 126,127,Centro,Sumare,SP,Brasil,13036026,financeiro0126@cliente.com.br,19900000126,CLI-0126
+SRC-CUST-00127,Cliente 0127 Comercio e Servicos Ltda,Cliente 0127,13000000000127,active,Rua Comercial 127,128,Centro,Valinhos,SP,Brasil,13037027,financeiro0127@cliente.com.br,19900000127,CLI-0127
+SRC-CUST-00128,Cliente 0128 Comercio e Servicos Ltda,Cliente 0128,13000000000128,active,Rua Comercial 128,129,Distrito Industrial,Hortolandia,SP,Brasil,13038028,financeiro0128@cliente.com.br,19900000128,CLI-0128
+SRC-CUST-00129,Cliente 0129 Comercio e Servicos Ltda,Cliente 0129,13000000000129,active,Rua Comercial 129,130,Centro,Paulinia,SP,Brasil,13039029,financeiro0129@cliente.com.br,19900000129,CLI-0129
+SRC-CUST-00130,Cliente 0130 Comercio e Servicos Ltda,Cliente 0130,13000000000130,active,Rua Comercial 130,131,Centro,Campinas,SP,Brasil,13040030,financeiro0130@cliente.com.br,19900000130,CLI-0130
+SRC-CUST-00131,Cliente 0131 Comercio e Servicos Ltda,Cliente 0131,13000000000131,active,Rua Comercial 131,132,Centro,Sumare,SP,Brasil,13041031,financeiro0131@cliente.com.br,19900000131,CLI-0131
+SRC-CUST-00132,Cliente 0132 Comercio e Servicos Ltda,Cliente 0132,13000000000132,active,Rua Comercial 132,133,Distrito Industrial,Valinhos,SP,Brasil,13042032,financeiro0132@cliente.com.br,19900000132,CLI-0132
+SRC-CUST-00133,Cliente 0133 Comercio e Servicos Ltda,Cliente 0133,13000000000133,active,Rua Comercial 133,134,Centro,Hortolandia,SP,Brasil,13043033,financeiro0133@cliente.com.br,19900000133,CLI-0133
+SRC-CUST-00134,Cliente 0134 Comercio e Servicos Ltda,Cliente 0134,13000000000134,active,Rua Comercial 134,135,Centro,Paulinia,SP,Brasil,13044034,financeiro0134@cliente.com.br,19900000134,CLI-0134
+SRC-CUST-00135,Cliente 0135 Comercio e Servicos Ltda,Cliente 0135,13000000000135,active,Rua Comercial 135,136,Centro,Campinas,SP,Brasil,13045035,financeiro0135@cliente.com.br,19900000135,CLI-0135
+SRC-CUST-00136,Cliente 0136 Comercio e Servicos Ltda,Cliente 0136,13000000000136,active,Rua Comercial 136,137,Distrito Industrial,Sumare,SP,Brasil,13046036,financeiro0136@cliente.com.br,19900000136,CLI-0136
+SRC-CUST-00137,Cliente 0137 Comercio e Servicos Ltda,Cliente 0137,13000000000137,active,Rua Comercial 137,138,Centro,Valinhos,SP,Brasil,13047037,financeiro0137@cliente.com.br,19900000137,CLI-0137
+SRC-CUST-00138,Cliente 0138 Comercio e Servicos Ltda,Cliente 0138,13000000000138,active,Rua Comercial 138,139,Centro,Hortolandia,SP,Brasil,13048038,financeiro0138@cliente.com.br,19900000138,CLI-0138
+SRC-CUST-00139,Cliente 0139 Comercio e Servicos Ltda,Cliente 0139,13000000000139,active,Rua Comercial 139,140,Centro,Paulinia,SP,Brasil,13049039,financeiro0139@cliente.com.br,19900000139,CLI-0139
+SRC-CUST-00140,Cliente 0140 Comercio e Servicos Ltda,Cliente 0140,13000000000140,active,Rua Comercial 140,141,Distrito Industrial,Campinas,SP,Brasil,13050040,financeiro0140@cliente.com.br,19900000140,CLI-0140
+SRC-CUST-00141,Cliente 0141 Comercio e Servicos Ltda,Cliente 0141,13000000000141,active,Rua Comercial 141,142,Centro,Sumare,SP,Brasil,13051041,financeiro0141@cliente.com.br,19900000141,CLI-0141
+SRC-CUST-00142,Cliente 0142 Comercio e Servicos Ltda,Cliente 0142,13000000000142,active,Rua Comercial 142,143,Centro,Valinhos,SP,Brasil,13052042,financeiro0142@cliente.com.br,19900000142,CLI-0142
+SRC-CUST-00143,Cliente 0143 Comercio e Servicos Ltda,Cliente 0143,13000000000143,active,Rua Comercial 143,144,Centro,Hortolandia,SP,Brasil,13053043,financeiro0143@cliente.com.br,19900000143,CLI-0143
+SRC-CUST-00144,Cliente 0144 Comercio e Servicos Ltda,Cliente 0144,13000000000144,active,Rua Comercial 144,145,Distrito Industrial,Paulinia,SP,Brasil,13054044,financeiro0144@cliente.com.br,19900000144,CLI-0144
+SRC-CUST-00145,Cliente 0145 Comercio e Servicos Ltda,Cliente 0145,13000000000145,inactive,Rua Comercial 145,146,Centro,Campinas,SP,Brasil,13055045,financeiro0145@cliente.com.br,19900000145,CLI-0145
+SRC-CUST-00146,Cliente 0146 Comercio e Servicos Ltda,Cliente 0146,13000000000146,active,Rua Comercial 146,147,Centro,Sumare,SP,Brasil,13056046,financeiro0146@cliente.com.br,19900000146,CLI-0146
+SRC-CUST-00147,Cliente 0147 Comercio e Servicos Ltda,Cliente 0147,13000000000147,active,Rua Comercial 147,148,Centro,Valinhos,SP,Brasil,13057047,financeiro0147@cliente.com.br,19900000147,CLI-0147
+SRC-CUST-00148,Cliente 0148 Comercio e Servicos Ltda,Cliente 0148,13000000000148,active,Rua Comercial 148,149,Distrito Industrial,Hortolandia,SP,Brasil,13058048,financeiro0148@cliente.com.br,19900000148,CLI-0148
+SRC-CUST-00149,Cliente 0149 Comercio e Servicos Ltda,Cliente 0149,13000000000149,active,Rua Comercial 149,150,Centro,Paulinia,SP,Brasil,13059049,financeiro0149@cliente.com.br,19900000149,CLI-0149
+SRC-CUST-00150,Cliente 0150 Comercio e Servicos Ltda,Cliente 0150,13000000000150,active,Rua Comercial 150,151,Centro,Campinas,SP,Brasil,13060050,financeiro0150@cliente.com.br,19900000150,CLI-0150
+SRC-CUST-00151,Cliente 0151 Comercio e Servicos Ltda,Cliente 0151,13000000000151,active,Rua Comercial 151,152,Centro,Sumare,SP,Brasil,13061051,financeiro0151@cliente.com.br,19900000151,CLI-0151
+SRC-CUST-00152,Cliente 0152 Comercio e Servicos Ltda,Cliente 0152,13000000000152,active,Rua Comercial 152,153,Distrito Industrial,Valinhos,SP,Brasil,13062052,financeiro0152@cliente.com.br,19900000152,CLI-0152
+SRC-CUST-00153,Cliente 0153 Comercio e Servicos Ltda,Cliente 0153,13000000000153,active,Rua Comercial 153,154,Centro,Hortolandia,SP,Brasil,13063053,financeiro0153@cliente.com.br,19900000153,CLI-0153
+SRC-CUST-00154,Cliente 0154 Comercio e Servicos Ltda,Cliente 0154,13000000000154,active,Rua Comercial 154,155,Centro,Paulinia,SP,Brasil,13064054,financeiro0154@cliente.com.br,19900000154,CLI-0154
+SRC-CUST-00155,Cliente 0155 Comercio e Servicos Ltda,Cliente 0155,13000000000155,active,Rua Comercial 155,156,Centro,Campinas,SP,Brasil,13065055,financeiro0155@cliente.com.br,19900000155,CLI-0155
+SRC-CUST-00156,Cliente 0156 Comercio e Servicos Ltda,Cliente 0156,13000000000156,active,Rua Comercial 156,157,Distrito Industrial,Sumare,SP,Brasil,13066056,financeiro0156@cliente.com.br,19900000156,CLI-0156
+SRC-CUST-00157,Cliente 0157 Comercio e Servicos Ltda,Cliente 0157,13000000000157,active,Rua Comercial 157,158,Centro,Valinhos,SP,Brasil,13067057,financeiro0157@cliente.com.br,19900000157,CLI-0157
+SRC-CUST-00158,Cliente 0158 Comercio e Servicos Ltda,Cliente 0158,13000000000158,active,Rua Comercial 158,159,Centro,Hortolandia,SP,Brasil,13068058,financeiro0158@cliente.com.br,19900000158,CLI-0158
+SRC-CUST-00159,Cliente 0159 Comercio e Servicos Ltda,Cliente 0159,13000000000159,active,Rua Comercial 159,160,Centro,Paulinia,SP,Brasil,13069059,financeiro0159@cliente.com.br,19900000159,CLI-0159
+SRC-CUST-00160,Cliente 0160 Comercio e Servicos Ltda,Cliente 0160,13000000000160,active,Rua Comercial 160,161,Distrito Industrial,Campinas,SP,Brasil,13070060,financeiro0160@cliente.com.br,19900000160,CLI-0160
+SRC-CUST-00161,Cliente 0161 Comercio e Servicos Ltda,Cliente 0161,13000000000161,active,Rua Comercial 161,162,Centro,Sumare,SP,Brasil,13071061,financeiro0161@cliente.com.br,19900000161,CLI-0161
+SRC-CUST-00162,Cliente 0162 Comercio e Servicos Ltda,Cliente 0162,13000000000162,active,Rua Comercial 162,163,Centro,Valinhos,SP,Brasil,13072062,financeiro0162@cliente.com.br,19900000162,CLI-0162
+SRC-CUST-00163,Cliente 0163 Comercio e Servicos Ltda,Cliente 0163,13000000000163,active,Rua Comercial 163,164,Centro,Hortolandia,SP,Brasil,13073063,financeiro0163@cliente.com.br,19900000163,CLI-0163
+SRC-CUST-00164,Cliente 0164 Comercio e Servicos Ltda,Cliente 0164,13000000000164,active,Rua Comercial 164,165,Distrito Industrial,Paulinia,SP,Brasil,13074064,financeiro0164@cliente.com.br,19900000164,CLI-0164
+SRC-CUST-00165,Cliente 0165 Comercio e Servicos Ltda,Cliente 0165,13000000000165,active,Rua Comercial 165,166,Centro,Campinas,SP,Brasil,13075065,financeiro0165@cliente.com.br,19900000165,CLI-0165
+SRC-CUST-00166,Cliente 0166 Comercio e Servicos Ltda,Cliente 0166,13000000000166,active,Rua Comercial 166,167,Centro,Sumare,SP,Brasil,13076066,financeiro0166@cliente.com.br,19900000166,CLI-0166
+SRC-CUST-00167,Cliente 0167 Comercio e Servicos Ltda,Cliente 0167,13000000000167,active,Rua Comercial 167,168,Centro,Valinhos,SP,Brasil,13077067,financeiro0167@cliente.com.br,19900000167,CLI-0167
+SRC-CUST-00168,Cliente 0168 Comercio e Servicos Ltda,Cliente 0168,13000000000168,active,Rua Comercial 168,169,Distrito Industrial,Hortolandia,SP,Brasil,13078068,financeiro0168@cliente.com.br,19900000168,CLI-0168
+SRC-CUST-00169,Cliente 0169 Comercio e Servicos Ltda,Cliente 0169,13000000000169,active,Rua Comercial 169,170,Centro,Paulinia,SP,Brasil,13079069,financeiro0169@cliente.com.br,19900000169,CLI-0169
+SRC-CUST-00170,Cliente 0170 Comercio e Servicos Ltda,Cliente 0170,13000000000170,active,Rua Comercial 170,171,Centro,Campinas,SP,Brasil,13080070,financeiro0170@cliente.com.br,19900000170,CLI-0170
+SRC-CUST-00171,Cliente 0171 Comercio e Servicos Ltda,Cliente 0171,13000000000171,active,Rua Comercial 171,172,Centro,Sumare,SP,Brasil,13081071,financeiro0171@cliente.com.br,19900000171,CLI-0171
+SRC-CUST-00172,Cliente 0172 Comercio e Servicos Ltda,Cliente 0172,13000000000172,active,Rua Comercial 172,173,Distrito Industrial,Valinhos,SP,Brasil,13082072,financeiro0172@cliente.com.br,19900000172,CLI-0172
+SRC-CUST-00173,Cliente 0173 Comercio e Servicos Ltda,Cliente 0173,13000000000173,active,Rua Comercial 173,174,Centro,Hortolandia,SP,Brasil,13083073,financeiro0173@cliente.com.br,19900000173,CLI-0173
+SRC-CUST-00174,Cliente 0174 Comercio e Servicos Ltda,Cliente 0174,13000000000174,inactive,Rua Comercial 174,175,Centro,Paulinia,SP,Brasil,13084074,financeiro0174@cliente.com.br,19900000174,CLI-0174
+SRC-CUST-00175,Cliente 0175 Comercio e Servicos Ltda,Cliente 0175,13000000000175,active,Rua Comercial 175,176,Centro,Campinas,SP,Brasil,13085075,financeiro0175@cliente.com.br,19900000175,CLI-0175
+SRC-CUST-00176,Cliente 0176 Comercio e Servicos Ltda,Cliente 0176,13000000000176,active,Rua Comercial 176,177,Distrito Industrial,Sumare,SP,Brasil,13086076,financeiro0176@cliente.com.br,19900000176,CLI-0176
+SRC-CUST-00177,Cliente 0177 Comercio e Servicos Ltda,Cliente 0177,13000000000177,active,Rua Comercial 177,178,Centro,Valinhos,SP,Brasil,13087077,financeiro0177@cliente.com.br,19900000177,CLI-0177
+SRC-CUST-00178,Cliente 0178 Comercio e Servicos Ltda,Cliente 0178,13000000000178,active,Rua Comercial 178,179,Centro,Hortolandia,SP,Brasil,13088078,financeiro0178@cliente.com.br,19900000178,CLI-0178
+SRC-CUST-00179,Cliente 0179 Comercio e Servicos Ltda,Cliente 0179,13000000000179,active,Rua Comercial 179,180,Centro,Paulinia,SP,Brasil,13089079,financeiro0179@cliente.com.br,19900000179,CLI-0179
+SRC-CUST-00180,Cliente 0180 Comercio e Servicos Ltda,Cliente 0180,13000000000180,active,Rua Comercial 180,181,Distrito Industrial,Campinas,SP,Brasil,13000080,financeiro0180@cliente.com.br,19900000180,CLI-0180
+SRC-CUST-00181,Cliente 0181 Comercio e Servicos Ltda,Cliente 0181,13000000000181,active,Rua Comercial 1,182,Centro,Sumare,SP,Brasil,13001081,financeiro0181@cliente.com.br,19900000181,CLI-0181
+SRC-CUST-00182,Cliente 0182 Comercio e Servicos Ltda,Cliente 0182,13000000000182,active,Rua Comercial 2,183,Centro,Valinhos,SP,Brasil,13002082,financeiro0182@cliente.com.br,19900000182,CLI-0182
+SRC-CUST-00183,Cliente 0183 Comercio e Servicos Ltda,Cliente 0183,13000000000183,active,Rua Comercial 3,184,Centro,Hortolandia,SP,Brasil,13003083,financeiro0183@cliente.com.br,19900000183,CLI-0183
+SRC-CUST-00184,Cliente 0184 Comercio e Servicos Ltda,Cliente 0184,13000000000184,active,Rua Comercial 4,185,Distrito Industrial,Paulinia,SP,Brasil,13004084,financeiro0184@cliente.com.br,19900000184,CLI-0184
+SRC-CUST-00185,Cliente 0185 Comercio e Servicos Ltda,Cliente 0185,13000000000185,active,Rua Comercial 5,186,Centro,Campinas,SP,Brasil,13005085,financeiro0185@cliente.com.br,19900000185,CLI-0185
+SRC-CUST-00186,Cliente 0186 Comercio e Servicos Ltda,Cliente 0186,13000000000186,active,Rua Comercial 6,187,Centro,Sumare,SP,Brasil,13006086,financeiro0186@cliente.com.br,19900000186,CLI-0186
+SRC-CUST-00187,Cliente 0187 Comercio e Servicos Ltda,Cliente 0187,13000000000187,active,Rua Comercial 7,188,Centro,Valinhos,SP,Brasil,13007087,financeiro0187@cliente.com.br,19900000187,CLI-0187
+SRC-CUST-00188,Cliente 0188 Comercio e Servicos Ltda,Cliente 0188,13000000000188,active,Rua Comercial 8,189,Distrito Industrial,Hortolandia,SP,Brasil,13008088,financeiro0188@cliente.com.br,19900000188,CLI-0188
+SRC-CUST-00189,Cliente 0189 Comercio e Servicos Ltda,Cliente 0189,13000000000189,active,Rua Comercial 9,190,Centro,Paulinia,SP,Brasil,13009089,financeiro0189@cliente.com.br,19900000189,CLI-0189
+SRC-CUST-00190,Cliente 0190 Comercio e Servicos Ltda,Cliente 0190,13000000000190,active,Rua Comercial 10,191,Centro,Campinas,SP,Brasil,13010090,financeiro0190@cliente.com.br,19900000190,CLI-0190
+SRC-CUST-00191,Cliente 0191 Comercio e Servicos Ltda,Cliente 0191,13000000000191,active,Rua Comercial 11,192,Centro,Sumare,SP,Brasil,13011091,financeiro0191@cliente.com.br,19900000191,CLI-0191
+SRC-CUST-00192,Cliente 0192 Comercio e Servicos Ltda,Cliente 0192,13000000000192,active,Rua Comercial 12,193,Distrito Industrial,Valinhos,SP,Brasil,13012092,financeiro0192@cliente.com.br,19900000192,CLI-0192
+SRC-CUST-00193,Cliente 0193 Comercio e Servicos Ltda,Cliente 0193,13000000000193,active,Rua Comercial 13,194,Centro,Hortolandia,SP,Brasil,13013093,financeiro0193@cliente.com.br,19900000193,CLI-0193
+SRC-CUST-00194,Cliente 0194 Comercio e Servicos Ltda,Cliente 0194,13000000000194,active,Rua Comercial 14,195,Centro,Paulinia,SP,Brasil,13014094,financeiro0194@cliente.com.br,19900000194,CLI-0194
+SRC-CUST-00195,Cliente 0195 Comercio e Servicos Ltda,Cliente 0195,13000000000195,active,Rua Comercial 15,196,Centro,Campinas,SP,Brasil,13015095,financeiro0195@cliente.com.br,19900000195,CLI-0195
+SRC-CUST-00196,Cliente 0196 Comercio e Servicos Ltda,Cliente 0196,13000000000196,active,Rua Comercial 16,197,Distrito Industrial,Sumare,SP,Brasil,13016096,financeiro0196@cliente.com.br,19900000196,CLI-0196
+SRC-CUST-00197,Cliente 0197 Comercio e Servicos Ltda,Cliente 0197,13000000000197,active,Rua Comercial 17,198,Centro,Valinhos,SP,Brasil,13017097,financeiro0197@cliente.com.br,19900000197,CLI-0197
+SRC-CUST-00198,Cliente 0198 Comercio e Servicos Ltda,Cliente 0198,13000000000198,active,Rua Comercial 18,199,Centro,Hortolandia,SP,Brasil,13018098,financeiro0198@cliente.com.br,19900000198,CLI-0198
+SRC-CUST-00199,Cliente 0199 Comercio e Servicos Ltda,Cliente 0199,13000000000199,active,Rua Comercial 19,200,Centro,Paulinia,SP,Brasil,13019099,financeiro0199@cliente.com.br,19900000199,CLI-0199
+SRC-CUST-00200,Cliente 0200 Comercio e Servicos Ltda,Cliente 0200,13000000000200,active,Rua Comercial 20,201,Distrito Industrial,Campinas,SP,Brasil,13020000,financeiro0200@cliente.com.br,19900000200,CLI-0200
+SRC-CUST-00201,Cliente 0201 Comercio e Servicos Ltda,Cliente 0201,13000000000201,active,Rua Comercial 21,202,Centro,Sumare,SP,Brasil,13021001,financeiro0201@cliente.com.br,19900000201,CLI-0201
+SRC-CUST-00202,Cliente 0202 Comercio e Servicos Ltda,Cliente 0202,13000000000202,active,Rua Comercial 22,203,Centro,Valinhos,SP,Brasil,13022002,financeiro0202@cliente.com.br,19900000202,CLI-0202
+SRC-CUST-00203,Cliente 0203 Comercio e Servicos Ltda,Cliente 0203,13000000000203,inactive,Rua Comercial 23,204,Centro,Hortolandia,SP,Brasil,13023003,financeiro0203@cliente.com.br,19900000203,CLI-0203
+SRC-CUST-00204,Cliente 0204 Comercio e Servicos Ltda,Cliente 0204,13000000000204,active,Rua Comercial 24,205,Distrito Industrial,Paulinia,SP,Brasil,13024004,financeiro0204@cliente.com.br,19900000204,CLI-0204
+SRC-CUST-00205,Cliente 0205 Comercio e Servicos Ltda,Cliente 0205,13000000000205,active,Rua Comercial 25,206,Centro,Campinas,SP,Brasil,13025005,financeiro0205@cliente.com.br,19900000205,CLI-0205
+SRC-CUST-00206,Cliente 0206 Comercio e Servicos Ltda,Cliente 0206,13000000000206,active,Rua Comercial 26,207,Centro,Sumare,SP,Brasil,13026006,financeiro0206@cliente.com.br,19900000206,CLI-0206
+SRC-CUST-00207,Cliente 0207 Comercio e Servicos Ltda,Cliente 0207,13000000000207,active,Rua Comercial 27,208,Centro,Valinhos,SP,Brasil,13027007,financeiro0207@cliente.com.br,19900000207,CLI-0207
+SRC-CUST-00208,Cliente 0208 Comercio e Servicos Ltda,Cliente 0208,13000000000208,active,Rua Comercial 28,209,Distrito Industrial,Hortolandia,SP,Brasil,13028008,financeiro0208@cliente.com.br,19900000208,CLI-0208
+SRC-CUST-00209,Cliente 0209 Comercio e Servicos Ltda,Cliente 0209,13000000000209,active,Rua Comercial 29,210,Centro,Paulinia,SP,Brasil,13029009,financeiro0209@cliente.com.br,19900000209,CLI-0209
+SRC-CUST-00210,Cliente 0210 Comercio e Servicos Ltda,Cliente 0210,13000000000210,active,Rua Comercial 30,211,Centro,Campinas,SP,Brasil,13030010,financeiro0210@cliente.com.br,19900000210,CLI-0210
+SRC-CUST-00211,Cliente 0211 Comercio e Servicos Ltda,Cliente 0211,13000000000211,active,Rua Comercial 31,212,Centro,Sumare,SP,Brasil,13031011,financeiro0211@cliente.com.br,19900000211,CLI-0211
+SRC-CUST-00212,Cliente 0212 Comercio e Servicos Ltda,Cliente 0212,13000000000212,active,Rua Comercial 32,213,Distrito Industrial,Valinhos,SP,Brasil,13032012,financeiro0212@cliente.com.br,19900000212,CLI-0212
+SRC-CUST-00213,Cliente 0213 Comercio e Servicos Ltda,Cliente 0213,13000000000213,active,Rua Comercial 33,214,Centro,Hortolandia,SP,Brasil,13033013,financeiro0213@cliente.com.br,19900000213,CLI-0213
+SRC-CUST-00214,Cliente 0214 Comercio e Servicos Ltda,Cliente 0214,13000000000214,active,Rua Comercial 34,215,Centro,Paulinia,SP,Brasil,13034014,financeiro0214@cliente.com.br,19900000214,CLI-0214
+SRC-CUST-00215,Cliente 0215 Comercio e Servicos Ltda,Cliente 0215,13000000000215,active,Rua Comercial 35,216,Centro,Campinas,SP,Brasil,13035015,financeiro0215@cliente.com.br,19900000215,CLI-0215
+SRC-CUST-00216,Cliente 0216 Comercio e Servicos Ltda,Cliente 0216,13000000000216,active,Rua Comercial 36,217,Distrito Industrial,Sumare,SP,Brasil,13036016,financeiro0216@cliente.com.br,19900000216,CLI-0216
+SRC-CUST-00217,Cliente 0217 Comercio e Servicos Ltda,Cliente 0217,13000000000217,active,Rua Comercial 37,218,Centro,Valinhos,SP,Brasil,13037017,financeiro0217@cliente.com.br,19900000217,CLI-0217
+SRC-CUST-00218,Cliente 0218 Comercio e Servicos Ltda,Cliente 0218,13000000000218,active,Rua Comercial 38,219,Centro,Hortolandia,SP,Brasil,13038018,financeiro0218@cliente.com.br,19900000218,CLI-0218
+SRC-CUST-00219,Cliente 0219 Comercio e Servicos Ltda,Cliente 0219,13000000000219,active,Rua Comercial 39,220,Centro,Paulinia,SP,Brasil,13039019,financeiro0219@cliente.com.br,19900000219,CLI-0219
+SRC-CUST-00220,Cliente 0220 Comercio e Servicos Ltda,Cliente 0220,13000000000220,active,Rua Comercial 40,221,Distrito Industrial,Campinas,SP,Brasil,13040020,financeiro0220@cliente.com.br,19900000220,CLI-0220
+SRC-CUST-00221,Cliente 0221 Comercio e Servicos Ltda,Cliente 0221,13000000000221,active,Rua Comercial 41,222,Centro,Sumare,SP,Brasil,13041021,financeiro0221@cliente.com.br,19900000221,CLI-0221
+SRC-CUST-00222,Cliente 0222 Comercio e Servicos Ltda,Cliente 0222,13000000000222,active,Rua Comercial 42,223,Centro,Valinhos,SP,Brasil,13042022,financeiro0222@cliente.com.br,19900000222,CLI-0222
+SRC-CUST-00223,Cliente 0223 Comercio e Servicos Ltda,Cliente 0223,13000000000223,active,Rua Comercial 43,224,Centro,Hortolandia,SP,Brasil,13043023,financeiro0223@cliente.com.br,19900000223,CLI-0223
+SRC-CUST-00224,Cliente 0224 Comercio e Servicos Ltda,Cliente 0224,13000000000224,active,Rua Comercial 44,225,Distrito Industrial,Paulinia,SP,Brasil,13044024,financeiro0224@cliente.com.br,19900000224,CLI-0224
+SRC-CUST-00225,Cliente 0225 Comercio e Servicos Ltda,Cliente 0225,13000000000225,active,Rua Comercial 45,226,Centro,Campinas,SP,Brasil,13045025,financeiro0225@cliente.com.br,19900000225,CLI-0225
+SRC-CUST-00226,Cliente 0226 Comercio e Servicos Ltda,Cliente 0226,13000000000226,active,Rua Comercial 46,227,Centro,Sumare,SP,Brasil,13046026,financeiro0226@cliente.com.br,19900000226,CLI-0226
+SRC-CUST-00227,Cliente 0227 Comercio e Servicos Ltda,Cliente 0227,13000000000227,active,Rua Comercial 47,228,Centro,Valinhos,SP,Brasil,13047027,financeiro0227@cliente.com.br,19900000227,CLI-0227
+SRC-CUST-00228,Cliente 0228 Comercio e Servicos Ltda,Cliente 0228,13000000000228,active,Rua Comercial 48,229,Distrito Industrial,Hortolandia,SP,Brasil,13048028,financeiro0228@cliente.com.br,19900000228,CLI-0228
+SRC-CUST-00229,Cliente 0229 Comercio e Servicos Ltda,Cliente 0229,13000000000229,active,Rua Comercial 49,230,Centro,Paulinia,SP,Brasil,13049029,financeiro0229@cliente.com.br,19900000229,CLI-0229
+SRC-CUST-00230,Cliente 0230 Comercio e Servicos Ltda,Cliente 0230,13000000000230,active,Rua Comercial 50,231,Centro,Campinas,SP,Brasil,13050030,financeiro0230@cliente.com.br,19900000230,CLI-0230
+SRC-CUST-00231,Cliente 0231 Comercio e Servicos Ltda,Cliente 0231,13000000000231,active,Rua Comercial 51,232,Centro,Sumare,SP,Brasil,13051031,financeiro0231@cliente.com.br,19900000231,CLI-0231
+SRC-CUST-00232,Cliente 0232 Comercio e Servicos Ltda,Cliente 0232,13000000000232,inactive,Rua Comercial 52,233,Distrito Industrial,Valinhos,SP,Brasil,13052032,financeiro0232@cliente.com.br,19900000232,CLI-0232
+SRC-CUST-00233,Cliente 0233 Comercio e Servicos Ltda,Cliente 0233,13000000000233,active,Rua Comercial 53,234,Centro,Hortolandia,SP,Brasil,13053033,financeiro0233@cliente.com.br,19900000233,CLI-0233
+SRC-CUST-00234,Cliente 0234 Comercio e Servicos Ltda,Cliente 0234,13000000000234,active,Rua Comercial 54,235,Centro,Paulinia,SP,Brasil,13054034,financeiro0234@cliente.com.br,19900000234,CLI-0234
+SRC-CUST-00235,Cliente 0235 Comercio e Servicos Ltda,Cliente 0235,13000000000235,active,Rua Comercial 55,236,Centro,Campinas,SP,Brasil,13055035,financeiro0235@cliente.com.br,19900000235,CLI-0235
+SRC-CUST-00236,Cliente 0236 Comercio e Servicos Ltda,Cliente 0236,13000000000236,active,Rua Comercial 56,237,Distrito Industrial,Sumare,SP,Brasil,13056036,financeiro0236@cliente.com.br,19900000236,CLI-0236
+SRC-CUST-00237,Cliente 0237 Comercio e Servicos Ltda,Cliente 0237,13000000000237,active,Rua Comercial 57,238,Centro,Valinhos,SP,Brasil,13057037,financeiro0237@cliente.com.br,19900000237,CLI-0237
+SRC-CUST-00238,Cliente 0238 Comercio e Servicos Ltda,Cliente 0238,13000000000238,active,Rua Comercial 58,239,Centro,Hortolandia,SP,Brasil,13058038,financeiro0238@cliente.com.br,19900000238,CLI-0238
+SRC-CUST-00239,Cliente 0239 Comercio e Servicos Ltda,Cliente 0239,13000000000239,active,Rua Comercial 59,240,Centro,Paulinia,SP,Brasil,13059039,financeiro0239@cliente.com.br,19900000239,CLI-0239
+SRC-CUST-00240,Cliente 0240 Comercio e Servicos Ltda,Cliente 0240,13000000000240,active,Rua Comercial 60,241,Distrito Industrial,Campinas,SP,Brasil,13060040,financeiro0240@cliente.com.br,19900000240,CLI-0240
+SRC-CUST-00241,Cliente 0241 Comercio e Servicos Ltda,Cliente 0241,13000000000241,active,Rua Comercial 61,242,Centro,Sumare,SP,Brasil,13061041,financeiro0241@cliente.com.br,19900000241,CLI-0241
+SRC-CUST-00242,Cliente 0242 Comercio e Servicos Ltda,Cliente 0242,13000000000242,active,Rua Comercial 62,243,Centro,Valinhos,SP,Brasil,13062042,financeiro0242@cliente.com.br,19900000242,CLI-0242
+SRC-CUST-00243,Cliente 0243 Comercio e Servicos Ltda,Cliente 0243,13000000000243,active,Rua Comercial 63,244,Centro,Hortolandia,SP,Brasil,13063043,financeiro0243@cliente.com.br,19900000243,CLI-0243
+SRC-CUST-00244,Cliente 0244 Comercio e Servicos Ltda,Cliente 0244,13000000000244,active,Rua Comercial 64,245,Distrito Industrial,Paulinia,SP,Brasil,13064044,financeiro0244@cliente.com.br,19900000244,CLI-0244
+SRC-CUST-00245,Cliente 0245 Comercio e Servicos Ltda,Cliente 0245,13000000000245,active,Rua Comercial 65,246,Centro,Campinas,SP,Brasil,13065045,financeiro0245@cliente.com.br,19900000245,CLI-0245
+SRC-CUST-00246,Cliente 0246 Comercio e Servicos Ltda,Cliente 0246,13000000000246,active,Rua Comercial 66,247,Centro,Sumare,SP,Brasil,13066046,financeiro0246@cliente.com.br,19900000246,CLI-0246
+SRC-CUST-00247,Cliente 0247 Comercio e Servicos Ltda,Cliente 0247,13000000000247,active,Rua Comercial 67,248,Centro,Valinhos,SP,Brasil,13067047,financeiro0247@cliente.com.br,19900000247,CLI-0247
+SRC-CUST-00248,Cliente 0248 Comercio e Servicos Ltda,Cliente 0248,13000000000248,active,Rua Comercial 68,249,Distrito Industrial,Hortolandia,SP,Brasil,13068048,financeiro0248@cliente.com.br,19900000248,CLI-0248
+SRC-CUST-00249,Cliente 0249 Comercio e Servicos Ltda,Cliente 0249,13000000000249,active,Rua Comercial 69,250,Centro,Paulinia,SP,Brasil,13069049,financeiro0249@cliente.com.br,19900000249,CLI-0249
+SRC-CUST-00250,Cliente 0250 Comercio e Servicos Ltda,Cliente 0250,13000000000250,active,Rua Comercial 70,1,Centro,Campinas,SP,Brasil,13070050,financeiro0250@cliente.com.br,19900000250,CLI-0250
+SRC-CUST-00251,Cliente 0251 Comercio e Servicos Ltda,Cliente 0251,13000000000251,active,Rua Comercial 71,2,Centro,Sumare,SP,Brasil,13071051,financeiro0251@cliente.com.br,19900000251,CLI-0251
+SRC-CUST-00252,Cliente 0252 Comercio e Servicos Ltda,Cliente 0252,13000000000252,active,Rua Comercial 72,3,Distrito Industrial,Valinhos,SP,Brasil,13072052,financeiro0252@cliente.com.br,19900000252,CLI-0252
+SRC-CUST-00253,Cliente 0253 Comercio e Servicos Ltda,Cliente 0253,13000000000253,active,Rua Comercial 73,4,Centro,Hortolandia,SP,Brasil,13073053,financeiro0253@cliente.com.br,19900000253,CLI-0253
+SRC-CUST-00254,Cliente 0254 Comercio e Servicos Ltda,Cliente 0254,13000000000254,active,Rua Comercial 74,5,Centro,Paulinia,SP,Brasil,13074054,financeiro0254@cliente.com.br,19900000254,CLI-0254
+SRC-CUST-00255,Cliente 0255 Comercio e Servicos Ltda,Cliente 0255,13000000000255,active,Rua Comercial 75,6,Centro,Campinas,SP,Brasil,13075055,financeiro0255@cliente.com.br,19900000255,CLI-0255
+SRC-CUST-00256,Cliente 0256 Comercio e Servicos Ltda,Cliente 0256,13000000000256,active,Rua Comercial 76,7,Distrito Industrial,Sumare,SP,Brasil,13076056,financeiro0256@cliente.com.br,19900000256,CLI-0256
+SRC-CUST-00257,Cliente 0257 Comercio e Servicos Ltda,Cliente 0257,13000000000257,active,Rua Comercial 77,8,Centro,Valinhos,SP,Brasil,13077057,financeiro0257@cliente.com.br,19900000257,CLI-0257
+SRC-CUST-00258,Cliente 0258 Comercio e Servicos Ltda,Cliente 0258,13000000000258,active,Rua Comercial 78,9,Centro,Hortolandia,SP,Brasil,13078058,financeiro0258@cliente.com.br,19900000258,CLI-0258
+SRC-CUST-00259,Cliente 0259 Comercio e Servicos Ltda,Cliente 0259,13000000000259,active,Rua Comercial 79,10,Centro,Paulinia,SP,Brasil,13079059,financeiro0259@cliente.com.br,19900000259,CLI-0259
+SRC-CUST-00260,Cliente 0260 Comercio e Servicos Ltda,Cliente 0260,13000000000260,active,Rua Comercial 80,11,Distrito Industrial,Campinas,SP,Brasil,13080060,financeiro0260@cliente.com.br,19900000260,CLI-0260
+SRC-CUST-00261,Cliente 0261 Comercio e Servicos Ltda,Cliente 0261,13000000000261,inactive,Rua Comercial 81,12,Centro,Sumare,SP,Brasil,13081061,financeiro0261@cliente.com.br,19900000261,CLI-0261
+SRC-CUST-00262,Cliente 0262 Comercio e Servicos Ltda,Cliente 0262,13000000000262,active,Rua Comercial 82,13,Centro,Valinhos,SP,Brasil,13082062,financeiro0262@cliente.com.br,19900000262,CLI-0262
+SRC-CUST-00263,Cliente 0263 Comercio e Servicos Ltda,Cliente 0263,13000000000263,active,Rua Comercial 83,14,Centro,Hortolandia,SP,Brasil,13083063,financeiro0263@cliente.com.br,19900000263,CLI-0263
+SRC-CUST-00264,Cliente 0264 Comercio e Servicos Ltda,Cliente 0264,13000000000264,active,Rua Comercial 84,15,Distrito Industrial,Paulinia,SP,Brasil,13084064,financeiro0264@cliente.com.br,19900000264,CLI-0264
+SRC-CUST-00265,Cliente 0265 Comercio e Servicos Ltda,Cliente 0265,13000000000265,active,Rua Comercial 85,16,Centro,Campinas,SP,Brasil,13085065,financeiro0265@cliente.com.br,19900000265,CLI-0265
+SRC-CUST-00266,Cliente 0266 Comercio e Servicos Ltda,Cliente 0266,13000000000266,active,Rua Comercial 86,17,Centro,Sumare,SP,Brasil,13086066,financeiro0266@cliente.com.br,19900000266,CLI-0266
+SRC-CUST-00267,Cliente 0267 Comercio e Servicos Ltda,Cliente 0267,13000000000267,active,Rua Comercial 87,18,Centro,Valinhos,SP,Brasil,13087067,financeiro0267@cliente.com.br,19900000267,CLI-0267
+SRC-CUST-00268,Cliente 0268 Comercio e Servicos Ltda,Cliente 0268,13000000000268,active,Rua Comercial 88,19,Distrito Industrial,Hortolandia,SP,Brasil,13088068,financeiro0268@cliente.com.br,19900000268,CLI-0268
+SRC-CUST-00269,Cliente 0269 Comercio e Servicos Ltda,Cliente 0269,13000000000269,active,Rua Comercial 89,20,Centro,Paulinia,SP,Brasil,13089069,financeiro0269@cliente.com.br,19900000269,CLI-0269
+SRC-CUST-00270,Cliente 0270 Comercio e Servicos Ltda,Cliente 0270,13000000000270,active,Rua Comercial 90,21,Centro,Campinas,SP,Brasil,13000070,financeiro0270@cliente.com.br,19900000270,CLI-0270
+SRC-CUST-00271,Cliente 0271 Comercio e Servicos Ltda,Cliente 0271,13000000000271,active,Rua Comercial 91,22,Centro,Sumare,SP,Brasil,13001071,financeiro0271@cliente.com.br,19900000271,CLI-0271
+SRC-CUST-00272,Cliente 0272 Comercio e Servicos Ltda,Cliente 0272,13000000000272,active,Rua Comercial 92,23,Distrito Industrial,Valinhos,SP,Brasil,13002072,financeiro0272@cliente.com.br,19900000272,CLI-0272
+SRC-CUST-00273,Cliente 0273 Comercio e Servicos Ltda,Cliente 0273,13000000000273,active,Rua Comercial 93,24,Centro,Hortolandia,SP,Brasil,13003073,financeiro0273@cliente.com.br,19900000273,CLI-0273
+SRC-CUST-00274,Cliente 0274 Comercio e Servicos Ltda,Cliente 0274,13000000000274,active,Rua Comercial 94,25,Centro,Paulinia,SP,Brasil,13004074,financeiro0274@cliente.com.br,19900000274,CLI-0274
+SRC-CUST-00275,Cliente 0275 Comercio e Servicos Ltda,Cliente 0275,13000000000275,active,Rua Comercial 95,26,Centro,Campinas,SP,Brasil,13005075,financeiro0275@cliente.com.br,19900000275,CLI-0275
+SRC-CUST-00276,Cliente 0276 Comercio e Servicos Ltda,Cliente 0276,13000000000276,active,Rua Comercial 96,27,Distrito Industrial,Sumare,SP,Brasil,13006076,financeiro0276@cliente.com.br,19900000276,CLI-0276
+SRC-CUST-00277,Cliente 0277 Comercio e Servicos Ltda,Cliente 0277,13000000000277,active,Rua Comercial 97,28,Centro,Valinhos,SP,Brasil,13007077,financeiro0277@cliente.com.br,19900000277,CLI-0277
+SRC-CUST-00278,Cliente 0278 Comercio e Servicos Ltda,Cliente 0278,13000000000278,active,Rua Comercial 98,29,Centro,Hortolandia,SP,Brasil,13008078,financeiro0278@cliente.com.br,19900000278,CLI-0278
+SRC-CUST-00279,Cliente 0279 Comercio e Servicos Ltda,Cliente 0279,13000000000279,active,Rua Comercial 99,30,Centro,Paulinia,SP,Brasil,13009079,financeiro0279@cliente.com.br,19900000279,CLI-0279
+SRC-CUST-00280,Cliente 0280 Comercio e Servicos Ltda,Cliente 0280,13000000000280,active,Rua Comercial 100,31,Distrito Industrial,Campinas,SP,Brasil,13010080,financeiro0280@cliente.com.br,19900000280,CLI-0280
+SRC-CUST-00281,Cliente 0281 Comercio e Servicos Ltda,Cliente 0281,13000000000281,active,Rua Comercial 101,32,Centro,Sumare,SP,Brasil,13011081,financeiro0281@cliente.com.br,19900000281,CLI-0281
+SRC-CUST-00282,Cliente 0282 Comercio e Servicos Ltda,Cliente 0282,13000000000282,active,Rua Comercial 102,33,Centro,Valinhos,SP,Brasil,13012082,financeiro0282@cliente.com.br,19900000282,CLI-0282
+SRC-CUST-00283,Cliente 0283 Comercio e Servicos Ltda,Cliente 0283,13000000000283,active,Rua Comercial 103,34,Centro,Hortolandia,SP,Brasil,13013083,financeiro0283@cliente.com.br,19900000283,CLI-0283
+SRC-CUST-00284,Cliente 0284 Comercio e Servicos Ltda,Cliente 0284,13000000000284,active,Rua Comercial 104,35,Distrito Industrial,Paulinia,SP,Brasil,13014084,financeiro0284@cliente.com.br,19900000284,CLI-0284
+SRC-CUST-00285,Cliente 0285 Comercio e Servicos Ltda,Cliente 0285,13000000000285,active,Rua Comercial 105,36,Centro,Campinas,SP,Brasil,13015085,financeiro0285@cliente.com.br,19900000285,CLI-0285
+SRC-CUST-00286,Cliente 0286 Comercio e Servicos Ltda,Cliente 0286,13000000000286,active,Rua Comercial 106,37,Centro,Sumare,SP,Brasil,13016086,financeiro0286@cliente.com.br,19900000286,CLI-0286
+SRC-CUST-00287,Cliente 0287 Comercio e Servicos Ltda,Cliente 0287,13000000000287,active,Rua Comercial 107,38,Centro,Valinhos,SP,Brasil,13017087,financeiro0287@cliente.com.br,19900000287,CLI-0287
+SRC-CUST-00288,Cliente 0288 Comercio e Servicos Ltda,Cliente 0288,13000000000288,active,Rua Comercial 108,39,Distrito Industrial,Hortolandia,SP,Brasil,13018088,financeiro0288@cliente.com.br,19900000288,CLI-0288
+SRC-CUST-00289,Cliente 0289 Comercio e Servicos Ltda,Cliente 0289,13000000000289,active,Rua Comercial 109,40,Centro,Paulinia,SP,Brasil,13019089,financeiro0289@cliente.com.br,19900000289,CLI-0289
+SRC-CUST-00290,Cliente 0290 Comercio e Servicos Ltda,Cliente 0290,13000000000290,inactive,Rua Comercial 110,41,Centro,Campinas,SP,Brasil,13020090,financeiro0290@cliente.com.br,19900000290,CLI-0290
+SRC-CUST-00291,Cliente 0291 Comercio e Servicos Ltda,Cliente 0291,13000000000291,active,Rua Comercial 111,42,Centro,Sumare,SP,Brasil,13021091,financeiro0291@cliente.com.br,19900000291,CLI-0291
+SRC-CUST-00292,Cliente 0292 Comercio e Servicos Ltda,Cliente 0292,13000000000292,active,Rua Comercial 112,43,Distrito Industrial,Valinhos,SP,Brasil,13022092,financeiro0292@cliente.com.br,19900000292,CLI-0292
+SRC-CUST-00293,Cliente 0293 Comercio e Servicos Ltda,Cliente 0293,13000000000293,active,Rua Comercial 113,44,Centro,Hortolandia,SP,Brasil,13023093,financeiro0293@cliente.com.br,19900000293,CLI-0293
+SRC-CUST-00294,Cliente 0294 Comercio e Servicos Ltda,Cliente 0294,13000000000294,active,Rua Comercial 114,45,Centro,Paulinia,SP,Brasil,13024094,financeiro0294@cliente.com.br,19900000294,CLI-0294
+SRC-CUST-00295,Cliente 0295 Comercio e Servicos Ltda,Cliente 0295,13000000000295,active,Rua Comercial 115,46,Centro,Campinas,SP,Brasil,13025095,financeiro0295@cliente.com.br,19900000295,CLI-0295
+SRC-CUST-00296,Cliente 0296 Comercio e Servicos Ltda,Cliente 0296,13000000000296,active,Rua Comercial 116,47,Distrito Industrial,Sumare,SP,Brasil,13026096,financeiro0296@cliente.com.br,19900000296,CLI-0296
+SRC-CUST-00297,Cliente 0297 Comercio e Servicos Ltda,Cliente 0297,13000000000297,active,Rua Comercial 117,48,Centro,Valinhos,SP,Brasil,13027097,financeiro0297@cliente.com.br,19900000297,CLI-0297
+SRC-CUST-00298,Cliente 0298 Comercio e Servicos Ltda,Cliente 0298,13000000000298,active,Rua Comercial 118,49,Centro,Hortolandia,SP,Brasil,13028098,financeiro0298@cliente.com.br,19900000298,CLI-0298
+SRC-CUST-00299,Cliente 0299 Comercio e Servicos Ltda,Cliente 0299,13000000000299,active,Rua Comercial 119,50,Centro,Paulinia,SP,Brasil,13029099,financeiro0299@cliente.com.br,19900000299,CLI-0299
+SRC-CUST-00300,Cliente 0300 Comercio e Servicos Ltda,Cliente 0300,13000000000300,active,Rua Comercial 120,51,Distrito Industrial,Campinas,SP,Brasil,13030000,financeiro0300@cliente.com.br,19900000300,CLI-0300
+SRC-CUST-00301,Cliente 0301 Comercio e Servicos Ltda,Cliente 0301,13000000000301,active,Rua Comercial 121,52,Centro,Sumare,SP,Brasil,13031001,financeiro0301@cliente.com.br,19900000301,CLI-0301
+SRC-CUST-00302,Cliente 0302 Comercio e Servicos Ltda,Cliente 0302,13000000000302,active,Rua Comercial 122,53,Centro,Valinhos,SP,Brasil,13032002,financeiro0302@cliente.com.br,19900000302,CLI-0302
+SRC-CUST-00303,Cliente 0303 Comercio e Servicos Ltda,Cliente 0303,13000000000303,active,Rua Comercial 123,54,Centro,Hortolandia,SP,Brasil,13033003,financeiro0303@cliente.com.br,19900000303,CLI-0303
+SRC-CUST-00304,Cliente 0304 Comercio e Servicos Ltda,Cliente 0304,13000000000304,active,Rua Comercial 124,55,Distrito Industrial,Paulinia,SP,Brasil,13034004,financeiro0304@cliente.com.br,19900000304,CLI-0304
+SRC-CUST-00305,Cliente 0305 Comercio e Servicos Ltda,Cliente 0305,13000000000305,active,Rua Comercial 125,56,Centro,Campinas,SP,Brasil,13035005,financeiro0305@cliente.com.br,19900000305,CLI-0305
+SRC-CUST-00306,Cliente 0306 Comercio e Servicos Ltda,Cliente 0306,13000000000306,active,Rua Comercial 126,57,Centro,Sumare,SP,Brasil,13036006,financeiro0306@cliente.com.br,19900000306,CLI-0306
+SRC-CUST-00307,Cliente 0307 Comercio e Servicos Ltda,Cliente 0307,13000000000307,active,Rua Comercial 127,58,Centro,Valinhos,SP,Brasil,13037007,financeiro0307@cliente.com.br,19900000307,CLI-0307
+SRC-CUST-00308,Cliente 0308 Comercio e Servicos Ltda,Cliente 0308,13000000000308,active,Rua Comercial 128,59,Distrito Industrial,Hortolandia,SP,Brasil,13038008,financeiro0308@cliente.com.br,19900000308,CLI-0308
+SRC-CUST-00309,Cliente 0309 Comercio e Servicos Ltda,Cliente 0309,13000000000309,active,Rua Comercial 129,60,Centro,Paulinia,SP,Brasil,13039009,financeiro0309@cliente.com.br,19900000309,CLI-0309
+SRC-CUST-00310,Cliente 0310 Comercio e Servicos Ltda,Cliente 0310,13000000000310,active,Rua Comercial 130,61,Centro,Campinas,SP,Brasil,13040010,financeiro0310@cliente.com.br,19900000310,CLI-0310
+SRC-CUST-00311,Cliente 0311 Comercio e Servicos Ltda,Cliente 0311,13000000000311,active,Rua Comercial 131,62,Centro,Sumare,SP,Brasil,13041011,financeiro0311@cliente.com.br,19900000311,CLI-0311
+SRC-CUST-00312,Cliente 0312 Comercio e Servicos Ltda,Cliente 0312,13000000000312,active,Rua Comercial 132,63,Distrito Industrial,Valinhos,SP,Brasil,13042012,financeiro0312@cliente.com.br,19900000312,CLI-0312
+SRC-CUST-00313,Cliente 0313 Comercio e Servicos Ltda,Cliente 0313,13000000000313,active,Rua Comercial 133,64,Centro,Hortolandia,SP,Brasil,13043013,financeiro0313@cliente.com.br,19900000313,CLI-0313
+SRC-CUST-00314,Cliente 0314 Comercio e Servicos Ltda,Cliente 0314,13000000000314,active,Rua Comercial 134,65,Centro,Paulinia,SP,Brasil,13044014,financeiro0314@cliente.com.br,19900000314,CLI-0314
+SRC-CUST-00315,Cliente 0315 Comercio e Servicos Ltda,Cliente 0315,13000000000315,active,Rua Comercial 135,66,Centro,Campinas,SP,Brasil,13045015,financeiro0315@cliente.com.br,19900000315,CLI-0315
+SRC-CUST-00316,Cliente 0316 Comercio e Servicos Ltda,Cliente 0316,13000000000316,active,Rua Comercial 136,67,Distrito Industrial,Sumare,SP,Brasil,13046016,financeiro0316@cliente.com.br,19900000316,CLI-0316
+SRC-CUST-00317,Cliente 0317 Comercio e Servicos Ltda,Cliente 0317,13000000000317,active,Rua Comercial 137,68,Centro,Valinhos,SP,Brasil,13047017,financeiro0317@cliente.com.br,19900000317,CLI-0317
+SRC-CUST-00318,Cliente 0318 Comercio e Servicos Ltda,Cliente 0318,13000000000318,active,Rua Comercial 138,69,Centro,Hortolandia,SP,Brasil,13048018,financeiro0318@cliente.com.br,19900000318,CLI-0318
+SRC-CUST-00319,Cliente 0319 Comercio e Servicos Ltda,Cliente 0319,13000000000319,inactive,Rua Comercial 139,70,Centro,Paulinia,SP,Brasil,13049019,financeiro0319@cliente.com.br,19900000319,CLI-0319
+SRC-CUST-00320,Cliente 0320 Comercio e Servicos Ltda,Cliente 0320,13000000000320,active,Rua Comercial 140,71,Distrito Industrial,Campinas,SP,Brasil,13050020,financeiro0320@cliente.com.br,19900000320,CLI-0320
+SRC-CUST-00321,Cliente 0321 Comercio e Servicos Ltda,Cliente 0321,13000000000321,active,Rua Comercial 141,72,Centro,Sumare,SP,Brasil,13051021,financeiro0321@cliente.com.br,19900000321,CLI-0321
+SRC-CUST-00322,Cliente 0322 Comercio e Servicos Ltda,Cliente 0322,13000000000322,active,Rua Comercial 142,73,Centro,Valinhos,SP,Brasil,13052022,financeiro0322@cliente.com.br,19900000322,CLI-0322
+SRC-CUST-00323,Cliente 0323 Comercio e Servicos Ltda,Cliente 0323,13000000000323,active,Rua Comercial 143,74,Centro,Hortolandia,SP,Brasil,13053023,financeiro0323@cliente.com.br,19900000323,CLI-0323
+SRC-CUST-00324,Cliente 0324 Comercio e Servicos Ltda,Cliente 0324,13000000000324,active,Rua Comercial 144,75,Distrito Industrial,Paulinia,SP,Brasil,13054024,financeiro0324@cliente.com.br,19900000324,CLI-0324
+SRC-CUST-00325,Cliente 0325 Comercio e Servicos Ltda,Cliente 0325,13000000000325,active,Rua Comercial 145,76,Centro,Campinas,SP,Brasil,13055025,financeiro0325@cliente.com.br,19900000325,CLI-0325
+SRC-CUST-00326,Cliente 0326 Comercio e Servicos Ltda,Cliente 0326,13000000000326,active,Rua Comercial 146,77,Centro,Sumare,SP,Brasil,13056026,financeiro0326@cliente.com.br,19900000326,CLI-0326
+SRC-CUST-00327,Cliente 0327 Comercio e Servicos Ltda,Cliente 0327,13000000000327,active,Rua Comercial 147,78,Centro,Valinhos,SP,Brasil,13057027,financeiro0327@cliente.com.br,19900000327,CLI-0327
+SRC-CUST-00328,Cliente 0328 Comercio e Servicos Ltda,Cliente 0328,13000000000328,active,Rua Comercial 148,79,Distrito Industrial,Hortolandia,SP,Brasil,13058028,financeiro0328@cliente.com.br,19900000328,CLI-0328
+SRC-CUST-00329,Cliente 0329 Comercio e Servicos Ltda,Cliente 0329,13000000000329,active,Rua Comercial 149,80,Centro,Paulinia,SP,Brasil,13059029,financeiro0329@cliente.com.br,19900000329,CLI-0329
+SRC-CUST-00330,Cliente 0330 Comercio e Servicos Ltda,Cliente 0330,13000000000330,active,Rua Comercial 150,81,Centro,Campinas,SP,Brasil,13060030,financeiro0330@cliente.com.br,19900000330,CLI-0330
+SRC-CUST-00331,Cliente 0331 Comercio e Servicos Ltda,Cliente 0331,13000000000331,active,Rua Comercial 151,82,Centro,Sumare,SP,Brasil,13061031,financeiro0331@cliente.com.br,19900000331,CLI-0331
+SRC-CUST-00332,Cliente 0332 Comercio e Servicos Ltda,Cliente 0332,13000000000332,active,Rua Comercial 152,83,Distrito Industrial,Valinhos,SP,Brasil,13062032,financeiro0332@cliente.com.br,19900000332,CLI-0332
+SRC-CUST-00333,Cliente 0333 Comercio e Servicos Ltda,Cliente 0333,13000000000333,active,Rua Comercial 153,84,Centro,Hortolandia,SP,Brasil,13063033,financeiro0333@cliente.com.br,19900000333,CLI-0333
+SRC-CUST-00334,Cliente 0334 Comercio e Servicos Ltda,Cliente 0334,13000000000334,active,Rua Comercial 154,85,Centro,Paulinia,SP,Brasil,13064034,financeiro0334@cliente.com.br,19900000334,CLI-0334
+SRC-CUST-00335,Cliente 0335 Comercio e Servicos Ltda,Cliente 0335,13000000000335,active,Rua Comercial 155,86,Centro,Campinas,SP,Brasil,13065035,financeiro0335@cliente.com.br,19900000335,CLI-0335
+SRC-CUST-00336,Cliente 0336 Comercio e Servicos Ltda,Cliente 0336,13000000000336,active,Rua Comercial 156,87,Distrito Industrial,Sumare,SP,Brasil,13066036,financeiro0336@cliente.com.br,19900000336,CLI-0336
+SRC-CUST-00337,Cliente 0337 Comercio e Servicos Ltda,Cliente 0337,13000000000337,active,Rua Comercial 157,88,Centro,Valinhos,SP,Brasil,13067037,financeiro0337@cliente.com.br,19900000337,CLI-0337
+SRC-CUST-00338,Cliente 0338 Comercio e Servicos Ltda,Cliente 0338,13000000000338,active,Rua Comercial 158,89,Centro,Hortolandia,SP,Brasil,13068038,financeiro0338@cliente.com.br,19900000338,CLI-0338
+SRC-CUST-00339,Cliente 0339 Comercio e Servicos Ltda,Cliente 0339,13000000000339,active,Rua Comercial 159,90,Centro,Paulinia,SP,Brasil,13069039,financeiro0339@cliente.com.br,19900000339,CLI-0339
+SRC-CUST-00340,Cliente 0340 Comercio e Servicos Ltda,Cliente 0340,13000000000340,active,Rua Comercial 160,91,Distrito Industrial,Campinas,SP,Brasil,13070040,financeiro0340@cliente.com.br,19900000340,CLI-0340
+SRC-CUST-00341,Cliente 0341 Comercio e Servicos Ltda,Cliente 0341,13000000000341,active,Rua Comercial 161,92,Centro,Sumare,SP,Brasil,13071041,financeiro0341@cliente.com.br,19900000341,CLI-0341
+SRC-CUST-00342,Cliente 0342 Comercio e Servicos Ltda,Cliente 0342,13000000000342,active,Rua Comercial 162,93,Centro,Valinhos,SP,Brasil,13072042,financeiro0342@cliente.com.br,19900000342,CLI-0342
+SRC-CUST-00343,Cliente 0343 Comercio e Servicos Ltda,Cliente 0343,13000000000343,active,Rua Comercial 163,94,Centro,Hortolandia,SP,Brasil,13073043,financeiro0343@cliente.com.br,19900000343,CLI-0343
+SRC-CUST-00344,Cliente 0344 Comercio e Servicos Ltda,Cliente 0344,13000000000344,active,Rua Comercial 164,95,Distrito Industrial,Paulinia,SP,Brasil,13074044,financeiro0344@cliente.com.br,19900000344,CLI-0344
+SRC-CUST-00345,Cliente 0345 Comercio e Servicos Ltda,Cliente 0345,13000000000345,active,Rua Comercial 165,96,Centro,Campinas,SP,Brasil,13075045,financeiro0345@cliente.com.br,19900000345,CLI-0345
+SRC-CUST-00346,Cliente 0346 Comercio e Servicos Ltda,Cliente 0346,13000000000346,active,Rua Comercial 166,97,Centro,Sumare,SP,Brasil,13076046,financeiro0346@cliente.com.br,19900000346,CLI-0346
+SRC-CUST-00347,Cliente 0347 Comercio e Servicos Ltda,Cliente 0347,13000000000347,active,Rua Comercial 167,98,Centro,Valinhos,SP,Brasil,13077047,financeiro0347@cliente.com.br,19900000347,CLI-0347
+SRC-CUST-00348,Cliente 0348 Comercio e Servicos Ltda,Cliente 0348,13000000000348,inactive,Rua Comercial 168,99,Distrito Industrial,Hortolandia,SP,Brasil,13078048,financeiro0348@cliente.com.br,19900000348,CLI-0348
+SRC-CUST-00349,Cliente 0349 Comercio e Servicos Ltda,Cliente 0349,13000000000349,active,Rua Comercial 169,100,Centro,Paulinia,SP,Brasil,13079049,financeiro0349@cliente.com.br,19900000349,CLI-0349
+SRC-CUST-00350,Cliente 0350 Comercio e Servicos Ltda,Cliente 0350,13000000000350,active,Rua Comercial 170,101,Centro,Campinas,SP,Brasil,13080050,financeiro0350@cliente.com.br,19900000350,CLI-0350
+SRC-CUST-00351,Cliente 0351 Comercio e Servicos Ltda,Cliente 0351,13000000000351,active,Rua Comercial 171,102,Centro,Sumare,SP,Brasil,13081051,financeiro0351@cliente.com.br,19900000351,CLI-0351
+SRC-CUST-00352,Cliente 0352 Comercio e Servicos Ltda,Cliente 0352,13000000000352,active,Rua Comercial 172,103,Distrito Industrial,Valinhos,SP,Brasil,13082052,financeiro0352@cliente.com.br,19900000352,CLI-0352
+SRC-CUST-00353,Cliente 0353 Comercio e Servicos Ltda,Cliente 0353,13000000000353,active,Rua Comercial 173,104,Centro,Hortolandia,SP,Brasil,13083053,financeiro0353@cliente.com.br,19900000353,CLI-0353
+SRC-CUST-00354,Cliente 0354 Comercio e Servicos Ltda,Cliente 0354,13000000000354,active,Rua Comercial 174,105,Centro,Paulinia,SP,Brasil,13084054,financeiro0354@cliente.com.br,19900000354,CLI-0354
+SRC-CUST-00355,Cliente 0355 Comercio e Servicos Ltda,Cliente 0355,13000000000355,active,Rua Comercial 175,106,Centro,Campinas,SP,Brasil,13085055,financeiro0355@cliente.com.br,19900000355,CLI-0355
+SRC-CUST-00356,Cliente 0356 Comercio e Servicos Ltda,Cliente 0356,13000000000356,active,Rua Comercial 176,107,Distrito Industrial,Sumare,SP,Brasil,13086056,financeiro0356@cliente.com.br,19900000356,CLI-0356
+SRC-CUST-00357,Cliente 0357 Comercio e Servicos Ltda,Cliente 0357,13000000000357,active,Rua Comercial 177,108,Centro,Valinhos,SP,Brasil,13087057,financeiro0357@cliente.com.br,19900000357,CLI-0357
+SRC-CUST-00358,Cliente 0358 Comercio e Servicos Ltda,Cliente 0358,13000000000358,active,Rua Comercial 178,109,Centro,Hortolandia,SP,Brasil,13088058,financeiro0358@cliente.com.br,19900000358,CLI-0358
+SRC-CUST-00359,Cliente 0359 Comercio e Servicos Ltda,Cliente 0359,13000000000359,active,Rua Comercial 179,110,Centro,Paulinia,SP,Brasil,13089059,financeiro0359@cliente.com.br,19900000359,CLI-0359
+SRC-CUST-00360,Cliente 0360 Comercio e Servicos Ltda,Cliente 0360,13000000000360,active,Rua Comercial 180,111,Distrito Industrial,Campinas,SP,Brasil,13000060,financeiro0360@cliente.com.br,19900000360,CLI-0360
+SRC-CUST-00361,Cliente 0361 Comercio e Servicos Ltda,Cliente 0361,13000000000361,active,Rua Comercial 1,112,Centro,Sumare,SP,Brasil,13001061,financeiro0361@cliente.com.br,19900000361,CLI-0361
+SRC-CUST-00362,Cliente 0362 Comercio e Servicos Ltda,Cliente 0362,13000000000362,active,Rua Comercial 2,113,Centro,Valinhos,SP,Brasil,13002062,financeiro0362@cliente.com.br,19900000362,CLI-0362
+SRC-CUST-00363,Cliente 0363 Comercio e Servicos Ltda,Cliente 0363,13000000000363,active,Rua Comercial 3,114,Centro,Hortolandia,SP,Brasil,13003063,financeiro0363@cliente.com.br,19900000363,CLI-0363
+SRC-CUST-00364,Cliente 0364 Comercio e Servicos Ltda,Cliente 0364,13000000000364,active,Rua Comercial 4,115,Distrito Industrial,Paulinia,SP,Brasil,13004064,financeiro0364@cliente.com.br,19900000364,CLI-0364
+SRC-CUST-00365,Cliente 0365 Comercio e Servicos Ltda,Cliente 0365,13000000000365,active,Rua Comercial 5,116,Centro,Campinas,SP,Brasil,13005065,financeiro0365@cliente.com.br,19900000365,CLI-0365
+SRC-CUST-00366,Cliente 0366 Comercio e Servicos Ltda,Cliente 0366,13000000000366,active,Rua Comercial 6,117,Centro,Sumare,SP,Brasil,13006066,financeiro0366@cliente.com.br,19900000366,CLI-0366
+SRC-CUST-00367,Cliente 0367 Comercio e Servicos Ltda,Cliente 0367,13000000000367,active,Rua Comercial 7,118,Centro,Valinhos,SP,Brasil,13007067,financeiro0367@cliente.com.br,19900000367,CLI-0367
+SRC-CUST-00368,Cliente 0368 Comercio e Servicos Ltda,Cliente 0368,13000000000368,active,Rua Comercial 8,119,Distrito Industrial,Hortolandia,SP,Brasil,13008068,financeiro0368@cliente.com.br,19900000368,CLI-0368
+SRC-CUST-00369,Cliente 0369 Comercio e Servicos Ltda,Cliente 0369,13000000000369,active,Rua Comercial 9,120,Centro,Paulinia,SP,Brasil,13009069,financeiro0369@cliente.com.br,19900000369,CLI-0369
+SRC-CUST-00370,Cliente 0370 Comercio e Servicos Ltda,Cliente 0370,13000000000370,active,Rua Comercial 10,121,Centro,Campinas,SP,Brasil,13010070,financeiro0370@cliente.com.br,19900000370,CLI-0370
+SRC-CUST-00371,Cliente 0371 Comercio e Servicos Ltda,Cliente 0371,13000000000371,active,Rua Comercial 11,122,Centro,Sumare,SP,Brasil,13011071,financeiro0371@cliente.com.br,19900000371,CLI-0371
+SRC-CUST-00372,Cliente 0372 Comercio e Servicos Ltda,Cliente 0372,13000000000372,active,Rua Comercial 12,123,Distrito Industrial,Valinhos,SP,Brasil,13012072,financeiro0372@cliente.com.br,19900000372,CLI-0372
+SRC-CUST-00373,Cliente 0373 Comercio e Servicos Ltda,Cliente 0373,13000000000373,active,Rua Comercial 13,124,Centro,Hortolandia,SP,Brasil,13013073,financeiro0373@cliente.com.br,19900000373,CLI-0373
+SRC-CUST-00374,Cliente 0374 Comercio e Servicos Ltda,Cliente 0374,13000000000374,active,Rua Comercial 14,125,Centro,Paulinia,SP,Brasil,13014074,financeiro0374@cliente.com.br,19900000374,CLI-0374
+SRC-CUST-00375,Cliente 0375 Comercio e Servicos Ltda,Cliente 0375,13000000000375,active,Rua Comercial 15,126,Centro,Campinas,SP,Brasil,13015075,financeiro0375@cliente.com.br,19900000375,CLI-0375
+SRC-CUST-00376,Cliente 0376 Comercio e Servicos Ltda,Cliente 0376,13000000000376,active,Rua Comercial 16,127,Distrito Industrial,Sumare,SP,Brasil,13016076,financeiro0376@cliente.com.br,19900000376,CLI-0376
+SRC-CUST-00377,Cliente 0377 Comercio e Servicos Ltda,Cliente 0377,13000000000377,inactive,Rua Comercial 17,128,Centro,Valinhos,SP,Brasil,13017077,financeiro0377@cliente.com.br,19900000377,CLI-0377
+SRC-CUST-00378,Cliente 0378 Comercio e Servicos Ltda,Cliente 0378,13000000000378,active,Rua Comercial 18,129,Centro,Hortolandia,SP,Brasil,13018078,financeiro0378@cliente.com.br,19900000378,CLI-0378
+SRC-CUST-00379,Cliente 0379 Comercio e Servicos Ltda,Cliente 0379,13000000000379,active,Rua Comercial 19,130,Centro,Paulinia,SP,Brasil,13019079,financeiro0379@cliente.com.br,19900000379,CLI-0379
+SRC-CUST-00380,Cliente 0380 Comercio e Servicos Ltda,Cliente 0380,13000000000380,active,Rua Comercial 20,131,Distrito Industrial,Campinas,SP,Brasil,13020080,financeiro0380@cliente.com.br,19900000380,CLI-0380
+SRC-CUST-00381,Cliente 0381 Comercio e Servicos Ltda,Cliente 0381,13000000000381,active,Rua Comercial 21,132,Centro,Sumare,SP,Brasil,13021081,financeiro0381@cliente.com.br,19900000381,CLI-0381
+SRC-CUST-00382,Cliente 0382 Comercio e Servicos Ltda,Cliente 0382,13000000000382,active,Rua Comercial 22,133,Centro,Valinhos,SP,Brasil,13022082,financeiro0382@cliente.com.br,19900000382,CLI-0382
+SRC-CUST-00383,Cliente 0383 Comercio e Servicos Ltda,Cliente 0383,13000000000383,active,Rua Comercial 23,134,Centro,Hortolandia,SP,Brasil,13023083,financeiro0383@cliente.com.br,19900000383,CLI-0383
+SRC-CUST-00384,Cliente 0384 Comercio e Servicos Ltda,Cliente 0384,13000000000384,active,Rua Comercial 24,135,Distrito Industrial,Paulinia,SP,Brasil,13024084,financeiro0384@cliente.com.br,19900000384,CLI-0384
+SRC-CUST-00385,Cliente 0385 Comercio e Servicos Ltda,Cliente 0385,13000000000385,active,Rua Comercial 25,136,Centro,Campinas,SP,Brasil,13025085,financeiro0385@cliente.com.br,19900000385,CLI-0385
+SRC-CUST-00386,Cliente 0386 Comercio e Servicos Ltda,Cliente 0386,13000000000386,active,Rua Comercial 26,137,Centro,Sumare,SP,Brasil,13026086,financeiro0386@cliente.com.br,19900000386,CLI-0386
+SRC-CUST-00387,Cliente 0387 Comercio e Servicos Ltda,Cliente 0387,13000000000387,active,Rua Comercial 27,138,Centro,Valinhos,SP,Brasil,13027087,financeiro0387@cliente.com.br,19900000387,CLI-0387
+SRC-CUST-00388,Cliente 0388 Comercio e Servicos Ltda,Cliente 0388,13000000000388,active,Rua Comercial 28,139,Distrito Industrial,Hortolandia,SP,Brasil,13028088,financeiro0388@cliente.com.br,19900000388,CLI-0388
+SRC-CUST-00389,Cliente 0389 Comercio e Servicos Ltda,Cliente 0389,13000000000389,active,Rua Comercial 29,140,Centro,Paulinia,SP,Brasil,13029089,financeiro0389@cliente.com.br,19900000389,CLI-0389
+SRC-CUST-00390,Cliente 0390 Comercio e Servicos Ltda,Cliente 0390,13000000000390,active,Rua Comercial 30,141,Centro,Campinas,SP,Brasil,13030090,financeiro0390@cliente.com.br,19900000390,CLI-0390
+SRC-CUST-00391,Cliente 0391 Comercio e Servicos Ltda,Cliente 0391,13000000000391,active,Rua Comercial 31,142,Centro,Sumare,SP,Brasil,13031091,financeiro0391@cliente.com.br,19900000391,CLI-0391
+SRC-CUST-00392,Cliente 0392 Comercio e Servicos Ltda,Cliente 0392,13000000000392,active,Rua Comercial 32,143,Distrito Industrial,Valinhos,SP,Brasil,13032092,financeiro0392@cliente.com.br,19900000392,CLI-0392
+SRC-CUST-00393,Cliente 0393 Comercio e Servicos Ltda,Cliente 0393,13000000000393,active,Rua Comercial 33,144,Centro,Hortolandia,SP,Brasil,13033093,financeiro0393@cliente.com.br,19900000393,CLI-0393
+SRC-CUST-00394,Cliente 0394 Comercio e Servicos Ltda,Cliente 0394,13000000000394,active,Rua Comercial 34,145,Centro,Paulinia,SP,Brasil,13034094,financeiro0394@cliente.com.br,19900000394,CLI-0394
+SRC-CUST-00395,Cliente 0395 Comercio e Servicos Ltda,Cliente 0395,13000000000395,active,Rua Comercial 35,146,Centro,Campinas,SP,Brasil,13035095,financeiro0395@cliente.com.br,19900000395,CLI-0395
+SRC-CUST-00396,Cliente 0396 Comercio e Servicos Ltda,Cliente 0396,13000000000396,active,Rua Comercial 36,147,Distrito Industrial,Sumare,SP,Brasil,13036096,financeiro0396@cliente.com.br,19900000396,CLI-0396
+SRC-CUST-00397,Cliente 0397 Comercio e Servicos Ltda,Cliente 0397,13000000000397,active,Rua Comercial 37,148,Centro,Valinhos,SP,Brasil,13037097,financeiro0397@cliente.com.br,19900000397,CLI-0397
+SRC-CUST-00398,Cliente 0398 Comercio e Servicos Ltda,Cliente 0398,13000000000398,active,Rua Comercial 38,149,Centro,Hortolandia,SP,Brasil,13038098,financeiro0398@cliente.com.br,19900000398,CLI-0398
+SRC-CUST-00399,Cliente 0399 Comercio e Servicos Ltda,Cliente 0399,13000000000399,active,Rua Comercial 39,150,Centro,Paulinia,SP,Brasil,13039099,financeiro0399@cliente.com.br,19900000399,CLI-0399
+SRC-CUST-00400,Cliente 0400 Comercio e Servicos Ltda,Cliente 0400,13000000000400,active,Rua Comercial 40,151,Distrito Industrial,Campinas,SP,Brasil,13040000,financeiro0400@cliente.com.br,19900000400,CLI-0400
+SRC-CUST-00401,Cliente 0401 Comercio e Servicos Ltda,Cliente 0401,13000000000401,active,Rua Comercial 41,152,Centro,Sumare,SP,Brasil,13041001,financeiro0401@cliente.com.br,19900000401,CLI-0401
+SRC-CUST-00402,Cliente 0402 Comercio e Servicos Ltda,Cliente 0402,13000000000402,active,Rua Comercial 42,153,Centro,Valinhos,SP,Brasil,13042002,financeiro0402@cliente.com.br,19900000402,CLI-0402
+SRC-CUST-00403,Cliente 0403 Comercio e Servicos Ltda,Cliente 0403,13000000000403,active,Rua Comercial 43,154,Centro,Hortolandia,SP,Brasil,13043003,financeiro0403@cliente.com.br,19900000403,CLI-0403
+SRC-CUST-00404,Cliente 0404 Comercio e Servicos Ltda,Cliente 0404,13000000000404,active,Rua Comercial 44,155,Distrito Industrial,Paulinia,SP,Brasil,13044004,financeiro0404@cliente.com.br,19900000404,CLI-0404
+SRC-CUST-00405,Cliente 0405 Comercio e Servicos Ltda,Cliente 0405,13000000000405,active,Rua Comercial 45,156,Centro,Campinas,SP,Brasil,13045005,financeiro0405@cliente.com.br,19900000405,CLI-0405
+SRC-CUST-00406,Cliente 0406 Comercio e Servicos Ltda,Cliente 0406,13000000000406,inactive,Rua Comercial 46,157,Centro,Sumare,SP,Brasil,13046006,financeiro0406@cliente.com.br,19900000406,CLI-0406
+SRC-CUST-00407,Cliente 0407 Comercio e Servicos Ltda,Cliente 0407,13000000000407,active,Rua Comercial 47,158,Centro,Valinhos,SP,Brasil,13047007,financeiro0407@cliente.com.br,19900000407,CLI-0407
+SRC-CUST-00408,Cliente 0408 Comercio e Servicos Ltda,Cliente 0408,13000000000408,active,Rua Comercial 48,159,Distrito Industrial,Hortolandia,SP,Brasil,13048008,financeiro0408@cliente.com.br,19900000408,CLI-0408
+SRC-CUST-00409,Cliente 0409 Comercio e Servicos Ltda,Cliente 0409,13000000000409,active,Rua Comercial 49,160,Centro,Paulinia,SP,Brasil,13049009,financeiro0409@cliente.com.br,19900000409,CLI-0409
+SRC-CUST-00410,Cliente 0410 Comercio e Servicos Ltda,Cliente 0410,13000000000410,active,Rua Comercial 50,161,Centro,Campinas,SP,Brasil,13050010,financeiro0410@cliente.com.br,19900000410,CLI-0410
+SRC-CUST-00411,Cliente 0411 Comercio e Servicos Ltda,Cliente 0411,13000000000411,active,Rua Comercial 51,162,Centro,Sumare,SP,Brasil,13051011,financeiro0411@cliente.com.br,19900000411,CLI-0411
+SRC-CUST-00412,Cliente 0412 Comercio e Servicos Ltda,Cliente 0412,13000000000412,active,Rua Comercial 52,163,Distrito Industrial,Valinhos,SP,Brasil,13052012,financeiro0412@cliente.com.br,19900000412,CLI-0412
+SRC-CUST-00413,Cliente 0413 Comercio e Servicos Ltda,Cliente 0413,13000000000413,active,Rua Comercial 53,164,Centro,Hortolandia,SP,Brasil,13053013,financeiro0413@cliente.com.br,19900000413,CLI-0413
+SRC-CUST-00414,Cliente 0414 Comercio e Servicos Ltda,Cliente 0414,13000000000414,active,Rua Comercial 54,165,Centro,Paulinia,SP,Brasil,13054014,financeiro0414@cliente.com.br,19900000414,CLI-0414
+SRC-CUST-00415,Cliente 0415 Comercio e Servicos Ltda,Cliente 0415,13000000000415,active,Rua Comercial 55,166,Centro,Campinas,SP,Brasil,13055015,financeiro0415@cliente.com.br,19900000415,CLI-0415
+SRC-CUST-00416,Cliente 0416 Comercio e Servicos Ltda,Cliente 0416,13000000000416,active,Rua Comercial 56,167,Distrito Industrial,Sumare,SP,Brasil,13056016,financeiro0416@cliente.com.br,19900000416,CLI-0416
+SRC-CUST-00417,Cliente 0417 Comercio e Servicos Ltda,Cliente 0417,13000000000417,active,Rua Comercial 57,168,Centro,Valinhos,SP,Brasil,13057017,financeiro0417@cliente.com.br,19900000417,CLI-0417
+SRC-CUST-00418,Cliente 0418 Comercio e Servicos Ltda,Cliente 0418,13000000000418,active,Rua Comercial 58,169,Centro,Hortolandia,SP,Brasil,13058018,financeiro0418@cliente.com.br,19900000418,CLI-0418
+SRC-CUST-00419,Cliente 0419 Comercio e Servicos Ltda,Cliente 0419,13000000000419,active,Rua Comercial 59,170,Centro,Paulinia,SP,Brasil,13059019,financeiro0419@cliente.com.br,19900000419,CLI-0419
+SRC-CUST-00420,Cliente 0420 Comercio e Servicos Ltda,Cliente 0420,13000000000420,active,Rua Comercial 60,171,Distrito Industrial,Campinas,SP,Brasil,13060020,financeiro0420@cliente.com.br,19900000420,CLI-0420
+SRC-CUST-00421,Cliente 0421 Comercio e Servicos Ltda,Cliente 0421,13000000000421,active,Rua Comercial 61,172,Centro,Sumare,SP,Brasil,13061021,financeiro0421@cliente.com.br,19900000421,CLI-0421
+SRC-CUST-00422,Cliente 0422 Comercio e Servicos Ltda,Cliente 0422,13000000000422,active,Rua Comercial 62,173,Centro,Valinhos,SP,Brasil,13062022,financeiro0422@cliente.com.br,19900000422,CLI-0422
+SRC-CUST-00423,Cliente 0423 Comercio e Servicos Ltda,Cliente 0423,13000000000423,active,Rua Comercial 63,174,Centro,Hortolandia,SP,Brasil,13063023,financeiro0423@cliente.com.br,19900000423,CLI-0423
+SRC-CUST-00424,Cliente 0424 Comercio e Servicos Ltda,Cliente 0424,13000000000424,active,Rua Comercial 64,175,Distrito Industrial,Paulinia,SP,Brasil,13064024,financeiro0424@cliente.com.br,19900000424,CLI-0424
+SRC-CUST-00425,Cliente 0425 Comercio e Servicos Ltda,Cliente 0425,13000000000425,active,Rua Comercial 65,176,Centro,Campinas,SP,Brasil,13065025,financeiro0425@cliente.com.br,19900000425,CLI-0425
+SRC-CUST-00426,Cliente 0426 Comercio e Servicos Ltda,Cliente 0426,13000000000426,active,Rua Comercial 66,177,Centro,Sumare,SP,Brasil,13066026,financeiro0426@cliente.com.br,19900000426,CLI-0426
+SRC-CUST-00427,Cliente 0427 Comercio e Servicos Ltda,Cliente 0427,13000000000427,active,Rua Comercial 67,178,Centro,Valinhos,SP,Brasil,13067027,financeiro0427@cliente.com.br,19900000427,CLI-0427
+SRC-CUST-00428,Cliente 0428 Comercio e Servicos Ltda,Cliente 0428,13000000000428,active,Rua Comercial 68,179,Distrito Industrial,Hortolandia,SP,Brasil,13068028,financeiro0428@cliente.com.br,19900000428,CLI-0428
+SRC-CUST-00429,Cliente 0429 Comercio e Servicos Ltda,Cliente 0429,13000000000429,active,Rua Comercial 69,180,Centro,Paulinia,SP,Brasil,13069029,financeiro0429@cliente.com.br,19900000429,CLI-0429
+SRC-CUST-00430,Cliente 0430 Comercio e Servicos Ltda,Cliente 0430,13000000000430,active,Rua Comercial 70,181,Centro,Campinas,SP,Brasil,13070030,financeiro0430@cliente.com.br,19900000430,CLI-0430
+SRC-CUST-00431,Cliente 0431 Comercio e Servicos Ltda,Cliente 0431,13000000000431,active,Rua Comercial 71,182,Centro,Sumare,SP,Brasil,13071031,financeiro0431@cliente.com.br,19900000431,CLI-0431
+SRC-CUST-00432,Cliente 0432 Comercio e Servicos Ltda,Cliente 0432,13000000000432,active,Rua Comercial 72,183,Distrito Industrial,Valinhos,SP,Brasil,13072032,financeiro0432@cliente.com.br,19900000432,CLI-0432
+SRC-CUST-00433,Cliente 0433 Comercio e Servicos Ltda,Cliente 0433,13000000000433,active,Rua Comercial 73,184,Centro,Hortolandia,SP,Brasil,13073033,financeiro0433@cliente.com.br,19900000433,CLI-0433
+SRC-CUST-00434,Cliente 0434 Comercio e Servicos Ltda,Cliente 0434,13000000000434,active,Rua Comercial 74,185,Centro,Paulinia,SP,Brasil,13074034,financeiro0434@cliente.com.br,19900000434,CLI-0434
+SRC-CUST-00435,Cliente 0435 Comercio e Servicos Ltda,Cliente 0435,13000000000435,inactive,Rua Comercial 75,186,Centro,Campinas,SP,Brasil,13075035,financeiro0435@cliente.com.br,19900000435,CLI-0435
+SRC-CUST-00436,Cliente 0436 Comercio e Servicos Ltda,Cliente 0436,13000000000436,active,Rua Comercial 76,187,Distrito Industrial,Sumare,SP,Brasil,13076036,financeiro0436@cliente.com.br,19900000436,CLI-0436
+SRC-CUST-00437,Cliente 0437 Comercio e Servicos Ltda,Cliente 0437,13000000000437,active,Rua Comercial 77,188,Centro,Valinhos,SP,Brasil,13077037,financeiro0437@cliente.com.br,19900000437,CLI-0437
+SRC-CUST-00438,Cliente 0438 Comercio e Servicos Ltda,Cliente 0438,13000000000438,active,Rua Comercial 78,189,Centro,Hortolandia,SP,Brasil,13078038,financeiro0438@cliente.com.br,19900000438,CLI-0438
+SRC-CUST-00439,Cliente 0439 Comercio e Servicos Ltda,Cliente 0439,13000000000439,active,Rua Comercial 79,190,Centro,Paulinia,SP,Brasil,13079039,financeiro0439@cliente.com.br,19900000439,CLI-0439
+SRC-CUST-00440,Cliente 0440 Comercio e Servicos Ltda,Cliente 0440,13000000000440,active,Rua Comercial 80,191,Distrito Industrial,Campinas,SP,Brasil,13080040,financeiro0440@cliente.com.br,19900000440,CLI-0440
+SRC-CUST-00441,Cliente 0441 Comercio e Servicos Ltda,Cliente 0441,13000000000441,active,Rua Comercial 81,192,Centro,Sumare,SP,Brasil,13081041,financeiro0441@cliente.com.br,19900000441,CLI-0441
+SRC-CUST-00442,Cliente 0442 Comercio e Servicos Ltda,Cliente 0442,13000000000442,active,Rua Comercial 82,193,Centro,Valinhos,SP,Brasil,13082042,financeiro0442@cliente.com.br,19900000442,CLI-0442
+SRC-CUST-00443,Cliente 0443 Comercio e Servicos Ltda,Cliente 0443,13000000000443,active,Rua Comercial 83,194,Centro,Hortolandia,SP,Brasil,13083043,financeiro0443@cliente.com.br,19900000443,CLI-0443
+SRC-CUST-00444,Cliente 0444 Comercio e Servicos Ltda,Cliente 0444,13000000000444,active,Rua Comercial 84,195,Distrito Industrial,Paulinia,SP,Brasil,13084044,financeiro0444@cliente.com.br,19900000444,CLI-0444
+SRC-CUST-00445,Cliente 0445 Comercio e Servicos Ltda,Cliente 0445,13000000000445,active,Rua Comercial 85,196,Centro,Campinas,SP,Brasil,13085045,financeiro0445@cliente.com.br,19900000445,CLI-0445
+SRC-CUST-00446,Cliente 0446 Comercio e Servicos Ltda,Cliente 0446,13000000000446,active,Rua Comercial 86,197,Centro,Sumare,SP,Brasil,13086046,financeiro0446@cliente.com.br,19900000446,CLI-0446
+SRC-CUST-00447,Cliente 0447 Comercio e Servicos Ltda,Cliente 0447,13000000000447,active,Rua Comercial 87,198,Centro,Valinhos,SP,Brasil,13087047,financeiro0447@cliente.com.br,19900000447,CLI-0447
+SRC-CUST-00448,Cliente 0448 Comercio e Servicos Ltda,Cliente 0448,13000000000448,active,Rua Comercial 88,199,Distrito Industrial,Hortolandia,SP,Brasil,13088048,financeiro0448@cliente.com.br,19900000448,CLI-0448
+SRC-CUST-00449,Cliente 0449 Comercio e Servicos Ltda,Cliente 0449,13000000000449,active,Rua Comercial 89,200,Centro,Paulinia,SP,Brasil,13089049,financeiro0449@cliente.com.br,19900000449,CLI-0449
+SRC-CUST-00450,Cliente 0450 Comercio e Servicos Ltda,Cliente 0450,13000000000450,active,Rua Comercial 90,201,Centro,Campinas,SP,Brasil,13000050,financeiro0450@cliente.com.br,19900000450,CLI-0450
+SRC-CUST-00451,Cliente 0451 Comercio e Servicos Ltda,Cliente 0451,13000000000451,active,Rua Comercial 91,202,Centro,Sumare,SP,Brasil,13001051,financeiro0451@cliente.com.br,19900000451,CLI-0451
+SRC-CUST-00452,Cliente 0452 Comercio e Servicos Ltda,Cliente 0452,13000000000452,active,Rua Comercial 92,203,Distrito Industrial,Valinhos,SP,Brasil,13002052,financeiro0452@cliente.com.br,19900000452,CLI-0452
+SRC-CUST-00453,Cliente 0453 Comercio e Servicos Ltda,Cliente 0453,13000000000453,active,Rua Comercial 93,204,Centro,Hortolandia,SP,Brasil,13003053,financeiro0453@cliente.com.br,19900000453,CLI-0453
+SRC-CUST-00454,Cliente 0454 Comercio e Servicos Ltda,Cliente 0454,13000000000454,active,Rua Comercial 94,205,Centro,Paulinia,SP,Brasil,13004054,financeiro0454@cliente.com.br,19900000454,CLI-0454
+SRC-CUST-00455,Cliente 0455 Comercio e Servicos Ltda,Cliente 0455,13000000000455,active,Rua Comercial 95,206,Centro,Campinas,SP,Brasil,13005055,financeiro0455@cliente.com.br,19900000455,CLI-0455
+SRC-CUST-00456,Cliente 0456 Comercio e Servicos Ltda,Cliente 0456,13000000000456,active,Rua Comercial 96,207,Distrito Industrial,Sumare,SP,Brasil,13006056,financeiro0456@cliente.com.br,19900000456,CLI-0456
+SRC-CUST-00457,Cliente 0457 Comercio e Servicos Ltda,Cliente 0457,13000000000457,active,Rua Comercial 97,208,Centro,Valinhos,SP,Brasil,13007057,financeiro0457@cliente.com.br,19900000457,CLI-0457
+SRC-CUST-00458,Cliente 0458 Comercio e Servicos Ltda,Cliente 0458,13000000000458,active,Rua Comercial 98,209,Centro,Hortolandia,SP,Brasil,13008058,financeiro0458@cliente.com.br,19900000458,CLI-0458
+SRC-CUST-00459,Cliente 0459 Comercio e Servicos Ltda,Cliente 0459,13000000000459,active,Rua Comercial 99,210,Centro,Paulinia,SP,Brasil,13009059,financeiro0459@cliente.com.br,19900000459,CLI-0459
+SRC-CUST-00460,Cliente 0460 Comercio e Servicos Ltda,Cliente 0460,13000000000460,active,Rua Comercial 100,211,Distrito Industrial,Campinas,SP,Brasil,13010060,financeiro0460@cliente.com.br,19900000460,CLI-0460
+SRC-CUST-00461,Cliente 0461 Comercio e Servicos Ltda,Cliente 0461,13000000000461,active,Rua Comercial 101,212,Centro,Sumare,SP,Brasil,13011061,financeiro0461@cliente.com.br,19900000461,CLI-0461
+SRC-CUST-00462,Cliente 0462 Comercio e Servicos Ltda,Cliente 0462,13000000000462,active,Rua Comercial 102,213,Centro,Valinhos,SP,Brasil,13012062,financeiro0462@cliente.com.br,19900000462,CLI-0462
+SRC-CUST-00463,Cliente 0463 Comercio e Servicos Ltda,Cliente 0463,13000000000463,active,Rua Comercial 103,214,Centro,Hortolandia,SP,Brasil,13013063,financeiro0463@cliente.com.br,19900000463,CLI-0463
+SRC-CUST-00464,Cliente 0464 Comercio e Servicos Ltda,Cliente 0464,13000000000464,inactive,Rua Comercial 104,215,Distrito Industrial,Paulinia,SP,Brasil,13014064,financeiro0464@cliente.com.br,19900000464,CLI-0464
+SRC-CUST-00465,Cliente 0465 Comercio e Servicos Ltda,Cliente 0465,13000000000465,active,Rua Comercial 105,216,Centro,Campinas,SP,Brasil,13015065,financeiro0465@cliente.com.br,19900000465,CLI-0465
+SRC-CUST-00466,Cliente 0466 Comercio e Servicos Ltda,Cliente 0466,13000000000466,active,Rua Comercial 106,217,Centro,Sumare,SP,Brasil,13016066,financeiro0466@cliente.com.br,19900000466,CLI-0466
+SRC-CUST-00467,Cliente 0467 Comercio e Servicos Ltda,Cliente 0467,13000000000467,active,Rua Comercial 107,218,Centro,Valinhos,SP,Brasil,13017067,financeiro0467@cliente.com.br,19900000467,CLI-0467
+SRC-CUST-00468,Cliente 0468 Comercio e Servicos Ltda,Cliente 0468,13000000000468,active,Rua Comercial 108,219,Distrito Industrial,Hortolandia,SP,Brasil,13018068,financeiro0468@cliente.com.br,19900000468,CLI-0468
+SRC-CUST-00469,Cliente 0469 Comercio e Servicos Ltda,Cliente 0469,13000000000469,active,Rua Comercial 109,220,Centro,Paulinia,SP,Brasil,13019069,financeiro0469@cliente.com.br,19900000469,CLI-0469
+SRC-CUST-00470,Cliente 0470 Comercio e Servicos Ltda,Cliente 0470,13000000000470,active,Rua Comercial 110,221,Centro,Campinas,SP,Brasil,13020070,financeiro0470@cliente.com.br,19900000470,CLI-0470
+SRC-CUST-00471,Cliente 0471 Comercio e Servicos Ltda,Cliente 0471,13000000000471,active,Rua Comercial 111,222,Centro,Sumare,SP,Brasil,13021071,financeiro0471@cliente.com.br,19900000471,CLI-0471
+SRC-CUST-00472,Cliente 0472 Comercio e Servicos Ltda,Cliente 0472,13000000000472,active,Rua Comercial 112,223,Distrito Industrial,Valinhos,SP,Brasil,13022072,financeiro0472@cliente.com.br,19900000472,CLI-0472
+SRC-CUST-00473,Cliente 0473 Comercio e Servicos Ltda,Cliente 0473,13000000000473,active,Rua Comercial 113,224,Centro,Hortolandia,SP,Brasil,13023073,financeiro0473@cliente.com.br,19900000473,CLI-0473
+SRC-CUST-00474,Cliente 0474 Comercio e Servicos Ltda,Cliente 0474,13000000000474,active,Rua Comercial 114,225,Centro,Paulinia,SP,Brasil,13024074,financeiro0474@cliente.com.br,19900000474,CLI-0474
+SRC-CUST-00475,Cliente 0475 Comercio e Servicos Ltda,Cliente 0475,13000000000475,active,Rua Comercial 115,226,Centro,Campinas,SP,Brasil,13025075,financeiro0475@cliente.com.br,19900000475,CLI-0475
+SRC-CUST-00476,Cliente 0476 Comercio e Servicos Ltda,Cliente 0476,13000000000476,active,Rua Comercial 116,227,Distrito Industrial,Sumare,SP,Brasil,13026076,financeiro0476@cliente.com.br,19900000476,CLI-0476
+SRC-CUST-00477,Cliente 0477 Comercio e Servicos Ltda,Cliente 0477,13000000000477,active,Rua Comercial 117,228,Centro,Valinhos,SP,Brasil,13027077,financeiro0477@cliente.com.br,19900000477,CLI-0477
+SRC-CUST-00478,Cliente 0478 Comercio e Servicos Ltda,Cliente 0478,13000000000478,active,Rua Comercial 118,229,Centro,Hortolandia,SP,Brasil,13028078,financeiro0478@cliente.com.br,19900000478,CLI-0478
+SRC-CUST-00479,Cliente 0479 Comercio e Servicos Ltda,Cliente 0479,13000000000479,active,Rua Comercial 119,230,Centro,Paulinia,SP,Brasil,13029079,financeiro0479@cliente.com.br,19900000479,CLI-0479
+SRC-CUST-00480,Cliente 0480 Comercio e Servicos Ltda,Cliente 0480,13000000000480,active,Rua Comercial 120,231,Distrito Industrial,Campinas,SP,Brasil,13030080,financeiro0480@cliente.com.br,19900000480,CLI-0480
+SRC-CUST-00481,Cliente 0481 Comercio e Servicos Ltda,Cliente 0481,13000000000481,active,Rua Comercial 121,232,Centro,Sumare,SP,Brasil,13031081,financeiro0481@cliente.com.br,19900000481,CLI-0481
+SRC-CUST-00482,Cliente 0482 Comercio e Servicos Ltda,Cliente 0482,13000000000482,active,Rua Comercial 122,233,Centro,Valinhos,SP,Brasil,13032082,financeiro0482@cliente.com.br,19900000482,CLI-0482
+SRC-CUST-00483,Cliente 0483 Comercio e Servicos Ltda,Cliente 0483,13000000000483,active,Rua Comercial 123,234,Centro,Hortolandia,SP,Brasil,13033083,financeiro0483@cliente.com.br,19900000483,CLI-0483
+SRC-CUST-00484,Cliente 0484 Comercio e Servicos Ltda,Cliente 0484,13000000000484,active,Rua Comercial 124,235,Distrito Industrial,Paulinia,SP,Brasil,13034084,financeiro0484@cliente.com.br,19900000484,CLI-0484
+SRC-CUST-00485,Cliente 0485 Comercio e Servicos Ltda,Cliente 0485,13000000000485,active,Rua Comercial 125,236,Centro,Campinas,SP,Brasil,13035085,financeiro0485@cliente.com.br,19900000485,CLI-0485
+SRC-CUST-00486,Cliente 0486 Comercio e Servicos Ltda,Cliente 0486,13000000000486,active,Rua Comercial 126,237,Centro,Sumare,SP,Brasil,13036086,financeiro0486@cliente.com.br,19900000486,CLI-0486
+SRC-CUST-00487,Cliente 0487 Comercio e Servicos Ltda,Cliente 0487,13000000000487,active,Rua Comercial 127,238,Centro,Valinhos,SP,Brasil,13037087,financeiro0487@cliente.com.br,19900000487,CLI-0487
+SRC-CUST-00488,Cliente 0488 Comercio e Servicos Ltda,Cliente 0488,13000000000488,active,Rua Comercial 128,239,Distrito Industrial,Hortolandia,SP,Brasil,13038088,financeiro0488@cliente.com.br,19900000488,CLI-0488
+SRC-CUST-00489,Cliente 0489 Comercio e Servicos Ltda,Cliente 0489,13000000000489,active,Rua Comercial 129,240,Centro,Paulinia,SP,Brasil,13039089,financeiro0489@cliente.com.br,19900000489,CLI-0489
+SRC-CUST-00490,Cliente 0490 Comercio e Servicos Ltda,Cliente 0490,13000000000490,active,Rua Comercial 130,241,Centro,Campinas,SP,Brasil,13040090,financeiro0490@cliente.com.br,19900000490,CLI-0490
+SRC-CUST-00491,Cliente 0491 Comercio e Servicos Ltda,Cliente 0491,13000000000491,active,Rua Comercial 131,242,Centro,Sumare,SP,Brasil,13041091,financeiro0491@cliente.com.br,19900000491,CLI-0491
+SRC-CUST-00492,Cliente 0492 Comercio e Servicos Ltda,Cliente 0492,13000000000492,active,Rua Comercial 132,243,Distrito Industrial,Valinhos,SP,Brasil,13042092,financeiro0492@cliente.com.br,19900000492,CLI-0492
+SRC-CUST-00493,Cliente 0493 Comercio e Servicos Ltda,Cliente 0493,13000000000493,inactive,Rua Comercial 133,244,Centro,Hortolandia,SP,Brasil,13043093,financeiro0493@cliente.com.br,19900000493,CLI-0493
+SRC-CUST-00494,Cliente 0494 Comercio e Servicos Ltda,Cliente 0494,13000000000494,active,Rua Comercial 134,245,Centro,Paulinia,SP,Brasil,13044094,financeiro0494@cliente.com.br,19900000494,CLI-0494
+SRC-CUST-00495,Cliente 0495 Comercio e Servicos Ltda,Cliente 0495,13000000000495,active,Rua Comercial 135,246,Centro,Campinas,SP,Brasil,13045095,financeiro0495@cliente.com.br,19900000495,CLI-0495
+SRC-CUST-00496,Cliente 0496 Comercio e Servicos Ltda,Cliente 0496,13000000000496,active,Rua Comercial 136,247,Distrito Industrial,Sumare,SP,Brasil,13046096,financeiro0496@cliente.com.br,19900000496,CLI-0496
+SRC-CUST-00497,Cliente 0497 Comercio e Servicos Ltda,Cliente 0497,13000000000497,active,Rua Comercial 137,248,Centro,Valinhos,SP,Brasil,13047097,financeiro0497@cliente.com.br,19900000497,CLI-0497
+SRC-CUST-00498,Cliente 0498 Comercio e Servicos Ltda,Cliente 0498,13000000000498,active,Rua Comercial 138,249,Centro,Hortolandia,SP,Brasil,13048098,financeiro0498@cliente.com.br,19900000498,CLI-0498
+SRC-CUST-00499,Cliente 0499 Comercio e Servicos Ltda,Cliente 0499,13000000000499,active,Rua Comercial 139,250,Centro,Paulinia,SP,Brasil,13049099,financeiro0499@cliente.com.br,19900000499,CLI-0499
+SRC-CUST-00500,Cliente 0500 Comercio e Servicos Ltda,Cliente 0500,13000000000500,active,Rua Comercial 140,1,Distrito Industrial,Campinas,SP,Brasil,13050000,financeiro0500@cliente.com.br,19900000500,CLI-0500
+SRC-CUST-00501,Cliente 0501 Comercio e Servicos Ltda,Cliente 0501,13000000000501,active,Rua Comercial 141,2,Centro,Sumare,SP,Brasil,13051001,financeiro0501@cliente.com.br,19900000501,CLI-0501
+SRC-CUST-00502,Cliente 0502 Comercio e Servicos Ltda,Cliente 0502,13000000000502,active,Rua Comercial 142,3,Centro,Valinhos,SP,Brasil,13052002,financeiro0502@cliente.com.br,19900000502,CLI-0502
+SRC-CUST-00503,Cliente 0503 Comercio e Servicos Ltda,Cliente 0503,13000000000503,active,Rua Comercial 143,4,Centro,Hortolandia,SP,Brasil,13053003,financeiro0503@cliente.com.br,19900000503,CLI-0503
+SRC-CUST-00504,Cliente 0504 Comercio e Servicos Ltda,Cliente 0504,13000000000504,active,Rua Comercial 144,5,Distrito Industrial,Paulinia,SP,Brasil,13054004,financeiro0504@cliente.com.br,19900000504,CLI-0504
+SRC-CUST-00505,Cliente 0505 Comercio e Servicos Ltda,Cliente 0505,13000000000505,active,Rua Comercial 145,6,Centro,Campinas,SP,Brasil,13055005,financeiro0505@cliente.com.br,19900000505,CLI-0505
+SRC-CUST-00506,Cliente 0506 Comercio e Servicos Ltda,Cliente 0506,13000000000506,active,Rua Comercial 146,7,Centro,Sumare,SP,Brasil,13056006,financeiro0506@cliente.com.br,19900000506,CLI-0506
+SRC-CUST-00507,Cliente 0507 Comercio e Servicos Ltda,Cliente 0507,13000000000507,active,Rua Comercial 147,8,Centro,Valinhos,SP,Brasil,13057007,financeiro0507@cliente.com.br,19900000507,CLI-0507
+SRC-CUST-00508,Cliente 0508 Comercio e Servicos Ltda,Cliente 0508,13000000000508,active,Rua Comercial 148,9,Distrito Industrial,Hortolandia,SP,Brasil,13058008,financeiro0508@cliente.com.br,19900000508,CLI-0508
+SRC-CUST-00509,Cliente 0509 Comercio e Servicos Ltda,Cliente 0509,13000000000509,active,Rua Comercial 149,10,Centro,Paulinia,SP,Brasil,13059009,financeiro0509@cliente.com.br,19900000509,CLI-0509
+SRC-CUST-00510,Cliente 0510 Comercio e Servicos Ltda,Cliente 0510,13000000000510,active,Rua Comercial 150,11,Centro,Campinas,SP,Brasil,13060010,financeiro0510@cliente.com.br,19900000510,CLI-0510
+SRC-CUST-00511,Cliente 0511 Comercio e Servicos Ltda,Cliente 0511,13000000000511,active,Rua Comercial 151,12,Centro,Sumare,SP,Brasil,13061011,financeiro0511@cliente.com.br,19900000511,CLI-0511
+SRC-CUST-00512,Cliente 0512 Comercio e Servicos Ltda,Cliente 0512,13000000000512,active,Rua Comercial 152,13,Distrito Industrial,Valinhos,SP,Brasil,13062012,financeiro0512@cliente.com.br,19900000512,CLI-0512
+SRC-CUST-00513,Cliente 0513 Comercio e Servicos Ltda,Cliente 0513,13000000000513,active,Rua Comercial 153,14,Centro,Hortolandia,SP,Brasil,13063013,financeiro0513@cliente.com.br,19900000513,CLI-0513
+SRC-CUST-00514,Cliente 0514 Comercio e Servicos Ltda,Cliente 0514,13000000000514,active,Rua Comercial 154,15,Centro,Paulinia,SP,Brasil,13064014,financeiro0514@cliente.com.br,19900000514,CLI-0514
+SRC-CUST-00515,Cliente 0515 Comercio e Servicos Ltda,Cliente 0515,13000000000515,active,Rua Comercial 155,16,Centro,Campinas,SP,Brasil,13065015,financeiro0515@cliente.com.br,19900000515,CLI-0515
+SRC-CUST-00516,Cliente 0516 Comercio e Servicos Ltda,Cliente 0516,13000000000516,active,Rua Comercial 156,17,Distrito Industrial,Sumare,SP,Brasil,13066016,financeiro0516@cliente.com.br,19900000516,CLI-0516
+SRC-CUST-00517,Cliente 0517 Comercio e Servicos Ltda,Cliente 0517,13000000000517,active,Rua Comercial 157,18,Centro,Valinhos,SP,Brasil,13067017,financeiro0517@cliente.com.br,19900000517,CLI-0517
+SRC-CUST-00518,Cliente 0518 Comercio e Servicos Ltda,Cliente 0518,13000000000518,active,Rua Comercial 158,19,Centro,Hortolandia,SP,Brasil,13068018,financeiro0518@cliente.com.br,19900000518,CLI-0518
+SRC-CUST-00519,Cliente 0519 Comercio e Servicos Ltda,Cliente 0519,13000000000519,active,Rua Comercial 159,20,Centro,Paulinia,SP,Brasil,13069019,financeiro0519@cliente.com.br,19900000519,CLI-0519
+SRC-CUST-00520,Cliente 0520 Comercio e Servicos Ltda,Cliente 0520,13000000000520,active,Rua Comercial 160,21,Distrito Industrial,Campinas,SP,Brasil,13070020,financeiro0520@cliente.com.br,19900000520,CLI-0520
+SRC-CUST-00521,Cliente 0521 Comercio e Servicos Ltda,Cliente 0521,13000000000521,active,Rua Comercial 161,22,Centro,Sumare,SP,Brasil,13071021,financeiro0521@cliente.com.br,19900000521,CLI-0521
+SRC-CUST-00522,Cliente 0522 Comercio e Servicos Ltda,Cliente 0522,13000000000522,inactive,Rua Comercial 162,23,Centro,Valinhos,SP,Brasil,13072022,financeiro0522@cliente.com.br,19900000522,CLI-0522
+SRC-CUST-00523,Cliente 0523 Comercio e Servicos Ltda,Cliente 0523,13000000000523,active,Rua Comercial 163,24,Centro,Hortolandia,SP,Brasil,13073023,financeiro0523@cliente.com.br,19900000523,CLI-0523
+SRC-CUST-00524,Cliente 0524 Comercio e Servicos Ltda,Cliente 0524,13000000000524,active,Rua Comercial 164,25,Distrito Industrial,Paulinia,SP,Brasil,13074024,financeiro0524@cliente.com.br,19900000524,CLI-0524
+SRC-CUST-00525,Cliente 0525 Comercio e Servicos Ltda,Cliente 0525,13000000000525,active,Rua Comercial 165,26,Centro,Campinas,SP,Brasil,13075025,financeiro0525@cliente.com.br,19900000525,CLI-0525
+SRC-CUST-00526,Cliente 0526 Comercio e Servicos Ltda,Cliente 0526,13000000000526,active,Rua Comercial 166,27,Centro,Sumare,SP,Brasil,13076026,financeiro0526@cliente.com.br,19900000526,CLI-0526
+SRC-CUST-00527,Cliente 0527 Comercio e Servicos Ltda,Cliente 0527,13000000000527,active,Rua Comercial 167,28,Centro,Valinhos,SP,Brasil,13077027,financeiro0527@cliente.com.br,19900000527,CLI-0527
+SRC-CUST-00528,Cliente 0528 Comercio e Servicos Ltda,Cliente 0528,13000000000528,active,Rua Comercial 168,29,Distrito Industrial,Hortolandia,SP,Brasil,13078028,financeiro0528@cliente.com.br,19900000528,CLI-0528
+SRC-CUST-00529,Cliente 0529 Comercio e Servicos Ltda,Cliente 0529,13000000000529,active,Rua Comercial 169,30,Centro,Paulinia,SP,Brasil,13079029,financeiro0529@cliente.com.br,19900000529,CLI-0529
+SRC-CUST-00530,Cliente 0530 Comercio e Servicos Ltda,Cliente 0530,13000000000530,active,Rua Comercial 170,31,Centro,Campinas,SP,Brasil,13080030,financeiro0530@cliente.com.br,19900000530,CLI-0530
+SRC-CUST-00531,Cliente 0531 Comercio e Servicos Ltda,Cliente 0531,13000000000531,active,Rua Comercial 171,32,Centro,Sumare,SP,Brasil,13081031,financeiro0531@cliente.com.br,19900000531,CLI-0531
+SRC-CUST-00532,Cliente 0532 Comercio e Servicos Ltda,Cliente 0532,13000000000532,active,Rua Comercial 172,33,Distrito Industrial,Valinhos,SP,Brasil,13082032,financeiro0532@cliente.com.br,19900000532,CLI-0532
+SRC-CUST-00533,Cliente 0533 Comercio e Servicos Ltda,Cliente 0533,13000000000533,active,Rua Comercial 173,34,Centro,Hortolandia,SP,Brasil,13083033,financeiro0533@cliente.com.br,19900000533,CLI-0533
+SRC-CUST-00534,Cliente 0534 Comercio e Servicos Ltda,Cliente 0534,13000000000534,active,Rua Comercial 174,35,Centro,Paulinia,SP,Brasil,13084034,financeiro0534@cliente.com.br,19900000534,CLI-0534
+SRC-CUST-00535,Cliente 0535 Comercio e Servicos Ltda,Cliente 0535,13000000000535,active,Rua Comercial 175,36,Centro,Campinas,SP,Brasil,13085035,financeiro0535@cliente.com.br,19900000535,CLI-0535
+SRC-CUST-00536,Cliente 0536 Comercio e Servicos Ltda,Cliente 0536,13000000000536,active,Rua Comercial 176,37,Distrito Industrial,Sumare,SP,Brasil,13086036,financeiro0536@cliente.com.br,19900000536,CLI-0536
+SRC-CUST-00537,Cliente 0537 Comercio e Servicos Ltda,Cliente 0537,13000000000537,active,Rua Comercial 177,38,Centro,Valinhos,SP,Brasil,13087037,financeiro0537@cliente.com.br,19900000537,CLI-0537
+SRC-CUST-00538,Cliente 0538 Comercio e Servicos Ltda,Cliente 0538,13000000000538,active,Rua Comercial 178,39,Centro,Hortolandia,SP,Brasil,13088038,financeiro0538@cliente.com.br,19900000538,CLI-0538
+SRC-CUST-00539,Cliente 0539 Comercio e Servicos Ltda,Cliente 0539,13000000000539,active,Rua Comercial 179,40,Centro,Paulinia,SP,Brasil,13089039,financeiro0539@cliente.com.br,19900000539,CLI-0539
+SRC-CUST-00540,Cliente 0540 Comercio e Servicos Ltda,Cliente 0540,13000000000540,active,Rua Comercial 180,41,Distrito Industrial,Campinas,SP,Brasil,13000040,financeiro0540@cliente.com.br,19900000540,CLI-0540
+SRC-CUST-00541,Cliente 0541 Comercio e Servicos Ltda,Cliente 0541,13000000000541,active,Rua Comercial 1,42,Centro,Sumare,SP,Brasil,13001041,financeiro0541@cliente.com.br,19900000541,CLI-0541
+SRC-CUST-00542,Cliente 0542 Comercio e Servicos Ltda,Cliente 0542,13000000000542,active,Rua Comercial 2,43,Centro,Valinhos,SP,Brasil,13002042,financeiro0542@cliente.com.br,19900000542,CLI-0542
+SRC-CUST-00543,Cliente 0543 Comercio e Servicos Ltda,Cliente 0543,13000000000543,active,Rua Comercial 3,44,Centro,Hortolandia,SP,Brasil,13003043,financeiro0543@cliente.com.br,19900000543,CLI-0543
+SRC-CUST-00544,Cliente 0544 Comercio e Servicos Ltda,Cliente 0544,13000000000544,active,Rua Comercial 4,45,Distrito Industrial,Paulinia,SP,Brasil,13004044,financeiro0544@cliente.com.br,19900000544,CLI-0544
+SRC-CUST-00545,Cliente 0545 Comercio e Servicos Ltda,Cliente 0545,13000000000545,active,Rua Comercial 5,46,Centro,Campinas,SP,Brasil,13005045,financeiro0545@cliente.com.br,19900000545,CLI-0545
+SRC-CUST-00546,Cliente 0546 Comercio e Servicos Ltda,Cliente 0546,13000000000546,active,Rua Comercial 6,47,Centro,Sumare,SP,Brasil,13006046,financeiro0546@cliente.com.br,19900000546,CLI-0546
+SRC-CUST-00547,Cliente 0547 Comercio e Servicos Ltda,Cliente 0547,13000000000547,active,Rua Comercial 7,48,Centro,Valinhos,SP,Brasil,13007047,financeiro0547@cliente.com.br,19900000547,CLI-0547
+SRC-CUST-00548,Cliente 0548 Comercio e Servicos Ltda,Cliente 0548,13000000000548,active,Rua Comercial 8,49,Distrito Industrial,Hortolandia,SP,Brasil,13008048,financeiro0548@cliente.com.br,19900000548,CLI-0548
+SRC-CUST-00549,Cliente 0549 Comercio e Servicos Ltda,Cliente 0549,13000000000549,active,Rua Comercial 9,50,Centro,Paulinia,SP,Brasil,13009049,financeiro0549@cliente.com.br,19900000549,CLI-0549
+SRC-CUST-00550,Cliente 0550 Comercio e Servicos Ltda,Cliente 0550,13000000000550,active,Rua Comercial 10,51,Centro,Campinas,SP,Brasil,13010050,financeiro0550@cliente.com.br,19900000550,CLI-0550
+SRC-CUST-00551,Cliente 0551 Comercio e Servicos Ltda,Cliente 0551,13000000000551,inactive,Rua Comercial 11,52,Centro,Sumare,SP,Brasil,13011051,financeiro0551@cliente.com.br,19900000551,CLI-0551
+SRC-CUST-00552,Cliente 0552 Comercio e Servicos Ltda,Cliente 0552,13000000000552,active,Rua Comercial 12,53,Distrito Industrial,Valinhos,SP,Brasil,13012052,financeiro0552@cliente.com.br,19900000552,CLI-0552
+SRC-CUST-00553,Cliente 0553 Comercio e Servicos Ltda,Cliente 0553,13000000000553,active,Rua Comercial 13,54,Centro,Hortolandia,SP,Brasil,13013053,financeiro0553@cliente.com.br,19900000553,CLI-0553
+SRC-CUST-00554,Cliente 0554 Comercio e Servicos Ltda,Cliente 0554,13000000000554,active,Rua Comercial 14,55,Centro,Paulinia,SP,Brasil,13014054,financeiro0554@cliente.com.br,19900000554,CLI-0554
+SRC-CUST-00555,Cliente 0555 Comercio e Servicos Ltda,Cliente 0555,13000000000555,active,Rua Comercial 15,56,Centro,Campinas,SP,Brasil,13015055,financeiro0555@cliente.com.br,19900000555,CLI-0555
+SRC-CUST-00556,Cliente 0556 Comercio e Servicos Ltda,Cliente 0556,13000000000556,active,Rua Comercial 16,57,Distrito Industrial,Sumare,SP,Brasil,13016056,financeiro0556@cliente.com.br,19900000556,CLI-0556
+SRC-CUST-00557,Cliente 0557 Comercio e Servicos Ltda,Cliente 0557,13000000000557,active,Rua Comercial 17,58,Centro,Valinhos,SP,Brasil,13017057,financeiro0557@cliente.com.br,19900000557,CLI-0557
+SRC-CUST-00558,Cliente 0558 Comercio e Servicos Ltda,Cliente 0558,13000000000558,active,Rua Comercial 18,59,Centro,Hortolandia,SP,Brasil,13018058,financeiro0558@cliente.com.br,19900000558,CLI-0558
+SRC-CUST-00559,Cliente 0559 Comercio e Servicos Ltda,Cliente 0559,13000000000559,active,Rua Comercial 19,60,Centro,Paulinia,SP,Brasil,13019059,financeiro0559@cliente.com.br,19900000559,CLI-0559
+SRC-CUST-00560,Cliente 0560 Comercio e Servicos Ltda,Cliente 0560,13000000000560,active,Rua Comercial 20,61,Distrito Industrial,Campinas,SP,Brasil,13020060,financeiro0560@cliente.com.br,19900000560,CLI-0560
+SRC-CUST-00561,Cliente 0561 Comercio e Servicos Ltda,Cliente 0561,13000000000561,active,Rua Comercial 21,62,Centro,Sumare,SP,Brasil,13021061,financeiro0561@cliente.com.br,19900000561,CLI-0561
+SRC-CUST-00562,Cliente 0562 Comercio e Servicos Ltda,Cliente 0562,13000000000562,active,Rua Comercial 22,63,Centro,Valinhos,SP,Brasil,13022062,financeiro0562@cliente.com.br,19900000562,CLI-0562
+SRC-CUST-00563,Cliente 0563 Comercio e Servicos Ltda,Cliente 0563,13000000000563,active,Rua Comercial 23,64,Centro,Hortolandia,SP,Brasil,13023063,financeiro0563@cliente.com.br,19900000563,CLI-0563
+SRC-CUST-00564,Cliente 0564 Comercio e Servicos Ltda,Cliente 0564,13000000000564,active,Rua Comercial 24,65,Distrito Industrial,Paulinia,SP,Brasil,13024064,financeiro0564@cliente.com.br,19900000564,CLI-0564
+SRC-CUST-00565,Cliente 0565 Comercio e Servicos Ltda,Cliente 0565,13000000000565,active,Rua Comercial 25,66,Centro,Campinas,SP,Brasil,13025065,financeiro0565@cliente.com.br,19900000565,CLI-0565
+SRC-CUST-00566,Cliente 0566 Comercio e Servicos Ltda,Cliente 0566,13000000000566,active,Rua Comercial 26,67,Centro,Sumare,SP,Brasil,13026066,financeiro0566@cliente.com.br,19900000566,CLI-0566
+SRC-CUST-00567,Cliente 0567 Comercio e Servicos Ltda,Cliente 0567,13000000000567,active,Rua Comercial 27,68,Centro,Valinhos,SP,Brasil,13027067,financeiro0567@cliente.com.br,19900000567,CLI-0567
+SRC-CUST-00568,Cliente 0568 Comercio e Servicos Ltda,Cliente 0568,13000000000568,active,Rua Comercial 28,69,Distrito Industrial,Hortolandia,SP,Brasil,13028068,financeiro0568@cliente.com.br,19900000568,CLI-0568
+SRC-CUST-00569,Cliente 0569 Comercio e Servicos Ltda,Cliente 0569,13000000000569,active,Rua Comercial 29,70,Centro,Paulinia,SP,Brasil,13029069,financeiro0569@cliente.com.br,19900000569,CLI-0569
+SRC-CUST-00570,Cliente 0570 Comercio e Servicos Ltda,Cliente 0570,13000000000570,active,Rua Comercial 30,71,Centro,Campinas,SP,Brasil,13030070,financeiro0570@cliente.com.br,19900000570,CLI-0570
+SRC-CUST-00571,Cliente 0571 Comercio e Servicos Ltda,Cliente 0571,13000000000571,active,Rua Comercial 31,72,Centro,Sumare,SP,Brasil,13031071,financeiro0571@cliente.com.br,19900000571,CLI-0571
+SRC-CUST-00572,Cliente 0572 Comercio e Servicos Ltda,Cliente 0572,13000000000572,active,Rua Comercial 32,73,Distrito Industrial,Valinhos,SP,Brasil,13032072,financeiro0572@cliente.com.br,19900000572,CLI-0572
+SRC-CUST-00573,Cliente 0573 Comercio e Servicos Ltda,Cliente 0573,13000000000573,active,Rua Comercial 33,74,Centro,Hortolandia,SP,Brasil,13033073,financeiro0573@cliente.com.br,19900000573,CLI-0573
+SRC-CUST-00574,Cliente 0574 Comercio e Servicos Ltda,Cliente 0574,13000000000574,active,Rua Comercial 34,75,Centro,Paulinia,SP,Brasil,13034074,financeiro0574@cliente.com.br,19900000574,CLI-0574
+SRC-CUST-00575,Cliente 0575 Comercio e Servicos Ltda,Cliente 0575,13000000000575,active,Rua Comercial 35,76,Centro,Campinas,SP,Brasil,13035075,financeiro0575@cliente.com.br,19900000575,CLI-0575
+SRC-CUST-00576,Cliente 0576 Comercio e Servicos Ltda,Cliente 0576,13000000000576,active,Rua Comercial 36,77,Distrito Industrial,Sumare,SP,Brasil,13036076,financeiro0576@cliente.com.br,19900000576,CLI-0576
+SRC-CUST-00577,Cliente 0577 Comercio e Servicos Ltda,Cliente 0577,13000000000577,active,Rua Comercial 37,78,Centro,Valinhos,SP,Brasil,13037077,financeiro0577@cliente.com.br,19900000577,CLI-0577
+SRC-CUST-00578,Cliente 0578 Comercio e Servicos Ltda,Cliente 0578,13000000000578,active,Rua Comercial 38,79,Centro,Hortolandia,SP,Brasil,13038078,financeiro0578@cliente.com.br,19900000578,CLI-0578
+SRC-CUST-00579,Cliente 0579 Comercio e Servicos Ltda,Cliente 0579,13000000000579,active,Rua Comercial 39,80,Centro,Paulinia,SP,Brasil,13039079,financeiro0579@cliente.com.br,19900000579,CLI-0579
+SRC-CUST-00580,Cliente 0580 Comercio e Servicos Ltda,Cliente 0580,13000000000580,inactive,Rua Comercial 40,81,Distrito Industrial,Campinas,SP,Brasil,13040080,financeiro0580@cliente.com.br,19900000580,CLI-0580
+SRC-CUST-00581,Cliente 0581 Comercio e Servicos Ltda,Cliente 0581,13000000000581,active,Rua Comercial 41,82,Centro,Sumare,SP,Brasil,13041081,financeiro0581@cliente.com.br,19900000581,CLI-0581
+SRC-CUST-00582,Cliente 0582 Comercio e Servicos Ltda,Cliente 0582,13000000000582,active,Rua Comercial 42,83,Centro,Valinhos,SP,Brasil,13042082,financeiro0582@cliente.com.br,19900000582,CLI-0582
+SRC-CUST-00583,Cliente 0583 Comercio e Servicos Ltda,Cliente 0583,13000000000583,active,Rua Comercial 43,84,Centro,Hortolandia,SP,Brasil,13043083,financeiro0583@cliente.com.br,19900000583,CLI-0583
+SRC-CUST-00584,Cliente 0584 Comercio e Servicos Ltda,Cliente 0584,13000000000584,active,Rua Comercial 44,85,Distrito Industrial,Paulinia,SP,Brasil,13044084,financeiro0584@cliente.com.br,19900000584,CLI-0584
+SRC-CUST-00585,Cliente 0585 Comercio e Servicos Ltda,Cliente 0585,13000000000585,active,Rua Comercial 45,86,Centro,Campinas,SP,Brasil,13045085,financeiro0585@cliente.com.br,19900000585,CLI-0585
+SRC-CUST-00586,Cliente 0586 Comercio e Servicos Ltda,Cliente 0586,13000000000586,active,Rua Comercial 46,87,Centro,Sumare,SP,Brasil,13046086,financeiro0586@cliente.com.br,19900000586,CLI-0586
+SRC-CUST-00587,Cliente 0587 Comercio e Servicos Ltda,Cliente 0587,13000000000587,active,Rua Comercial 47,88,Centro,Valinhos,SP,Brasil,13047087,financeiro0587@cliente.com.br,19900000587,CLI-0587
+SRC-CUST-00588,Cliente 0588 Comercio e Servicos Ltda,Cliente 0588,13000000000588,active,Rua Comercial 48,89,Distrito Industrial,Hortolandia,SP,Brasil,13048088,financeiro0588@cliente.com.br,19900000588,CLI-0588
+SRC-CUST-00589,Cliente 0589 Comercio e Servicos Ltda,Cliente 0589,13000000000589,active,Rua Comercial 49,90,Centro,Paulinia,SP,Brasil,13049089,financeiro0589@cliente.com.br,19900000589,CLI-0589
+SRC-CUST-00590,Cliente 0590 Comercio e Servicos Ltda,Cliente 0590,13000000000590,active,Rua Comercial 50,91,Centro,Campinas,SP,Brasil,13050090,financeiro0590@cliente.com.br,19900000590,CLI-0590
+SRC-CUST-00591,Cliente 0591 Comercio e Servicos Ltda,Cliente 0591,13000000000591,active,Rua Comercial 51,92,Centro,Sumare,SP,Brasil,13051091,financeiro0591@cliente.com.br,19900000591,CLI-0591
+SRC-CUST-00592,Cliente 0592 Comercio e Servicos Ltda,Cliente 0592,13000000000592,active,Rua Comercial 52,93,Distrito Industrial,Valinhos,SP,Brasil,13052092,financeiro0592@cliente.com.br,19900000592,CLI-0592
+SRC-CUST-00593,Cliente 0593 Comercio e Servicos Ltda,Cliente 0593,13000000000593,active,Rua Comercial 53,94,Centro,Hortolandia,SP,Brasil,13053093,financeiro0593@cliente.com.br,19900000593,CLI-0593
+SRC-CUST-00594,Cliente 0594 Comercio e Servicos Ltda,Cliente 0594,13000000000594,active,Rua Comercial 54,95,Centro,Paulinia,SP,Brasil,13054094,financeiro0594@cliente.com.br,19900000594,CLI-0594
+SRC-CUST-00595,Cliente 0595 Comercio e Servicos Ltda,Cliente 0595,13000000000595,active,Rua Comercial 55,96,Centro,Campinas,SP,Brasil,13055095,financeiro0595@cliente.com.br,19900000595,CLI-0595
+SRC-CUST-00596,Cliente 0596 Comercio e Servicos Ltda,Cliente 0596,13000000000596,active,Rua Comercial 56,97,Distrito Industrial,Sumare,SP,Brasil,13056096,financeiro0596@cliente.com.br,19900000596,CLI-0596
+SRC-CUST-00597,Cliente 0597 Comercio e Servicos Ltda,Cliente 0597,13000000000597,active,Rua Comercial 57,98,Centro,Valinhos,SP,Brasil,13057097,financeiro0597@cliente.com.br,19900000597,CLI-0597
+SRC-CUST-00598,Cliente 0598 Comercio e Servicos Ltda,Cliente 0598,13000000000598,active,Rua Comercial 58,99,Centro,Hortolandia,SP,Brasil,13058098,financeiro0598@cliente.com.br,19900000598,CLI-0598
+SRC-CUST-00599,Cliente 0599 Comercio e Servicos Ltda,Cliente 0599,13000000000599,active,Rua Comercial 59,100,Centro,Paulinia,SP,Brasil,13059099,financeiro0599@cliente.com.br,19900000599,CLI-0599
+SRC-CUST-00600,Cliente 0600 Comercio e Servicos Ltda,Cliente 0600,13000000000600,active,Rua Comercial 60,101,Distrito Industrial,Campinas,SP,Brasil,13060000,financeiro0600@cliente.com.br,19900000600,CLI-0600
+SRC-CUST-00601,Cliente 0601 Comercio e Servicos Ltda,Cliente 0601,13000000000601,active,Rua Comercial 61,102,Centro,Sumare,SP,Brasil,13061001,financeiro0601@cliente.com.br,19900000601,CLI-0601
+SRC-CUST-00602,Cliente 0602 Comercio e Servicos Ltda,Cliente 0602,13000000000602,active,Rua Comercial 62,103,Centro,Valinhos,SP,Brasil,13062002,financeiro0602@cliente.com.br,19900000602,CLI-0602
+SRC-CUST-00603,Cliente 0603 Comercio e Servicos Ltda,Cliente 0603,13000000000603,active,Rua Comercial 63,104,Centro,Hortolandia,SP,Brasil,13063003,financeiro0603@cliente.com.br,19900000603,CLI-0603
+SRC-CUST-00604,Cliente 0604 Comercio e Servicos Ltda,Cliente 0604,13000000000604,active,Rua Comercial 64,105,Distrito Industrial,Paulinia,SP,Brasil,13064004,financeiro0604@cliente.com.br,19900000604,CLI-0604
+SRC-CUST-00605,Cliente 0605 Comercio e Servicos Ltda,Cliente 0605,13000000000605,active,Rua Comercial 65,106,Centro,Campinas,SP,Brasil,13065005,financeiro0605@cliente.com.br,19900000605,CLI-0605
+SRC-CUST-00606,Cliente 0606 Comercio e Servicos Ltda,Cliente 0606,13000000000606,active,Rua Comercial 66,107,Centro,Sumare,SP,Brasil,13066006,financeiro0606@cliente.com.br,19900000606,CLI-0606
+SRC-CUST-00607,Cliente 0607 Comercio e Servicos Ltda,Cliente 0607,13000000000607,active,Rua Comercial 67,108,Centro,Valinhos,SP,Brasil,13067007,financeiro0607@cliente.com.br,19900000607,CLI-0607
+SRC-CUST-00608,Cliente 0608 Comercio e Servicos Ltda,Cliente 0608,13000000000608,active,Rua Comercial 68,109,Distrito Industrial,Hortolandia,SP,Brasil,13068008,financeiro0608@cliente.com.br,19900000608,CLI-0608
+SRC-CUST-00609,Cliente 0609 Comercio e Servicos Ltda,Cliente 0609,13000000000609,inactive,Rua Comercial 69,110,Centro,Paulinia,SP,Brasil,13069009,financeiro0609@cliente.com.br,19900000609,CLI-0609
+SRC-CUST-00610,Cliente 0610 Comercio e Servicos Ltda,Cliente 0610,13000000000610,active,Rua Comercial 70,111,Centro,Campinas,SP,Brasil,13070010,financeiro0610@cliente.com.br,19900000610,CLI-0610
+SRC-CUST-00611,Cliente 0611 Comercio e Servicos Ltda,Cliente 0611,13000000000611,active,Rua Comercial 71,112,Centro,Sumare,SP,Brasil,13071011,financeiro0611@cliente.com.br,19900000611,CLI-0611
+SRC-CUST-00612,Cliente 0612 Comercio e Servicos Ltda,Cliente 0612,13000000000612,active,Rua Comercial 72,113,Distrito Industrial,Valinhos,SP,Brasil,13072012,financeiro0612@cliente.com.br,19900000612,CLI-0612
+SRC-CUST-00613,Cliente 0613 Comercio e Servicos Ltda,Cliente 0613,13000000000613,active,Rua Comercial 73,114,Centro,Hortolandia,SP,Brasil,13073013,financeiro0613@cliente.com.br,19900000613,CLI-0613
+SRC-CUST-00614,Cliente 0614 Comercio e Servicos Ltda,Cliente 0614,13000000000614,active,Rua Comercial 74,115,Centro,Paulinia,SP,Brasil,13074014,financeiro0614@cliente.com.br,19900000614,CLI-0614
+SRC-CUST-00615,Cliente 0615 Comercio e Servicos Ltda,Cliente 0615,13000000000615,active,Rua Comercial 75,116,Centro,Campinas,SP,Brasil,13075015,financeiro0615@cliente.com.br,19900000615,CLI-0615
+SRC-CUST-00616,Cliente 0616 Comercio e Servicos Ltda,Cliente 0616,13000000000616,active,Rua Comercial 76,117,Distrito Industrial,Sumare,SP,Brasil,13076016,financeiro0616@cliente.com.br,19900000616,CLI-0616
+SRC-CUST-00617,Cliente 0617 Comercio e Servicos Ltda,Cliente 0617,13000000000617,active,Rua Comercial 77,118,Centro,Valinhos,SP,Brasil,13077017,financeiro0617@cliente.com.br,19900000617,CLI-0617
+SRC-CUST-00618,Cliente 0618 Comercio e Servicos Ltda,Cliente 0618,13000000000618,active,Rua Comercial 78,119,Centro,Hortolandia,SP,Brasil,13078018,financeiro0618@cliente.com.br,19900000618,CLI-0618
+SRC-CUST-00619,Cliente 0619 Comercio e Servicos Ltda,Cliente 0619,13000000000619,active,Rua Comercial 79,120,Centro,Paulinia,SP,Brasil,13079019,financeiro0619@cliente.com.br,19900000619,CLI-0619
+SRC-CUST-00620,Cliente 0620 Comercio e Servicos Ltda,Cliente 0620,13000000000620,active,Rua Comercial 80,121,Distrito Industrial,Campinas,SP,Brasil,13080020,financeiro0620@cliente.com.br,19900000620,CLI-0620

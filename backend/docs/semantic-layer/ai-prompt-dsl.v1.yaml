@@ -1,0 +1,116 @@
+metadata:
+  artifact: ai_prompt_dsl
+  version: 1.0.0
+  status: approved
+  purpose: constrain_ai_to_official_semantic_and_decision_contracts
+
+policy:
+  mandatory_inputs:
+    - company_id
+    - period_ref
+    - requested_kpi_ids
+    - resolved_formula_ids
+    - fired_rule_ids
+    - selected_recommendation_ids
+    - evidence_bundle
+  forbidden_inputs:
+    - raw_erp_field_names
+    - unrestricted_external_facts
+  required_sources:
+    - business_semantic_dictionary
+    - formula_dsl
+    - rule_dsl
+    - recommendation_dsl
+
+prompt_contract:
+  template_fields:
+    - prompt_id
+    - intent
+    - audience
+    - language
+    - context
+    - evidence
+    - constraints
+    - output_schema
+    - guardrails
+  intents:
+    - explain_kpi
+    - explain_alert
+    - compare_periods
+    - propose_actions
+    - executive_summary
+
+output_schemas:
+  explain_kpi:
+    required_sections:
+      - what_happened
+      - why_happened
+      - what_to_do_now
+    max_causes: 3
+    max_recommendations: 3
+  executive_summary:
+    required_sections:
+      - strategic_status
+      - key_risks
+      - top_actions_30d
+
+guardrails:
+  - only_use_kpis_from_formula_dsl
+  - only_use_rules_from_rule_dsl
+  - only_use_recommendations_from_recommendation_dsl
+  - reject_if_evidence_confidence_below_threshold
+  - no_cross_tenant_data
+  - no_undefined_metric_or_term
+
+prompt_examples:
+  - prompt_id: p.explain.fin03
+    intent: explain_kpi
+    audience: gestor_nao_tecnico
+    language: pt-BR
+    context:
+      company_id: cmp_acme
+      period_ref: 2026-07
+      kpi_id: FIN-03
+    evidence:
+      formula_id: f.net_revenue
+      metric_value: -125000.45
+      target_value: 50000
+      trend: down
+      confidence_score: 0.93
+      fired_rules:
+        - r.fin03.cash_negative_3d
+      recommendations:
+        - rec.cash.001
+    constraints:
+      tone: direct_and_clear
+      avoid_jargon: true
+      translate_percent_to_financial_impact: true
+    output_schema: explain_kpi
+    guardrails:
+      - only_use_official_dsls
+      - include_three_actionable_steps
+
+  - prompt_id: p.exec.health
+    intent: executive_summary
+    audience: c_level
+    language: pt-BR
+    context:
+      company_id: cmp_acme
+      period_ref: 2026-W28
+      kpi_id: EXE-04
+    evidence:
+      formula_id: f.business_health_index
+      metric_value: 63.5
+      trend: down
+      confidence_score: 0.9
+      fired_rules:
+        - r.exe04.health_drop_10p
+      recommendations:
+        - rec.exec.001
+    constraints:
+      max_length_words: 220
+      include_risk_impact_time_horizon: true
+    output_schema: executive_summary
+    guardrails:
+      - no_external_assumptions
+      - reference_only_evidence_bundle

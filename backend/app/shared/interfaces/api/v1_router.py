@@ -12,6 +12,7 @@ from app.modules.kpi.interfaces.api.routes import router as kpi_router
 from app.modules.notification.interfaces.api.routes import router as notification_router
 from app.modules.omie.interfaces.api.routes import router as omie_router
 from app.modules.recommendation.interfaces.api.routes import router as recommendation_router
+from app.modules.summary.interfaces.api.routes import router as summary_router
 
 api_v1_router = APIRouter()
 
@@ -27,3 +28,4 @@ api_v1_router.include_router(alert_router)
 api_v1_router.include_router(recommendation_router)
 api_v1_router.include_router(ai_router)
 api_v1_router.include_router(notification_router)
+api_v1_router.include_router(summary_router)

@@ -35,6 +35,7 @@ RUN apt-get update \
 
 COPY --from=builder /opt/venv /opt/venv
 COPY app ./app
+COPY docs ./docs
 COPY alembic ./alembic
 COPY alembic.ini ./alembic.ini
 

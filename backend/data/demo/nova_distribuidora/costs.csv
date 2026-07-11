@@ -1,0 +1,49 @@
+cost_id,period,cost_center_id,amount,description
+COST-LOG-001,2024-08,CC-LOG,166854.60,Fretes e operacao logistica
+COST-EST-001,2024-08,CC-EST,91011.60,Custos de armazenagem e perdas de estoque
+COST-LOG-002,2024-09,CC-LOG,166347.74,Fretes e operacao logistica
+COST-EST-002,2024-09,CC-EST,90735.13,Custos de armazenagem e perdas de estoque
+COST-LOG-003,2024-10,CC-LOG,169260.83,Fretes e operacao logistica
+COST-EST-003,2024-10,CC-EST,92324.09,Custos de armazenagem e perdas de estoque
+COST-LOG-004,2024-11,CC-LOG,199102.81,Fretes e operacao logistica
+COST-EST-004,2024-11,CC-EST,108601.53,Custos de armazenagem e perdas de estoque
+COST-LOG-005,2024-12,CC-LOG,202569.46,Fretes e operacao logistica
+COST-EST-005,2024-12,CC-EST,110492.43,Custos de armazenagem e perdas de estoque
+COST-LOG-006,2025-01,CC-LOG,157427.23,Fretes e operacao logistica
+COST-EST-006,2025-01,CC-EST,85869.40,Custos de armazenagem e perdas de estoque
+COST-LOG-007,2025-02,CC-LOG,160152.77,Fretes e operacao logistica
+COST-EST-007,2025-02,CC-EST,87356.06,Custos de armazenagem e perdas de estoque
+COST-LOG-008,2025-03,CC-LOG,187384.18,Fretes e operacao logistica
+COST-EST-008,2025-03,CC-EST,102209.55,Custos de armazenagem e perdas de estoque
+COST-LOG-009,2025-04,CC-LOG,190610.31,Fretes e operacao logistica
+COST-EST-009,2025-04,CC-EST,103969.26,Custos de armazenagem e perdas de estoque
+COST-LOG-010,2025-05,CC-LOG,175893.12,Fretes e operacao logistica
+COST-EST-010,2025-05,CC-EST,95941.70,Custos de armazenagem e perdas de estoque
+COST-LOG-011,2025-06,CC-LOG,178905.18,Fretes e operacao logistica
+COST-EST-011,2025-06,CC-EST,97584.64,Custos de armazenagem e perdas de estoque
+COST-LOG-012,2025-07,CC-LOG,164021.58,Fretes e operacao logistica
+COST-EST-012,2025-07,CC-EST,89466.32,Custos de armazenagem e perdas de estoque
+COST-LOG-013,2025-08,CC-LOG,181321.11,Fretes e operacao logistica
+COST-EST-013,2025-08,CC-EST,98902.43,Custos de armazenagem e perdas de estoque
+COST-LOG-014,2025-09,CC-LOG,179418.05,Fretes e operacao logistica
+COST-EST-014,2025-09,CC-EST,97864.39,Custos de armazenagem e perdas de estoque
+COST-LOG-015,2025-10,CC-LOG,181358.70,Fretes e operacao logistica
+COST-EST-015,2025-10,CC-EST,98922.93,Custos de armazenagem e perdas de estoque
+COST-LOG-016,2025-11,CC-LOG,211723.02,Fretes e operacao logistica
+COST-EST-016,2025-11,CC-EST,115485.29,Custos de armazenagem e perdas de estoque
+COST-LOG-017,2025-12,CC-LOG,213981.24,Fretes e operacao logistica
+COST-EST-017,2025-12,CC-EST,116717.04,Custos de armazenagem e perdas de estoque
+COST-LOG-018,2026-01,CC-LOG,165028.59,Fretes e operacao logistica
+COST-EST-018,2026-01,CC-EST,90015.60,Custos de armazenagem e perdas de estoque
+COST-LOG-019,2026-02,CC-LOG,166763.92,Fretes e operacao logistica
+COST-EST-019,2026-02,CC-EST,90962.14,Custos de armazenagem e perdas de estoque
+COST-LOG-020,2026-03,CC-LOG,193618.06,Fretes e operacao logistica
+COST-EST-020,2026-03,CC-EST,105609.85,Custos de armazenagem e perdas de estoque
+COST-LOG-021,2026-04,CC-LOG,195624.83,Fretes e operacao logistica
+COST-EST-021,2026-04,CC-EST,106704.45,Custos de armazenagem e perdas de estoque
+COST-LOG-022,2026-05,CC-LOG,179117.61,Fretes e operacao logistica
+COST-EST-022,2026-05,CC-EST,97700.52,Custos de armazenagem e perdas de estoque
+COST-LOG-023,2026-06,CC-LOG,180947.16,Fretes e operacao logistica
+COST-EST-023,2026-06,CC-EST,98698.45,Custos de armazenagem e perdas de estoque
+COST-LOG-024,2026-07,CC-LOG,164752.87,Fretes e operacao logistica
+COST-EST-024,2026-07,CC-EST,89865.20,Custos de armazenagem e perdas de estoque

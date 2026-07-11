@@ -1,0 +1,10 @@
+account_code,account_name,nature
+3.1.1,Receita Bruta,revenue
+3.1.2,Impostos sobre Vendas,deduction
+3.1.3,Descontos,deduction
+3.1.4,Devolucoes,deduction
+4.1.1,CMV,cost
+5.1.1,Despesas Comerciais,expense
+5.1.2,Despesas Administrativas,expense
+5.1.3,Despesas Financeiras,expense
+9.9.9,Resultado Liquido,result

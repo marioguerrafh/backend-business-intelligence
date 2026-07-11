@@ -1,0 +1,65 @@
+metadata:
+  artifact: semantic-layer-manifest
+  version: 1.0.0
+  status: approved
+  owner_roles:
+    - enterprise_information_architect
+    - principal_ddd_architect
+    - data_architect
+    - chief_business_intelligence_officer
+  date: 2026-07-10
+
+mission:
+  statement: >
+    Establish the official semantic layer so any ERP can be translated to the
+    platform canonical model, KPIs are ERP-agnostic, rules and recommendations
+    are runtime-configurable, and AI responses are constrained to official DSLs.
+
+artifacts:
+  business_semantic_dictionary:
+    file: business-semantic-dictionary.v1.yaml
+    purpose: define official business terms and governance semantics
+  canonical_data_model:
+    file: canonical-data-model.v1.yaml
+    purpose: define ERP-independent entities, events, measures, and dimensions
+  erp_mapping_catalog:
+    file: erp-mapping-catalog.v1.yaml
+    purpose: map source ERP fields/events to canonical model
+  formula_dsl:
+    file: formula-dsl.v1.yaml
+    purpose: define KPI formulas and metric computations without code changes
+  rule_dsl:
+    file: rule-dsl.v1.yaml
+    purpose: define health, thresholds, triggers, and escalation without code changes
+  recommendation_dsl:
+    file: recommendation-dsl.v1.yaml
+    purpose: define recommendation logic and templates without recompilation
+  ai_prompt_dsl:
+    file: ai-prompt-dsl.v1.yaml
+    purpose: constrain AI prompts, evidence, and output contracts
+
+rfc_artifacts:
+  - file: rfc-formula-dsl-v1.yaml
+  - file: rfc-rule-dsl-v1.yaml
+  - file: rfc-recommendation-dsl-v1.yaml
+  - file: rfc-ai-prompt-dsl-v1.yaml
+
+runtime_contracts:
+  erp_agnostic_kpi_calculation:
+    requires:
+      - canonical_data_model
+      - formula_dsl
+      - erp_mapping_catalog
+  rules_without_code_changes:
+    requires:
+      - rule_dsl
+  recommendations_without_recompile:
+    requires:
+      - recommendation_dsl
+  ai_constrained_to_official_specs:
+    requires:
+      - ai_prompt_dsl
+      - business_semantic_dictionary
+      - formula_dsl
+      - rule_dsl
+      - recommendation_dsl

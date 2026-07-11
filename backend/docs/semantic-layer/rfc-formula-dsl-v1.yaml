@@ -1,0 +1,53 @@
+rfc:
+  id: RFC-FORMULA-DSL-V1
+  title: Formula DSL v1.0
+  date: 2026-07-10
+  status: proposed
+  owners:
+    - principal_ddd_architect
+    - data_architect
+    - cfo
+
+problem:
+  statement: KPI calculations must be configurable without code changes and must remain ERP-agnostic.
+
+decision:
+  adopt_formula_dsl: true
+  source_of_truth: formula-dsl.v1.yaml
+  calculation_scope: canonical_data_model_only
+
+goals:
+  - enable_runtime_formula_changes
+  - isolate_kpis_from_erp_field_variability
+  - enforce_semantic_and_unit_validation
+
+non_goals:
+  - arbitrary_user_defined_functions
+  - direct_access_to_source_erp_fields
+
+architecture_impact:
+  affected_layers:
+    - kpi_engine
+    - semantic_layer
+  runtime_requirements:
+    - formula_compiler
+    - validator
+    - lineage_audit
+
+governance:
+  versioning: semantic_versioned
+  approval_flow:
+    - business_validation
+    - controller_validation
+    - architecture_approval
+
+acceptance_criteria:
+  - all_official_kpis_mapped_to_formula_ids
+  - formula_changes_do_not_require_redeploy
+  - formulas_fail_fast_on_semantic_errors
+
+risks_and_mitigations:
+  - risk: formula_complexity_growth
+    mitigation: function_whitelist_and_style_guide
+  - risk: invalid_unit_operations
+    mitigation: strict_unit_validator

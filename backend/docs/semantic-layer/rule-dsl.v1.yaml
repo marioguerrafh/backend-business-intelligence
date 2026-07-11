@@ -1,0 +1,144 @@
+metadata:
+  artifact: rule_dsl
+  version: 1.0.0
+  status: approved
+  purpose: declarative_health_trigger_and_escalation_logic
+
+rule_contract:
+  fields:
+    - rule_id
+    - kpi_id
+    - name
+    - scope
+    - condition
+    - severity
+    - priority
+    - trigger_window
+    - dependencies
+    - actions
+    - alert_channels
+    - escalation_policy
+    - effective_from
+    - effective_to
+    - enabled
+
+syntax:
+  condition_language:
+    operators:
+      comparison:
+        - gt
+        - gte
+        - lt
+        - lte
+        - eq
+        - neq
+      logical:
+        - and
+        - or
+        - not
+      temporal:
+        - consecutive_periods
+        - changed_by_percent
+        - trend_down
+  severity_levels:
+    - low
+    - medium
+    - high
+    - critical
+
+rule_examples:
+  - rule_id: r.fin03.cash_negative_3d
+    kpi_id: FIN-03
+    name: fluxo_caixa_negativo_tres_dias
+    scope:
+      dimensions:
+        - company_id
+    condition: and(lt(metric_value,0), consecutive_periods(3, day))
+    severity: high
+    priority: p0
+    trigger_window: 3d
+    dependencies:
+      - kpi.FIN-03
+    actions:
+      - action_id: open_incident
+      - action_id: run_cash_projection_30d
+    alert_channels:
+      - in_app
+      - email
+    escalation_policy:
+      initial_owner: treasury_manager
+      escalate_after: 24h
+      escalate_to:
+        - cfo
+        - controller
+    effective_from: 2026-07-10
+    effective_to: null
+    enabled: true
+
+  - rule_id: r.est02.stockout_over_5
+    kpi_id: EST-02
+    name: ruptura_acima_limite
+    scope:
+      dimensions:
+        - company_id
+        - sku
+    condition: gt(metric_value,5)
+    severity: critical
+    priority: p0
+    trigger_window: 1d
+    dependencies:
+      - kpi.EST-02
+      - fact_inventory_snapshot.available_qty
+    actions:
+      - action_id: prioritize_replenishment
+      - action_id: notify_sales_risk
+    alert_channels:
+      - in_app
+      - webhook
+    escalation_policy:
+      initial_owner: supply_chain_manager
+      escalate_after: 12h
+      escalate_to:
+        - operations_director
+    effective_from: 2026-07-10
+    effective_to: null
+    enabled: true
+
+  - rule_id: r.exe04.health_drop_10p
+    kpi_id: EXE-04
+    name: queda_rapida_indice_saude
+    scope:
+      dimensions:
+        - company_id
+    condition: changed_by_percent(metric_value, -10, 14d)
+    severity: high
+    priority: p0
+    trigger_window: 14d
+    dependencies:
+      - kpi.EXE-04
+      - kpi.FIN-02
+      - kpi.FIN-03
+    actions:
+      - action_id: generate_multi_area_diagnosis
+      - action_id: create_executive_war_room
+    alert_channels:
+      - in_app
+      - email
+      - executive_digest
+    escalation_policy:
+      initial_owner: ceo_office
+      escalate_after: 24h
+      escalate_to:
+        - board_reporting_channel
+    effective_from: 2026-07-10
+    effective_to: null
+    enabled: true
+
+runtime_policies:
+  deduplication:
+    key: company_id+kpi_id+rule_id+period_ref
+  conflict_resolution:
+    strategy: highest_severity_wins
+  safety:
+    - rules_cannot_execute_undefined_actions
+    - disabled_rule_must_not_fire

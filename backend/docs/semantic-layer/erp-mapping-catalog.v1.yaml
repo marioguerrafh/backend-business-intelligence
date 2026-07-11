@@ -1,0 +1,167 @@
+metadata:
+  artifact: erp_mapping_catalog
+  version: 1.0.0
+  status: approved
+  objective: map_any_erp_to_canonical_model
+
+global_mapping_rules:
+  - mapping_rule_id: map.global.tenant
+    description: resolve source legal entity to company_id
+    output_canonical_field: dim_company.company_id
+  - mapping_rule_id: map.global.timezone
+    description: normalize all datetimes to utc before date_sk derivation
+    output_canonical_field: dim_date.date
+  - mapping_rule_id: map.global.currency
+    description: normalize source amounts to document currency and optional reporting currency
+
+source_connectors:
+  sap_s4hana:
+    connector_type: database_or_api
+    canonical_mapping_sets:
+      sales:
+        - source: vbrk.vbeln
+          canonical: fact_sales.invoice_id
+        - source: vbrp.posnr
+          canonical: fact_sales.invoice_line_id
+        - source: vbrk.fkdat
+          canonical: fact_sales.transaction_date
+        - source: vbrp.matnr
+          canonical: dim_product.sku
+        - source: kna1.kunnr
+          canonical: dim_customer.customer_external_id
+        - source: vbrp.netwr
+          canonical: fact_sales.net_revenue
+      inventory:
+        - source: mard.matnr
+          canonical: dim_product.sku
+        - source: mard.labst
+          canonical: fact_inventory_snapshot.available_qty
+      procurement:
+        - source: ekko.ebeln
+          canonical: fact_procurement.po_id
+        - source: ekpo.menge
+          canonical: fact_procurement.po_quantity
+      hr:
+        - source: pa0001.pernr
+          canonical: fact_hr_workforce.employee_id
+
+  totvs_protheus:
+    connector_type: database
+    canonical_mapping_sets:
+      sales:
+        - source: sf2.f2_doc
+          canonical: fact_sales.invoice_id
+        - source: sd2.d2_item
+          canonical: fact_sales.invoice_line_id
+        - source: sd2.d2_total
+          canonical: fact_sales.gross_revenue
+        - source: sd2.d2_desc
+          canonical: fact_sales.discount_amount
+      inventory:
+        - source: sb2.b2_qatu
+          canonical: fact_inventory_snapshot.available_qty
+      procurement:
+        - source: sc7.c7_num
+          canonical: fact_procurement.po_id
+        - source: sc7.c7_quant
+          canonical: fact_procurement.po_quantity
+
+  oracle_netsuite:
+    connector_type: api
+    canonical_mapping_sets:
+      sales:
+        - source: transaction.id
+          canonical: fact_sales.invoice_id
+        - source: transaction.trandate
+          canonical: fact_sales.transaction_date
+        - source: transactionline.item
+          canonical: dim_product.product_external_id
+        - source: transactionline.amount
+          canonical: fact_sales.net_revenue
+      procurement:
+        - source: purchaseorder.id
+          canonical: fact_procurement.po_id
+        - source: purchaseorderline.quantity
+          canonical: fact_procurement.po_quantity
+
+  microsoft_dynamics_365:
+    connector_type: api
+    canonical_mapping_sets:
+      sales:
+        - source: salesorder.orderid
+          canonical: fact_sales.order_id
+        - source: salesorderline.productid
+          canonical: dim_product.product_external_id
+        - source: salesorderline.netamount
+          canonical: fact_sales.net_revenue
+      service:
+        - source: incident.ticketnumber
+          canonical: fact_service.ticket_id
+        - source: incident.firstresponsesent
+          canonical: fact_service.first_response_minutes
+
+  odoo:
+    connector_type: database_or_api
+    canonical_mapping_sets:
+      sales:
+        - source: sale_order.name
+          canonical: fact_sales.order_id
+        - source: sale_order_line.product_id
+          canonical: dim_product.product_external_id
+        - source: sale_order_line.price_total
+          canonical: fact_sales.gross_revenue
+      inventory:
+        - source: stock_quant.quantity
+          canonical: fact_inventory_snapshot.on_hand_qty
+      procurement:
+        - source: purchase_order.name
+          canonical: fact_procurement.po_id
+
+  omie:
+    connector_type: api
+    canonical_mapping_sets:
+      sales:
+        - source: pedido_venda.codigo_pedido
+          canonical: fact_sales.order_id
+        - source: pedido_venda.total_pedido
+          canonical: fact_sales.gross_revenue
+      customer:
+        - source: cliente.codigo_cliente_omie
+          canonical: dim_customer.customer_external_id
+      product:
+        - source: produto.codigo
+          canonical: dim_product.sku
+
+mapping_resolution:
+  key_resolution_priority:
+    - exact_source_to_canonical_map
+    - source_alias_map
+    - transformation_rule
+  duplicate_resolution:
+    strategy: source_record_id_plus_company_id
+  null_handling:
+    policy: fail_on_mandatory_canonical_fields
+
+validation_rules:
+  - validation_id: mapval.001
+    description: every canonical mandatory field must have source mapping
+  - validation_id: mapval.002
+    description: mapping transformation must preserve type and unit
+  - validation_id: mapval.003
+    description: each mapping set must declare source_system_version
+
+onboarding_template:
+  required_metadata:
+    - source_system_name
+    - source_system_version
+    - extraction_mode
+    - incremental_key
+    - timezone
+  mandatory_canonical_domains:
+    - sales
+    - inventory
+    - procurement
+  optional_canonical_domains:
+    - hr
+    - service
+    - production

@@ -1,0 +1,207 @@
+metadata:
+  artifact: canonical_data_model
+  version: 1.0.0
+  status: approved
+  modeling_style: ddd_bounded_context_plus_analytics_star
+
+principles:
+  - canonical_entities_are_erp_independent
+  - all_facts_are_tenant_scoped
+  - all_facts_are_time_scoped
+  - identifiers_are_stable_and_traceable
+
+bounded_contexts:
+  - auth
+  - business_customer
+  - business_product
+  - financeiro
+  - comercial
+  - contabil
+  - estoque
+  - compras
+  - rh
+  - atendimento
+  - producao
+  - executivo
+
+core_dimensions:
+  dim_company:
+    keys:
+      natural_key: company_id
+      surrogate_key: company_sk
+    attributes:
+      - legal_name
+      - tax_id
+      - segment
+      - country
+      - state
+      - city
+
+  dim_date:
+    keys:
+      natural_key: date
+      surrogate_key: date_sk
+    attributes:
+      - year
+      - quarter
+      - month
+      - week
+      - day
+      - is_month_end
+
+  dim_product:
+    keys:
+      natural_key: product_id
+      surrogate_key: product_sk
+    attributes:
+      - sku
+      - name
+      - category
+      - unit_of_measure
+      - status
+
+  dim_customer:
+    keys:
+      natural_key: customer_id
+      surrogate_key: customer_sk
+    attributes:
+      - legal_name
+      - trade_name
+      - document_number
+      - status
+
+  dim_channel:
+    keys:
+      natural_key: channel_id
+      surrogate_key: channel_sk
+    attributes:
+      - channel_type
+      - channel_group
+
+canonical_facts:
+  fact_sales:
+    grain: one_row_per_invoice_line_or_order_line
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+      - customer_sk
+    measures:
+      - gross_revenue
+      - tax_amount
+      - discount_amount
+      - return_amount
+      - net_revenue
+      - quantity_sold
+      - cogs_amount
+
+  fact_finance_cashflow:
+    grain: one_row_per_cash_movement
+    mandatory_keys:
+      - company_sk
+      - date_sk
+    dimensions:
+      - cash_flow_type
+      - account_type
+    measures:
+      - cash_in_amount
+      - cash_out_amount
+      - operating_cash_flow_amount
+
+  fact_inventory_snapshot:
+    grain: one_row_per_product_location_snapshot
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+    dimensions:
+      - location_id
+    measures:
+      - on_hand_qty
+      - reserved_qty
+      - available_qty
+      - inventory_value
+
+  fact_procurement:
+    grain: one_row_per_purchase_order_line
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+    dimensions:
+      - supplier_id
+    measures:
+      - po_quantity
+      - po_unit_cost
+      - po_total_cost
+      - lead_time_days
+      - on_time_delivery_flag
+
+  fact_hr_workforce:
+    grain: one_row_per_employee_per_period
+    mandatory_keys:
+      - company_sk
+      - date_sk
+    dimensions:
+      - department_id
+      - role_id
+    measures:
+      - active_headcount
+      - admissions_count
+      - dismissals_count
+      - absence_hours
+      - scheduled_hours
+      - payroll_cost
+
+  fact_service:
+    grain: one_row_per_ticket_or_interaction
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - customer_sk
+    dimensions:
+      - channel_id
+      - queue_id
+      - agent_id
+    measures:
+      - first_response_minutes
+      - resolution_minutes
+      - first_contact_resolution_flag
+      - nps_score
+
+  fact_production:
+    grain: one_row_per_machine_shift_batch
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+    dimensions:
+      - plant_id
+      - line_id
+      - machine_id
+      - shift_id
+    measures:
+      - planned_output_qty
+      - actual_output_qty
+      - scrap_qty
+      - availability_rate
+      - performance_rate
+      - quality_rate
+      - oee_rate
+
+semantic_lineage_contract:
+  required_fields:
+    - source_system
+    - source_table_or_endpoint
+    - source_field
+    - canonical_entity
+    - canonical_field
+    - mapping_rule_id
+    - transformation_id
+    - loaded_at
+
+erp_independence_contract:
+  constraints:
+    - KPI_formulas_must_reference_canonical_facts_and_dimensions_only
+    - no_formula_may_reference_source_system_field_directly
+    - source_variation_must_be_absorbed_by_erp_mapping_catalog

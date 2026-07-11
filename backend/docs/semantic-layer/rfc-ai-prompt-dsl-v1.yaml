@@ -1,0 +1,53 @@
+rfc:
+  id: RFC-AI-PROMPT-DSL-V1
+  title: AI Prompt DSL v1.0
+  date: 2026-07-10
+  status: proposed
+  owners:
+    - chief_bi_officer
+    - enterprise_information_architect
+    - principal_ddd_architect
+
+problem:
+  statement: AI responses must be constrained to official semantics and DSL-defined evidence.
+
+decision:
+  adopt_ai_prompt_dsl: true
+  source_of_truth: ai-prompt-dsl.v1.yaml
+  generation_model: evidence_bound_contract_based
+
+goals:
+  - prevent_non_official_metrics_and_rules
+  - ensure_explainability_for_non_technical_managers
+  - enforce_output_structure_for_governance
+
+non_goals:
+  - open_ended_unconstrained_ai_generation
+  - prompts_without_evidence_bundle
+
+architecture_impact:
+  affected_layers:
+    - ai_explanation_service
+    - governance_audit
+  runtime_requirements:
+    - prompt_contract_validator
+    - guardrail_enforcer
+    - output_schema_validator
+
+governance:
+  versioning: semantic_versioned
+  approval_flow:
+    - bi_office
+    - legal_compliance_if_required
+    - architecture_approval
+
+acceptance_criteria:
+  - ai_uses_only_official_dsl_references
+  - every_response_contains_required_sections
+  - low_confidence_evidence_blocks_final_answer
+
+risks_and_mitigations:
+  - risk: hallucinated_business_terms
+    mitigation: semantic_dictionary_lookup_enforcement
+  - risk: recommendation_mismatch
+    mitigation: recommendation_id_only_reference_policy
