@@ -1,0 +1,22 @@
+metadata:
+  artifact: score_mapping
+  version: 1.0.0
+  status: approved
+  catalog_ref: kpi-catalog.v1.yaml
+
+score:
+  kpi_id: EXE-04
+  name: Indice de Saude Empresarial Composto
+  formula_id: executive.business_health_index
+  weights:
+    FIN-01: 0.20
+    FIN-02: 0.20
+    FIN-03: 0.15
+    COM-01: 0.15
+    EST-02: 0.10
+    PRD-01: 0.20
+  thresholds:
+    excellent: 95
+    good: 80
+    attention: 60
+    critical: 0

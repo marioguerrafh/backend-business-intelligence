@@ -83,6 +83,7 @@ class SummaryBuilder:
             trends=trend,
             next_risks=source.next_risks,
             timeline_points=points,
+            dashboard=dict(source.dashboard),
         )
 
     @staticmethod

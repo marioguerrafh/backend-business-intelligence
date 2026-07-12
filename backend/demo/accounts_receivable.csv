@@ -1,0 +1,2 @@
+company_id,period_ref,source_record_id,customer_id,invoice_number,issue_date,due_date,payment_date,amount,received_amount,outstanding_amount,status,aging_days
+cmp_acme,2026-07,SRC-AR-1001,CUST-001,AR-202607-001,2026-07-05,2026-07-20,2026-07-19,18000.00,18000.00,0.00,paid,0

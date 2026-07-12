@@ -16,7 +16,7 @@ def test_formula_engine_evaluates_official_net_revenue_formula() -> None:
 
     result = engine.evaluate_formula(
         FormulaEvaluationRequest(
-            formula_id="f.net_revenue",
+            formula_id="revenue.net",
             company_id="cmp_acme",
             period_ref="2026-07",
             metrics={
@@ -30,7 +30,7 @@ def test_formula_engine_evaluates_official_net_revenue_formula() -> None:
 
     assert result.value == 830.0
     assert result.unit == "BRL"
-    assert result.audit.formula_id == "f.net_revenue"
+    assert result.audit.formula_id == "revenue.net"
     assert result.audit.inputs_used["fact_sales.gross_revenue"] == 1000
 
 
@@ -48,6 +48,7 @@ class _CatalogWithUndeclaredIdentifier(FormulaCatalogReader):
                 precision=2,
                 owner="test",
                 version=1,
+                effective_from="2026-07-12",
             )
         }
 
@@ -85,6 +86,7 @@ def test_dependency_resolver_detects_cycle() -> None:
             precision=2,
             owner="test",
             version=1,
+            effective_from="2026-07-12",
         ),
         "f.b": FormulaDefinition(
             formula_id="f.b",
@@ -97,6 +99,7 @@ def test_dependency_resolver_detects_cycle() -> None:
             precision=2,
             owner="test",
             version=1,
+            effective_from="2026-07-12",
         ),
     }
 

@@ -15,7 +15,13 @@ from app.modules.business.infrastructure.models import (
     ProductModel,
 )
 from app.modules.imports.infrastructure.models import (
+    ImportedAccountsPayableFactModel,
+    ImportedAccountsReceivableFactModel,
+    ImportedBalanceSheetFactModel,
     ImportedFinancialFactModel,
+    ImportedHrFactModel,
+    ImportedIncomeStatementFactModel,
+    ImportedInventoryFactModel,
     ImportedSaleFactModel,
     ImportInconsistencyModel,
     ImportJobModel,
@@ -38,6 +44,12 @@ def _build_session_factory():
             ImportInconsistencyModel.__table__,
             ImportedSaleFactModel.__table__,
             ImportedFinancialFactModel.__table__,
+            ImportedBalanceSheetFactModel.__table__,
+            ImportedIncomeStatementFactModel.__table__,
+            ImportedAccountsReceivableFactModel.__table__,
+            ImportedAccountsPayableFactModel.__table__,
+            ImportedInventoryFactModel.__table__,
+            ImportedHrFactModel.__table__,
             ImportPublishedEventModel.__table__,
             CustomerModel.__table__,
             CustomerContactModel.__table__,
@@ -150,16 +162,16 @@ def test_import_endpoint_blocks_tenant_spoofing() -> None:
     client = TestClient(app)
 
     token = _token(client, company_id="cmp_acme")
-    csv_content = "source_record_id,transaction_date,cash_flow_type,account_type,cash_in_amount,cash_out_amount,operating_cash_flow_amount,description\nSRC-1,2026-07-01,operating,bank,1000,200,800,Movimento diario\n"
+    csv_content = "company_id,period_ref,source_record_id,transaction_date,cash_flow_type,account_type,cash_in_amount,cash_out_amount,operating_cash_flow_amount,description\ncmp_acme,2026-07,SRC-1,2026-07-01,operating,bank,1000,200,800,Movimento diario\n"
 
     response = client.post(
         "/v1/imports/csv",
         data={
             "company_id": "cmp_omega",
-            "template": "financial",
+            "template": "cashflow",
             "source_system": "csv_manual",
         },
-        files={"file": ("financial.csv", csv_content, "text/csv")},
+        files={"file": ("cashflow.csv", csv_content, "text/csv")},
         headers={"Authorization": f"Bearer {token}"},
     )
 

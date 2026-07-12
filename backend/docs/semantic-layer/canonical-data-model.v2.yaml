@@ -1,0 +1,798 @@
+metadata:
+  artifact: canonical_data_model
+  version: 2.0.0
+  status: approved
+  modeling_style: ddd_bounded_context_plus_analytics_star
+  compatibility:
+    backwards_compatible_with: canonical-data-model.v1.yaml
+    breaking_changes: false
+  date: 2026-07-12
+
+principles:
+  - canonical_entities_are_erp_independent
+  - all_facts_are_tenant_scoped
+  - all_facts_are_time_scoped
+  - identifiers_are_stable_and_traceable
+
+bounded_contexts:
+  - auth
+  - business_customer
+  - business_product
+  - financeiro
+  - comercial
+  - contabil
+  - estoque
+  - compras
+  - rh
+  - atendimento
+  - producao
+  - executivo
+
+core_dimensions:
+  dim_company:
+    keys:
+      natural_key: company_id
+      surrogate_key: company_sk
+    attributes:
+      - legal_name
+      - tax_id
+      - segment
+      - country
+      - state
+      - city
+
+  dim_date:
+    keys:
+      natural_key: date
+      surrogate_key: date_sk
+    attributes:
+      - year
+      - quarter
+      - month
+      - week
+      - day
+      - is_month_end
+
+  dim_product:
+    keys:
+      natural_key: product_id
+      surrogate_key: product_sk
+    attributes:
+      - sku
+      - name
+      - category
+      - unit_of_measure
+      - status
+
+  dim_customer:
+    keys:
+      natural_key: customer_id
+      surrogate_key: customer_sk
+    attributes:
+      - legal_name
+      - trade_name
+      - document_number
+      - status
+
+  dim_channel:
+    keys:
+      natural_key: channel_id
+      surrogate_key: channel_sk
+    attributes:
+      - channel_type
+      - channel_group
+
+canonical_facts:
+  fact_sales:
+    grain: one_row_per_invoice_line_or_order_line
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+      - customer_sk
+    measures:
+      - gross_revenue
+      - tax_amount
+      - discount_amount
+      - return_amount
+      - net_revenue
+      - quantity_sold
+      - cogs_amount
+
+  fact_finance_cashflow:
+    grain: one_row_per_cash_movement
+    mandatory_keys:
+      - company_sk
+      - date_sk
+    dimensions:
+      - cash_flow_type
+      - account_type
+    measures:
+      - cash_in_amount
+      - cash_out_amount
+      - operating_cash_flow_amount
+
+  fact_inventory_snapshot:
+    grain: one_row_per_product_location_snapshot
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+    dimensions:
+      - location_id
+    measures:
+      - on_hand_qty
+      - reserved_qty
+      - available_qty
+      - inventory_value
+
+  fact_procurement:
+    grain: one_row_per_purchase_order_line
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+    dimensions:
+      - supplier_id
+    measures:
+      - po_quantity
+      - po_unit_cost
+      - po_total_cost
+      - lead_time_days
+      - on_time_delivery_flag
+
+  fact_hr_workforce:
+    grain: one_row_per_employee_per_period
+    mandatory_keys:
+      - company_sk
+      - date_sk
+    dimensions:
+      - department_id
+      - role_id
+    measures:
+      - active_headcount
+      - admissions_count
+      - dismissals_count
+      - absence_hours
+      - scheduled_hours
+      - payroll_cost
+
+  fact_service:
+    grain: one_row_per_ticket_or_interaction
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - customer_sk
+    dimensions:
+      - channel_id
+      - queue_id
+      - agent_id
+    measures:
+      - first_response_minutes
+      - resolution_minutes
+      - first_contact_resolution_flag
+      - nps_score
+
+  fact_production:
+    grain: one_row_per_machine_shift_batch
+    mandatory_keys:
+      - company_sk
+      - date_sk
+      - product_sk
+    dimensions:
+      - plant_id
+      - line_id
+      - machine_id
+      - shift_id
+    measures:
+      - planned_output_qty
+      - actual_output_qty
+      - scrap_qty
+      - availability_rate
+      - performance_rate
+      - quality_rate
+      - oee_rate
+
+  fact_balance_sheet:
+    grain: one_row_per_company_period_closing_balance
+    mandatory_keys:
+      - company_id
+      - period_ref
+      - reference_date
+    measures:
+      - current_assets
+      - non_current_assets
+      - cash_and_equivalents
+      - inventory
+      - accounts_receivable
+      - other_current_assets
+      - current_liabilities
+      - non_current_liabilities
+      - accounts_payable
+      - total_assets
+      - total_liabilities
+      - equity
+    fields:
+      - name: company_id
+        description: Tenant identifier.
+        type: string
+        nullable: false
+        business_definition: Unique company identifier used for multi-tenant isolation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: period_ref
+        description: Period reference in YYYY-MM format.
+        type: string
+        nullable: false
+        business_definition: Accounting period used for KPI aggregation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: reference_date
+        description: Closing date of the balance sheet snapshot.
+        type: date
+        nullable: false
+        business_definition: Date representing the accounting position for the period.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: current_assets
+        description: Total current assets.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Assets expected to be converted into cash within 12 months.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: non_current_assets
+        description: Total non-current assets.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Assets with realization horizon above 12 months.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: cash_and_equivalents
+        description: Cash and short-term cash equivalents.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Immediate liquidity available in cash and bank equivalents.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: inventory
+        description: Total inventory balance.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Inventory recognized as asset at period close.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: accounts_receivable
+        description: Total accounts receivable.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Amount expected to be received from customers.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: other_current_assets
+        description: Other current assets not separately classified.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Residual current assets used to close current asset composition.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: current_liabilities
+        description: Total current liabilities.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Obligations due within 12 months.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: non_current_liabilities
+        description: Total non-current liabilities.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Obligations due after 12 months.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: accounts_payable
+        description: Total accounts payable.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Amount owed to suppliers and third parties.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: total_assets
+        description: Total assets.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Sum of current and non-current assets.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: total_liabilities
+        description: Total liabilities.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Sum of current and non-current liabilities.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: equity
+        description: Shareholders equity.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Net worth attributable to owners at period close.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: created_at
+        description: Record creation timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp when the canonical record was first persisted.
+        source_system_examples: [platform_etl]
+      - name: updated_at
+        description: Record update timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp of the latest canonical update.
+        source_system_examples: [platform_etl]
+
+  fact_income_statement:
+    grain: one_row_per_company_period_income_statement
+    mandatory_keys:
+      - company_id
+      - period_ref
+    measures:
+      - gross_revenue
+      - net_revenue
+      - cogs
+      - gross_profit
+      - operating_expenses
+      - ebit
+      - depreciation
+      - amortization
+      - ebitda
+      - financial_income
+      - financial_expense
+      - income_before_tax
+      - income_tax
+      - net_income
+      - nopat
+    fields:
+      - name: company_id
+        description: Tenant identifier.
+        type: string
+        nullable: false
+        business_definition: Unique company identifier used for multi-tenant isolation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: period_ref
+        description: Period reference in YYYY-MM format.
+        type: string
+        nullable: false
+        business_definition: Accounting period used for DRE consolidation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: gross_revenue
+        description: Gross operating revenue.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Total revenue before deductions and taxes.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: net_revenue
+        description: Net operating revenue.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Revenue after taxes, returns, and discounts.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: cogs
+        description: Cost of goods sold.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Direct cost associated with sold goods/services.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: gross_profit
+        description: Gross profit amount.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Net revenue minus COGS.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: operating_expenses
+        description: Total operating expenses.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Expenses required to run day-to-day operations.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: ebit
+        description: Earnings before interest and taxes.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Operating profit before financial results and taxes.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: depreciation
+        description: Depreciation expense.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Non-cash expense allocation for tangible assets.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle]
+      - name: amortization
+        description: Amortization expense.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Non-cash expense allocation for intangible assets.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle]
+      - name: ebitda
+        description: Earnings before interest, taxes, depreciation, and amortization.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Operating result adjusted for non-cash D&A effects.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: financial_income
+        description: Financial income.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Gains from financial operations and investments.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: financial_expense
+        description: Financial expense.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Costs related to debt, interest, and financial charges.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: income_before_tax
+        description: Income before tax.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Profit after financial results and before tax charges.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: income_tax
+        description: Income tax expense.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Taxes on profit for the reporting period.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle]
+      - name: net_income
+        description: Net income.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Final accounting profit after all expenses and taxes.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Oracle]
+      - name: nopat
+        description: Net operating profit after taxes.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Operating result net of taxes, excluding financing effects.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle]
+      - name: created_at
+        description: Record creation timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp when the canonical record was first persisted.
+        source_system_examples: [platform_etl]
+      - name: updated_at
+        description: Record update timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp of the latest canonical update.
+        source_system_examples: [platform_etl]
+
+  fact_accounts_receivable:
+    grain: one_row_per_customer_invoice_receivable
+    mandatory_keys:
+      - company_id
+      - customer_id
+      - invoice_number
+    measures:
+      - amount
+      - received_amount
+      - outstanding_amount
+      - aging_days
+    fields:
+      - name: company_id
+        description: Tenant identifier.
+        type: string
+        nullable: false
+        business_definition: Unique company identifier used for multi-tenant isolation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: customer_id
+        description: Customer identifier.
+        type: string
+        nullable: false
+        business_definition: Canonical customer reference tied to dim_customer.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: invoice_number
+        description: Invoice reference number.
+        type: string
+        nullable: false
+        business_definition: Commercial/fiscal document used to track receivable title.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: issue_date
+        description: Invoice issue date.
+        type: date
+        nullable: false
+        business_definition: Date when receivable title was generated.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: due_date
+        description: Contractual due date.
+        type: date
+        nullable: false
+        business_definition: Payment deadline used for aging and collection metrics.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: payment_date
+        description: Actual payment date.
+        type: date
+        nullable: true
+        business_definition: Date when the receivable was settled.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: amount
+        description: Original receivable amount.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Face value of the receivable title.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: received_amount
+        description: Amount already received.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Settled amount linked to the receivable title.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: outstanding_amount
+        description: Open amount to be received.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Residual amount still pending settlement.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: status
+        description: Receivable status.
+        type: string
+        nullable: false
+        business_definition: Operational state such as open, paid, overdue, renegotiated.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: aging_days
+        description: Receivable aging in days.
+        type: int
+        nullable: false
+        business_definition: Number of days since due date for outstanding titles.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: created_at
+        description: Record creation timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp when the canonical record was first persisted.
+        source_system_examples: [platform_etl]
+
+  fact_accounts_payable:
+    grain: one_row_per_supplier_invoice_payable
+    mandatory_keys:
+      - company_id
+      - supplier_id
+      - invoice_number
+    measures:
+      - amount
+      - paid_amount
+      - outstanding_amount
+      - aging_days
+    fields:
+      - name: company_id
+        description: Tenant identifier.
+        type: string
+        nullable: false
+        business_definition: Unique company identifier used for multi-tenant isolation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: supplier_id
+        description: Supplier identifier.
+        type: string
+        nullable: false
+        business_definition: Canonical supplier reference tied to procurement facts.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: invoice_number
+        description: Payable invoice reference number.
+        type: string
+        nullable: false
+        business_definition: Fiscal/commercial document used to track payable title.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: issue_date
+        description: Invoice issue date.
+        type: date
+        nullable: false
+        business_definition: Date when payable title was generated.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: due_date
+        description: Contractual due date.
+        type: date
+        nullable: false
+        business_definition: Payment deadline used for treasury planning and KPI PMP.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: payment_date
+        description: Actual payment date.
+        type: date
+        nullable: true
+        business_definition: Date when the payable title was settled.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: amount
+        description: Original payable amount.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Face value of the payable title.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: paid_amount
+        description: Amount already paid.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Settled amount linked to the payable title.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: outstanding_amount
+        description: Open amount to be paid.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Residual amount still pending settlement.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: status
+        description: Payable status.
+        type: string
+        nullable: false
+        business_definition: Operational state such as open, paid, overdue, renegotiated.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: aging_days
+        description: Payable aging in days.
+        type: int
+        nullable: false
+        business_definition: Number of days since due date for outstanding titles.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: created_at
+        description: Record creation timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp when the canonical record was first persisted.
+        source_system_examples: [platform_etl]
+
+  fact_inventory:
+    grain: one_row_per_product_warehouse_snapshot_date
+    mandatory_keys:
+      - company_id
+      - product_id
+      - warehouse_id
+      - snapshot_date
+    measures:
+      - opening_quantity
+      - closing_quantity
+      - average_quantity
+      - average_cost
+      - inventory_value
+      - stock_turnover
+      - days_in_inventory
+    fields:
+      - name: company_id
+        description: Tenant identifier.
+        type: string
+        nullable: false
+        business_definition: Unique company identifier used for multi-tenant isolation.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Senior, Oracle, Bling, Tiny]
+      - name: product_id
+        description: Product identifier.
+        type: string
+        nullable: false
+        business_definition: Canonical product reference tied to dim_product.
+        source_system_examples: [Omie, Conta Azul, SAP, TOTVS, Bling, Tiny]
+      - name: warehouse_id
+        description: Warehouse/location identifier.
+        type: string
+        nullable: false
+        business_definition: Physical or logical inventory storage location.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: snapshot_date
+        description: Inventory snapshot date.
+        type: date
+        nullable: false
+        business_definition: Date of inventory position used for PME and giro metrics.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: opening_quantity
+        description: Opening inventory quantity.
+        type: decimal(18,4)
+        nullable: false
+        business_definition: Quantity at start of the snapshot period.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: closing_quantity
+        description: Closing inventory quantity.
+        type: decimal(18,4)
+        nullable: false
+        business_definition: Quantity at end of the snapshot period.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: average_quantity
+        description: Average inventory quantity for the period.
+        type: decimal(18,4)
+        nullable: false
+        business_definition: Average stock level used in turnover and days-in-inventory calculations.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: average_cost
+        description: Average unit cost.
+        type: decimal(18,4)
+        nullable: false
+        business_definition: Weighted average cost of inventory units for valuation.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: inventory_value
+        description: Inventory monetary value.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Total stock value at average cost.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle, Bling, Tiny]
+      - name: stock_turnover
+        description: Inventory turnover indicator.
+        type: decimal(18,4)
+        nullable: true
+        business_definition: Number of times inventory rotates in a period.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle]
+      - name: days_in_inventory
+        description: Inventory days indicator.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Average number of days inventory remains before sale.
+        source_system_examples: [Omie, SAP, TOTVS, Oracle]
+      - name: created_at
+        description: Record creation timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp when the canonical record was first persisted.
+        source_system_examples: [platform_etl]
+
+  fact_hr:
+    grain: one_row_per_company_period_workforce
+    mandatory_keys:
+      - company_id
+      - period_ref
+    measures:
+      - employee_count
+      - active_employee_count
+      - terminated_employee_count
+      - payroll_amount
+      - average_salary
+      - hours_worked
+    fields:
+      - name: company_id
+        description: Tenant identifier.
+        type: string
+        nullable: false
+        business_definition: Unique company identifier used for multi-tenant isolation.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle, Omie, Conta Azul]
+      - name: period_ref
+        description: Period reference in YYYY-MM format.
+        type: string
+        nullable: false
+        business_definition: Period used for workforce and payroll KPI consolidation.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle, Omie, Conta Azul]
+      - name: employee_count
+        description: Total employees in period.
+        type: int
+        nullable: false
+        business_definition: Total number of employees linked to the company in the period.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle]
+      - name: active_employee_count
+        description: Active employees in period.
+        type: int
+        nullable: false
+        business_definition: Number of employees with active status in the period.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle]
+      - name: terminated_employee_count
+        description: Terminated employees in period.
+        type: int
+        nullable: false
+        business_definition: Number of employees terminated during the period.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle]
+      - name: payroll_amount
+        description: Payroll amount.
+        type: decimal(18,2)
+        nullable: false
+        business_definition: Total payroll and labor burden recognized in period.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle, Omie, Conta Azul]
+      - name: average_salary
+        description: Average salary.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Average remuneration per active employee.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle]
+      - name: hours_worked
+        description: Total hours worked.
+        type: decimal(18,2)
+        nullable: true
+        business_definition: Sum of effective worked hours for workforce productivity analysis.
+        source_system_examples: [Senior, SAP, TOTVS, Oracle]
+      - name: created_at
+        description: Record creation timestamp.
+        type: timestamp
+        nullable: false
+        business_definition: Timestamp when the canonical record was first persisted.
+        source_system_examples: [platform_etl]
+
+semantic_lineage_contract:
+  required_fields:
+    - source_system
+    - source_table_or_endpoint
+    - source_field
+    - canonical_entity
+    - canonical_field
+    - mapping_rule_id
+    - transformation_id
+    - loaded_at
+
+erp_independence_contract:
+  constraints:
+    - KPI_formulas_must_reference_canonical_facts_and_dimensions_only
+    - no_formula_may_reference_source_system_field_directly
+    - source_variation_must_be_absorbed_by_erp_mapping_catalog

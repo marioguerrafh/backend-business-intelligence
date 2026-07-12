@@ -15,6 +15,7 @@ from app.modules.rule.infrastructure.rule_catalog_yaml import YamlRuleCatalogRea
 class ExecuteRulesUseCase:
     repository: object
     catalog_reader: YamlRuleCatalogReader
+    kpi_catalog: object | None = None
 
     def execute(self, command: ExecuteRulesCommand) -> ExecuteRulesResult:
         rules = self.catalog_reader.load_rules()
@@ -97,6 +98,8 @@ class ExecuteRulesUseCase:
                 continue
 
             fired += 1
+            kpi_meta = self._kpi_meta(rule.kpi_id)
+            kpi_name = str(kpi_meta.get("name") or kpi_meta.get("display_name") or rule.kpi_id)
             alert = RuleExecutionResult(
                 alert_id=f"rule_{uuid4().hex[:16]}",
                 rule_id=rule.rule_id,
@@ -105,8 +108,8 @@ class ExecuteRulesUseCase:
                 period_ref=command.period_ref,
                 severity=rule.severity,
                 priority=rule.priority,
-                title=f"{rule.kpi_id} - {rule.name}",
-                description=f"Rule {rule.rule_id} fired for KPI {rule.kpi_id} with value {metric_value}",
+                title=f"{kpi_name} - {rule.name}",
+                description=f"Regra {rule.rule_id} disparou para {kpi_name} com valor {metric_value}",
                 metric_value=metric_value,
                 fired_at=datetime.now(timezone.utc),
                 orchestrator_run_id=command.orchestrator_run_id,
@@ -149,3 +152,15 @@ class ExecuteRulesUseCase:
             idempotent_hits=idempotent,
             published_event_ids=tuple(event_ids),
         )
+
+    def _kpi_meta(self, kpi_id: str) -> dict[str, object]:
+        if self.kpi_catalog is None:
+            return {}
+        load_kpis = getattr(self.kpi_catalog, "load_kpis", None)
+        if callable(load_kpis):
+            return dict(load_kpis().get(kpi_id, {}))
+        get_by_id = getattr(self.kpi_catalog, "get_by_id", None)
+        if callable(get_by_id):
+            meta = get_by_id(kpi_id)
+            return dict(meta or {})
+        return {}

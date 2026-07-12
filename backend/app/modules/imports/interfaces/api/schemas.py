@@ -15,7 +15,19 @@ class ImportInconsistencyResponse(BaseModel):
 
 class ImportCsvResponse(BaseModel):
     job_id: str
-    template: Literal["customers", "products", "sales", "financial"]
+    template: Literal[
+        "customers",
+        "products",
+        "sales",
+        "cashflow",
+        "balance_sheet",
+        "income_statement",
+        "accounts_receivable",
+        "accounts_payable",
+        "inventory",
+        "hr",
+        "financial",
+    ]
     status: Literal["success", "partial", "failed"]
     total_rows: int
     imported_rows: int

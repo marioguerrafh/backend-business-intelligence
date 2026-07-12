@@ -15,6 +15,7 @@ class FormulaDefinition:
     precision: int
     owner: str
     version: int
+    effective_from: str = "1970-01-01"
 
 
 @dataclass(slots=True)

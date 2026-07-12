@@ -80,6 +80,7 @@ class SummaryAggregate:
     trends: SummaryComparisons
     next_risks: tuple[dict[str, Any], ...]
     timeline_points: tuple[TimelinePoint, ...]
+    dashboard: dict[str, Any]
 
     def to_payload(self) -> dict[str, Any]:
         return {
@@ -152,4 +153,5 @@ class SummaryAggregate:
                     for point in self.timeline_points
                 ]
             },
+            "dashboard": dict(self.dashboard),
         }

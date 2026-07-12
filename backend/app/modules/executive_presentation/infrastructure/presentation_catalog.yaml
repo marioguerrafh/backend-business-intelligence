@@ -1,0 +1,350 @@
+locale:
+  months:
+    "01": Janeiro
+    "02": Fevereiro
+    "03": Marco
+    "04": Abril
+    "05": Maio
+    "06": Junho
+    "07": Julho
+    "08": Agosto
+    "09": Setembro
+    "10": Outubro
+    "11": Novembro
+    "12": Dezembro
+  months_short:
+    "01": Jan
+    "02": Fev
+    "03": Mar
+    "04": Abr
+    "05": Mai
+    "06": Jun
+    "07": Jul
+    "08": Ago
+    "09": Set
+    "10": Out
+    "11": Nov
+    "12": Dez
+
+strings:
+  summary_title: Saude da Empresa
+  comparison_last_month: em relacao ao mes anterior
+  comparison_last_year: em relacao ao ano anterior
+  recommended_action: Ver recomendacoes
+  impact_label: Impacto estimado
+  impact_unavailable_label: Impacto nao disponivel
+  trend_up_description: Crescimento em relacao ao periodo anterior.
+  trend_down_description: Queda em relacao ao periodo anterior.
+  trend_stable_description: Resultado estavel em relacao ao periodo anterior.
+  timeline_current_description: Referencia mais recente consolidada.
+  timeline_previous_description: Referencia historica para comparacao.
+
+sections:
+  - type: hero
+    title: Saude da Empresa
+    empty_message: Dados de saude nao disponiveis.
+  - type: highlights
+    title: Destaques
+    empty_message: Sem destaques para o periodo.
+  - type: kpis
+    title: Indicadores-chave
+    empty_message: Nenhum KPI disponivel para este periodo.
+  - type: alerts
+    title: Alertas
+    empty_message: Nenhum alerta ativo.
+  - type: recommendations
+    title: Recomendacoes
+    empty_message: Nenhuma recomendacao no momento.
+  - type: insights
+    title: Insights
+    empty_message: Nenhum insight disponivel para este periodo.
+  - type: timeline
+    title: Evolucao de score
+    empty_message: Historico insuficiente para timeline.
+
+severity:
+  CRITICAL:
+    label: Critica
+    color: error
+    icon: warning
+  HIGH:
+    label: Alta
+    color: error
+    icon: warning
+  MEDIUM:
+    label: Media
+    color: warning
+    icon: warning
+  LOW:
+    label: Baixa
+    color: info
+    icon: info
+  INFO:
+    label: Informativa
+    color: info
+    icon: info
+
+health:
+  good:
+    label: Saudavel
+    color: success
+    icon: check_circle
+    description: Indicador dentro da faixa esperada.
+  attention:
+    label: Em atencao
+    color: warning
+    icon: warning
+    description: Indicador com variacao relevante e acompanhamento recomendado.
+  critical:
+    label: Critico
+    color: error
+    icon: error
+    description: Indicador fora da faixa esperada e exige acao imediata.
+
+score:
+  thresholds:
+    - min: 95
+      status: Excelente
+      color: success
+      icon: workspace_premium
+      description: Sua empresa apresenta excelente desempenho financeiro e operacional.
+    - min: 80
+      status: Muito Boa
+      color: success
+      icon: verified
+      description: Sua empresa apresenta desempenho consistente com alta confiabilidade operacional.
+    - min: 65
+      status: Boa
+      color: info
+      icon: sentiment_satisfied
+      description: Sua empresa tem boa performance, com oportunidades objetivas de evolucao.
+    - min: 50
+      status: Atencao
+      color: warning
+      icon: warning
+      description: Sua empresa requer atencao em indicadores-chave para manter ritmo de crescimento.
+    - min: 35
+      status: Critica
+      color: error
+      icon: report_problem
+      description: Sua empresa apresenta riscos relevantes que exigem plano de resposta imediato.
+    - min: 0
+      status: Grave
+      color: error
+      icon: error
+      description: Sua empresa esta em nivel critico e precisa de intervencao executiva imediata.
+
+kpis:
+  FIN-01:
+    short_name: Receita
+    display_name: Receita Liquida
+    description: Total de receita liquida consolidada no periodo.
+    icon: payments
+    category: Financeiro
+    currency: BRL
+    health:
+      green: good
+      yellow: attention
+      red: critical
+    comparison: em relacao ao mes anterior
+    display_order: 1
+  FIN-02:
+    short_name: Margem
+    display_name: Margem EBITDA
+    description: Percentual de margem EBITDA no periodo.
+    icon: trending_up
+    category: Financeiro
+    currency: PERCENT
+    comparison: em relacao ao mes anterior
+    display_order: 2
+  FIN-03:
+    short_name: Margem Op.
+    display_name: Margem Operacional
+    description: Margem operacional consolidada no periodo.
+    icon: account_balance_wallet
+    category: Financeiro
+    currency: PERCENT
+    comparison: em relacao ao mes anterior
+    display_order: 3
+  COM-01:
+    short_name: Vendas
+    display_name: Vendas
+    description: Volume de vendas liquidas no periodo.
+    icon: shopping_cart
+    category: Comercial
+    currency: BRL
+    comparison: em relacao ao mes anterior
+    display_order: 4
+  EST-01:
+    short_name: Estoque
+    display_name: Nivel de Estoque
+    description: Cobertura de estoque consolidada no periodo.
+    icon: inventory
+    category: Operacional
+    currency: NUMBER
+    comparison: em relacao ao mes anterior
+    display_order: 5
+  EXE-04:
+    short_name: Saude
+    display_name: Indice de Saude do Negocio
+    description: Composto executivo que resume a saude da empresa.
+    icon: monitor_heart
+    category: Executivo
+    currency: SCORE
+    comparison: em relacao ao mes anterior
+    display_order: 6
+  default:
+    short_name: Indicador
+    display_name: Indicador
+    description: Indicador consolidado para acompanhamento executivo.
+    icon: insights
+    category: Executivo
+    currency: NUMBER
+    comparison: em relacao ao mes anterior
+    display_order: 99
+
+alerts:
+  by_rule:
+    r.fin01.net_revenue_below_target:
+      title: Receita abaixo da meta
+      message: A receita liquida ficou abaixo da meta definida para este periodo.
+      category: Financeiro
+      icon: payments
+      color: warning
+  by_kpi:
+    FIN-01:
+      title: Receita abaixo da meta
+      message: A receita liquida ficou abaixo da meta definida para este periodo.
+      category: Financeiro
+      icon: payments
+      color: warning
+    FIN-02:
+      title: Fluxo de caixa negativo
+      message: O fluxo de caixa apresenta saldo negativo no periodo e requer ajuste imediato.
+      category: Financeiro
+      icon: account_balance
+      color: error
+    FIN-03:
+      title: Margem operacional reduzida
+      message: A margem operacional ficou abaixo do patamar esperado para este periodo.
+      category: Financeiro
+      icon: show_chart
+      color: warning
+    COM-01:
+      title: Queda nas vendas
+      message: O desempenho comercial ficou abaixo da tendencia projetada para o periodo.
+      category: Comercial
+      icon: trending_down
+      color: warning
+    EST-01:
+      title: Estoque elevado
+      message: O nivel de estoque acima do previsto aumenta risco de capital parado.
+      category: Operacional
+      icon: inventory_2
+      color: info
+  default:
+    title_template: "{kpi_name} com desvio relevante"
+    message_template: "O indicador {kpi_name} apresentou variacao fora do esperado para este periodo."
+    category: Executivo
+    icon: warning
+    color: warning
+
+insights:
+  trend:
+    title: Receita estavel
+    importance: low
+    icon: analytics
+    category: Financeiro
+    display_order: 1
+  margin_attention:
+    title: Margem em reducao
+    importance: medium
+    icon: query_stats
+    category: Financeiro
+    display_order: 2
+  healthy_cashflow:
+    title: Fluxo de caixa saudavel
+    importance: low
+    icon: account_balance
+    category: Financeiro
+    display_order: 3
+  sales_above_average:
+    title: Vendas acima da media
+    importance: high
+    icon: trending_up
+    category: Comercial
+    display_order: 4
+  low_conversion:
+    title: Baixa conversao comercial
+    importance: high
+    icon: conversion_path
+    category: Comercial
+    display_order: 5
+  default:
+    title: Oportunidade de melhoria detectada
+    importance: medium
+    icon: lightbulb
+    category: Executivo
+    display_order: 99
+
+recommendations:
+  by_category:
+    Financeiro:
+      description: A margem operacional apresentou reducao nas ultimas semanas.
+      expected_benefit_template: Melhora estimada de {value} na margem.
+    Comercial:
+      description: A conversao comercial ficou abaixo da media esperada.
+      expected_benefit_template: Potencial de recuperacao de {value} em vendas.
+    Operacional:
+      description: O desempenho operacional permite ganhos com ajustes de processo.
+      expected_benefit_template: Ganho estimado de {value} com a implementacao.
+  default:
+    category: Operacional
+    icon: task_alt
+    color: primary
+    action_button: Ver plano de acao
+    estimated_effort: media
+    estimated_time: 7 dias
+    description: Recomendacao priorizada para melhoria de desempenho.
+    expected_benefit_template: Beneficio estimado de {value}.
+
+dashboard:
+  summary_version: "3.1"
+  refresh_interval_seconds: 300
+
+highlights:
+  revenue:
+    icon: payments
+    color: success
+    template: Receita de {value}
+  alerts:
+    icon: warning
+    color: warning
+    singular_template: "{count} alerta ativo"
+    plural_template: "{count} alertas ativos"
+  trend:
+    icon: trending_up
+    color_up: success
+    color_down: error
+    color_stable: info
+    up_template: Receita cresceu {value}
+    down_template: Receita caiu {value}
+    stable_template: Receita estavel no periodo
+  executive_score:
+    icon: workspace_premium
+    color: primary
+    template: Executive Score {value}
+
+trends:
+  up:
+    icon: trending_up
+    color: success
+    description: Crescimento em relacao ao mes anterior.
+  down:
+    icon: trending_down
+    color: error
+    description: Queda em relacao ao mes anterior.
+  stable:
+    icon: trending_flat
+    color: info
+    description: Estabilidade em relacao ao mes anterior.

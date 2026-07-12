@@ -1,7 +1,7 @@
 ﻿from __future__ import annotations
 
 import csv
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from typing import Protocol
@@ -20,6 +20,16 @@ from app.modules.imports.application.contracts import (
     ImportCsvCommand,
     ImportCsvResult,
     ImportInconsistency,
+)
+from app.modules.imports.application.fact_mappers import (
+    AccountsPayableMapper,
+    AccountsReceivableMapper,
+    BalanceSheetMapper,
+    CashflowMapper,
+    HrMapper,
+    IncomeStatementMapper,
+    InventoryMapper,
+    SalesMapper,
 )
 from app.modules.imports.application.template_registry import get_template
 from app.modules.imports.domain.entities import CsvRow
@@ -55,10 +65,28 @@ class ImportRepositoryPort(Protocol):
     def add_inconsistency(self, *, company_id: str, job_id: str, issue: ImportInconsistency) -> None:
         ...
 
-    def persist_sale_fact(self, **kwargs) -> None:
+    def persist_sale_fact(self, **kwargs) -> bool:
         ...
 
-    def persist_financial_fact(self, **kwargs) -> None:
+    def persist_financial_fact(self, **kwargs) -> bool:
+        ...
+
+    def persist_balance_sheet_fact(self, **kwargs) -> bool:
+        ...
+
+    def persist_income_statement_fact(self, **kwargs) -> bool:
+        ...
+
+    def persist_accounts_receivable_fact(self, **kwargs) -> bool:
+        ...
+
+    def persist_accounts_payable_fact(self, **kwargs) -> bool:
+        ...
+
+    def persist_inventory_fact(self, **kwargs) -> bool:
+        ...
+
+    def persist_hr_fact(self, **kwargs) -> bool:
         ...
 
     def publish_ingest_completed(
@@ -101,6 +129,19 @@ class ImportCsvUseCase:
     upsert_customer: UpsertCustomerPort
     upsert_product: UpsertProductPort
     pipeline_coordinator: PipelineCoordinatorPort | None = None
+    _fact_mappers: dict[str, object] = field(init=False, repr=False)
+
+    def __post_init__(self) -> None:
+        self._fact_mappers = {
+            "sales": SalesMapper(),
+            "cashflow": CashflowMapper(),
+            "balance_sheet": BalanceSheetMapper(),
+            "income_statement": IncomeStatementMapper(),
+            "accounts_receivable": AccountsReceivableMapper(),
+            "accounts_payable": AccountsPayableMapper(),
+            "inventory": InventoryMapper(),
+            "hr": HrMapper(),
+        }
 
     def execute(self, command: ImportCsvCommand) -> ImportCsvResult:
         job_id = self.repository.create_job(
@@ -116,10 +157,15 @@ class ImportCsvUseCase:
 
         imported_rows = 0
         failed_rows = 0
+        seen_row_keys: set[str] = set()
 
         for row in rows:
             try:
-                self._import_row(command=command, job_id=job_id, row=row)
+                dedupe_key = self._import_row(command=command, job_id=job_id, row=row)
+                if dedupe_key and dedupe_key in seen_row_keys:
+                    raise ValueError(f"row {row.row_number}: duplicate row key '{dedupe_key}' in CSV")
+                if dedupe_key:
+                    seen_row_keys.add(dedupe_key)
                 imported_rows += 1
             except ValueError as exc:
                 failed_rows += 1
@@ -216,17 +262,14 @@ class ImportCsvUseCase:
             )
         return rows, issues
 
-    def _import_row(self, *, command: ImportCsvCommand, job_id: str, row: CsvRow) -> None:
+    def _import_row(self, *, command: ImportCsvCommand, job_id: str, row: CsvRow) -> str | None:
         if command.template == "customers":
             self._import_customer(command=command, row=row)
-            return
+            return None
         if command.template == "products":
             self._import_product(command=command, row=row)
-            return
-        if command.template == "sales":
-            self._import_sale_fact(command=command, job_id=job_id, row=row)
-            return
-        self._import_financial_fact(command=command, job_id=job_id, row=row)
+            return None
+        return self._import_fact(command=command, job_id=job_id, row=row)
 
     def _import_customer(self, *, command: ImportCsvCommand, row: CsvRow) -> None:
         source_record_id = self._required(row, "source_record_id")
@@ -302,39 +345,93 @@ class ImportCsvUseCase:
         )
 
     def _import_sale_fact(self, *, command: ImportCsvCommand, job_id: str, row: CsvRow) -> None:
+        mapper = self._fact_mappers["sales"]
+        record = mapper.map(command_company_id=command.company_id, row=row)
         self.repository.persist_sale_fact(
             job_id=job_id,
-            company_id=command.company_id,
             source_system=command.source_system,
-            source_record_id=self._required(row, "source_record_id"),
-            transaction_date=self._date_required(row, "transaction_date"),
-            invoice_id=self._required(row, "invoice_id"),
-            invoice_line_id=self._required(row, "invoice_line_id"),
-            product_external_id=self._required(row, "product_external_id"),
-            customer_external_id=self._required(row, "customer_external_id"),
-            gross_revenue=float(self._decimal_required(row, "gross_revenue")),
-            tax_amount=float(self._decimal_required(row, "tax_amount")),
-            discount_amount=float(self._decimal_required(row, "discount_amount")),
-            return_amount=float(self._decimal_required(row, "return_amount")),
-            net_revenue=float(self._decimal_required(row, "net_revenue")),
-            quantity_sold=float(self._decimal_required(row, "quantity_sold")),
-            cogs_amount=float(self._decimal_required(row, "cogs_amount")),
+            **record.payload,
         )
 
-    def _import_financial_fact(self, *, command: ImportCsvCommand, job_id: str, row: CsvRow) -> None:
-        self.repository.persist_financial_fact(
-            job_id=job_id,
-            company_id=command.company_id,
-            source_system=command.source_system,
-            source_record_id=self._required(row, "source_record_id"),
-            transaction_date=self._date_required(row, "transaction_date"),
-            cash_flow_type=self._required(row, "cash_flow_type"),
-            account_type=self._required(row, "account_type"),
-            cash_in_amount=float(self._decimal_required(row, "cash_in_amount")),
-            cash_out_amount=float(self._decimal_required(row, "cash_out_amount")),
-            operating_cash_flow_amount=float(self._decimal_required(row, "operating_cash_flow_amount")),
-            description=row.data.get("description") or None,
-        )
+    def _import_fact(self, *, command: ImportCsvCommand, job_id: str, row: CsvRow) -> str:
+        template = self._normalize_template(command.template)
+        mapper = self._fact_mappers.get(template)
+        if mapper is None:
+            raise ValueError(f"unsupported import template: {command.template}")
+
+        record = mapper.map(command_company_id=command.company_id, row=row)
+
+        if template == "sales":
+            self.repository.persist_sale_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "cashflow":
+            self.repository.persist_financial_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "balance_sheet":
+            self.repository.persist_balance_sheet_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "income_statement":
+            self.repository.persist_income_statement_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "accounts_receivable":
+            self.repository.persist_accounts_receivable_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "accounts_payable":
+            self.repository.persist_accounts_payable_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "inventory":
+            self.repository.persist_inventory_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        if template == "hr":
+            self.repository.persist_hr_fact(
+                job_id=job_id,
+                source_system=command.source_system,
+                **record.payload,
+            )
+            return record.identity
+
+        raise ValueError(f"unsupported import template: {command.template}")
+
+    @staticmethod
+    def _normalize_template(template: str) -> str:
+        if template == "financial":
+            return "cashflow"
+        return template
 
     @staticmethod
     def _required(row: CsvRow, field: str) -> str:

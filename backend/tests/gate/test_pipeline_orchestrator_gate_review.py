@@ -108,9 +108,9 @@ def test_gate_pipeline_runs_without_manual_engine_calls() -> None:
 
     token = _token(client)
     csv_content = (
-        "source_record_id,transaction_date,invoice_id,invoice_line_id,product_external_id,customer_external_id,"
+        "company_id,period_ref,source_record_id,transaction_date,invoice_id,invoice_line_id,product_external_id,customer_external_id,"
         "gross_revenue,tax_amount,discount_amount,return_amount,net_revenue,quantity_sold,cogs_amount\n"
-        "SRC-GATE-1,2026-07-10,NF-1,1,PRD-1,CLI-1,1200,120,30,20,1030,4,700\n"
+        "cmp_acme,2026-07,SRC-GATE-1,2026-07-10,NF-1,1,PRD-1,CLI-1,1200,120,30,20,1030,4,700\n"
     )
 
     import_response = client.post(
@@ -151,5 +151,26 @@ def test_gate_pipeline_runs_without_manual_engine_calls() -> None:
         assert "pipeline.step.started.v1" in topics
         assert "pipeline.step.completed.v1" in topics
         assert "pipeline.completed.v1" in topics or "pipeline.failed.v1" in topics
+
+        steps = session.execute(
+            select(PipelineStepModel).where(PipelineStepModel.pipeline_run_id == run.pipeline_run_id)
+        ).scalars().all()
+        step_names = {step.step_name for step in steps}
+        assert {
+            "KPI Orchestrator",
+            "Rule Engine",
+            "Recommendation Engine",
+            "Insight Engine",
+            "Executive Score Engine",
+            "Summary Engine",
+        }.issubset(step_names)
+
+        step_statuses = {step.step_name: step.status for step in steps}
+        assert step_statuses.get("KPI Orchestrator") == "SUCCESS"
+        assert step_statuses.get("Rule Engine") == "SUCCESS"
+        assert step_statuses.get("Recommendation Engine") == "SUCCESS"
+        assert step_statuses.get("Insight Engine") == "SUCCESS"
+        assert step_statuses.get("Executive Score Engine") == "SUCCESS"
+        assert step_statuses.get("Summary Engine") == "SUCCESS"
 
     app.dependency_overrides.clear()

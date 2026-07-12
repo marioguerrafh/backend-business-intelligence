@@ -32,8 +32,26 @@ def import_csv(
 ) -> ImportCsvResponse:
     TenantGuard.assert_payload_company(principal.company_id, company_id)
 
-    if template not in {"customers", "products", "sales", "financial"}:
-        raise ErrorMapper.unprocessable(ValueError("template must be one of customers, products, sales, financial"))
+    allowed_templates = {
+        "customers",
+        "products",
+        "sales",
+        "cashflow",
+        "balance_sheet",
+        "income_statement",
+        "accounts_receivable",
+        "accounts_payable",
+        "inventory",
+        "hr",
+        "financial",
+    }
+    if template not in allowed_templates:
+        raise ErrorMapper.unprocessable(
+            ValueError(
+                "template must be one of customers, products, sales, cashflow, balance_sheet, "
+                "income_statement, accounts_receivable, accounts_payable, inventory, hr, financial"
+            )
+        )
     if not file.filename or not file.filename.lower().endswith(".csv"):
         raise ErrorMapper.unprocessable(ValueError("file must be a .csv"))
 

@@ -2,7 +2,19 @@ from dataclasses import dataclass
 from typing import Literal
 
 
-ImportTemplate = Literal["customers", "products", "sales", "financial"]
+ImportTemplate = Literal[
+    "customers",
+    "products",
+    "sales",
+    "cashflow",
+    "balance_sheet",
+    "income_statement",
+    "accounts_receivable",
+    "accounts_payable",
+    "inventory",
+    "hr",
+    "financial",
+]
 
 
 @dataclass(slots=True, frozen=True)

@@ -54,6 +54,14 @@ def test_summary_builder_maps_payload_and_computes_trends() -> None:
             {"snapshot_date": "2025-07-10", "overall_score": 60, "financial_score": 61, "commercial_score": 59, "operational_score": 58},
         ),
         next_risks=({"risk_code": "cash.low", "probability": 0.8},),
+        dashboard={
+            "last_import": "2026-07-10T11:58:00+00:00",
+            "last_pipeline": "completed",
+            "pipeline_duration_ms": 3400,
+            "summary_version": "3.1",
+            "refresh_interval_seconds": 300,
+            "data_quality": "excellent",
+        },
     )
 
     aggregate = SummaryBuilder().build(summary_id="sum_1", source=source)

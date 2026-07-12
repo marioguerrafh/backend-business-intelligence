@@ -4,8 +4,11 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from sqlalchemy import Select, select
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
+from app.modules.imports.infrastructure.models import ImportJobModel
+from app.modules.pipeline.infrastructure.models import PipelineRunModel
 from app.modules.rule.infrastructure.models import RuleResultModel
 from app.modules.summary.application.ports.repository import (
     SummaryProjectionRecord,
@@ -61,6 +64,34 @@ class SqlAlchemySummaryRepository(SummaryRepository):
             .limit(30)
         ).scalars().all()
 
+        latest_import = self._safe_scalar_one_or_none(
+            select(ImportJobModel)
+            .where(ImportJobModel.company_id == company_id)
+            .order_by(ImportJobModel.finished_at.desc().nullslast(), ImportJobModel.started_at.desc())
+            .limit(1)
+        )
+
+        latest_pipeline = self._safe_scalar_one_or_none(
+            select(PipelineRunModel)
+            .where(PipelineRunModel.company_id == company_id)
+            .order_by(PipelineRunModel.finished_at.desc().nullslast(), PipelineRunModel.started_at.desc())
+            .limit(1)
+        )
+
+        pipeline_duration_ms = None
+        if latest_pipeline is not None and latest_pipeline.started_at and latest_pipeline.finished_at:
+            pipeline_duration_ms = int((latest_pipeline.finished_at - latest_pipeline.started_at).total_seconds() * 1000)
+
+        data_quality = "excellent"
+        if latest_import is not None and latest_import.total_rows > 0:
+            failed_ratio = latest_import.failed_rows / latest_import.total_rows
+            if failed_ratio >= 0.15:
+                data_quality = "critical"
+            elif failed_ratio >= 0.07:
+                data_quality = "attention"
+            elif failed_ratio >= 0.02:
+                data_quality = "good"
+
         return SummarySourcePayload(
             company_id=company_id,
             period_ref=effective_period,
@@ -94,6 +125,9 @@ class SqlAlchemySummaryRepository(SummaryRepository):
             alerts=tuple(
                 {
                     "alert_id": item.rule_result_id,
+                    "rule_id": item.rule_id,
+                    "kpi_id": item.kpi_id,
+                    "metric_value": item.metric_value,
                     "severity": item.severity,
                     "priority": item.priority,
                     "title": item.alert_title,
@@ -156,6 +190,14 @@ class SqlAlchemySummaryRepository(SummaryRepository):
                 for item in timeline_rows
             ),
             next_risks=tuple(timeline_rows[0].top_risks_json if timeline_rows else []),
+            dashboard={
+                "last_import": latest_import.finished_at.isoformat() if latest_import and latest_import.finished_at else None,
+                "last_pipeline": latest_pipeline.status.lower() if latest_pipeline else "unknown",
+                "pipeline_duration_ms": pipeline_duration_ms,
+                "summary_version": "3.1",
+                "refresh_interval_seconds": 300,
+                "data_quality": data_quality,
+            },
         )
 
     def save_projection(self, aggregate: SummaryAggregate) -> None:
@@ -200,3 +242,12 @@ class SqlAlchemySummaryRepository(SummaryRepository):
         if period_ref:
             query = query.where(ExecutiveScoreModel.period_ref == period_ref)
         return self.session.execute(query.order_by(ExecutiveScoreModel.calculated_at.desc()).limit(1)).scalar_one_or_none()
+
+    def _safe_scalar_one_or_none(self, statement: Select[Any]) -> Any | None:
+        try:
+            return self.session.execute(statement).scalar_one_or_none()
+        except OperationalError as exc:
+            message = str(exc).lower()
+            if "no such table" in message or "does not exist" in message:
+                return None
+            raise

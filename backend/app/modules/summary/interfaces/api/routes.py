@@ -20,6 +20,7 @@ def get_summary(
     request: Request,
     company_id: str | None = Query(default=None),
     period_ref: str | None = Query(default=None),
+    force_refresh: bool = Query(default=False),
     principal: AuthPrincipal = Depends(get_current_principal),
     db: Session = Depends(get_db),
 ) -> GetSummaryResponse:
@@ -38,6 +39,7 @@ def get_summary(
                     company_id=tenant_id,
                     period_ref=period_ref,
                     correlation_id=request.headers.get("X-Correlation-ID"),
+                    force_refresh=force_refresh,
                 )
             )
         )

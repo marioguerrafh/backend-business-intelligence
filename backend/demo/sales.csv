@@ -1,0 +1,2 @@
+company_id,period_ref,source_record_id,transaction_date,invoice_id,invoice_line_id,product_external_id,customer_external_id,gross_revenue,tax_amount,discount_amount,return_amount,net_revenue,quantity_sold,cogs_amount
+cmp_acme,2026-07,SRC-S-1001,2026-07-03,NF-20260703-1,1,PROD-001,CUST-001,2500.00,250.00,50.00,0.00,2200.00,10,1300.00

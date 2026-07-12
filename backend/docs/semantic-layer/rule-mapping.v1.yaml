@@ -1,0 +1,27 @@
+metadata:
+  artifact: rule_mapping
+  version: 1.0.0
+  status: approved
+  catalog_ref: kpi-catalog.v1.yaml
+
+rules:
+  r.fin01.net_revenue_below_target:
+    kpi_id: FIN-01
+    category: Financeiro
+    severity: medium
+    priority: p1
+  r.fin03.cash_negative_3d:
+    kpi_id: FIN-03
+    category: Financeiro
+    severity: high
+    priority: p0
+  r.est02.stockout_over_5:
+    kpi_id: EST-02
+    category: Estoque
+    severity: critical
+    priority: p0
+  r.exe04.health_drop_10p:
+    kpi_id: EXE-04
+    category: Executivo
+    severity: high
+    priority: p0

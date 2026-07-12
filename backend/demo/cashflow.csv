@@ -1,0 +1,2 @@
+company_id,period_ref,source_record_id,transaction_date,cash_flow_type,account_type,cash_in_amount,cash_out_amount,operating_cash_flow_amount,description
+cmp_acme,2026-07,SRC-CF-1001,2026-07-03,operating,bank,5000.00,1700.00,3300.00,Daily operating movement

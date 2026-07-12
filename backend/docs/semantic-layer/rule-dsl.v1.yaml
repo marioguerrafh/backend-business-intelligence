@@ -47,6 +47,33 @@ syntax:
     - critical
 
 rule_examples:
+  - rule_id: r.fin01.net_revenue_below_target
+    kpi_id: FIN-01
+    name: receita_liquida_abaixo_meta
+    scope:
+      dimensions:
+        - company_id
+    condition: lt(metric_value,1800000)
+    severity: medium
+    priority: p1
+    trigger_window: 30d
+    dependencies:
+      - kpi.FIN-01
+    actions:
+      - action_id: review_pricing_campaigns
+      - action_id: inspect_discount_policies
+    alert_channels:
+      - in_app
+      - email
+    escalation_policy:
+      initial_owner: comercial_manager
+      escalate_after: 48h
+      escalate_to:
+        - cfo
+    effective_from: 2026-07-10
+    effective_to: null
+    enabled: true
+
   - rule_id: r.fin03.cash_negative_3d
     kpi_id: FIN-03
     name: fluxo_caixa_negativo_tres_dias

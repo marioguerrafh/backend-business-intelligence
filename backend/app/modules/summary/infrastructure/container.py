@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 from sqlalchemy.orm import Session
 
+from app.modules.executive_presentation.application.catalog import PresentationCatalog
+from app.modules.executive_presentation.application.presenter import ExecutivePresentationMapper
 from app.modules.summary.application.summary_builder import SummaryBuilder
 from app.modules.summary.application.summary_cache import InMemorySummaryCache
 from app.modules.summary.application.summary_projection import SummaryProjection
@@ -23,5 +25,6 @@ def build_summary_container(session: Session) -> SummaryContainer:
         builder=SummaryBuilder(),
         projection=SummaryProjection(),
         cache=_summary_cache,
+        presenter=ExecutivePresentationMapper(catalog_reader=PresentationCatalog()),
     )
     return SummaryContainer(service=service)

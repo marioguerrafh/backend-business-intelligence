@@ -1,0 +1,1598 @@
+metadata:
+  artifact: kpi_catalog
+  version: 1.0.0
+  status: approved
+  owner_roles:
+    - principal_backend_engineer
+    - data_architect
+    - chief_business_intelligence_officer
+  date: 2026-07-12
+  source_of_truth: true
+
+categories:
+  - Financeiro
+  - Economico
+  - Comercial
+  - Operacional
+  - Produtividade
+  - Estoque
+  - Clientes
+  - RH
+  - Fiscal
+  - Executivo
+
+defaults:
+  health_ranges: &default_health_ranges
+    excellent:
+      min: 95
+    good:
+      min: 80
+    attention:
+      min: 60
+    critical:
+      min: 0
+  presentation: &default_presentation
+    title: Indicador Executivo
+    subtitle: Indicador consolidado para acompanhamento executivo.
+    empty_message: Sem dados consolidados para o periodo.
+    tooltip: KPI oficial da plataforma.
+    card_style: premium
+
+kpis:
+  FIN-01:
+    id: FIN-01
+    code: net_revenue
+    name: Receita Liquida
+    short_name: Receita
+    description: Receita liquida consolidada do periodo.
+    category: Financeiro
+    subcategory: Receita
+    unit: BRL
+    display_format: currency_compact
+    precision: 2
+    icon: payments
+    color: success
+    display_order: 1
+    formula_id: revenue.net
+    formula: Receita bruta menos impostos, devolucoes e descontos.
+    depends_on: []
+    source_tables: [fact_sales]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Receita Liquida
+      subtitle: Receita consolidada do periodo.
+      empty_message: Sem receita consolidada para o periodo.
+      tooltip: Receita liquida apos deducoes fiscais e comerciais.
+      card_style: premium
+    tags: [receita, vendas, executivo]
+    owner: financeiro
+    formula_spec:
+      formula_id: f.net_revenue
+      name: receita_liquida
+      expression: sub(sub(sub(sum(gross_revenue), sum(tax_amount)), sum(return_amount)), sum(discount_amount))
+      input_metrics: [fact_sales.gross_revenue, fact_sales.tax_amount, fact_sales.return_amount, fact_sales.discount_amount]
+      output_type: decimal
+      output_unit: BRL
+      precision: 2
+      owner: financeiro
+      version: 1
+      effective_from: 2026-07-10
+
+  FIN-02:
+    id: FIN-02
+    code: ebitda_margin
+    name: Margem EBITDA
+    short_name: EBITDA
+    description: Margem EBITDA consolidada do periodo.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: trending_up
+    color: success
+    display_order: 2
+    formula_id: margin.ebitda
+    formula: EBITDA dividido pela receita liquida.
+    depends_on: [FIN-01]
+    source_tables: [fact_sales, fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Margem EBITDA
+      subtitle: Eficiência operacional antes de juros e impostos.
+      empty_message: Sem margem EBITDA calculada para o periodo.
+      tooltip: Percentual da receita que sobra da operacao.
+      card_style: premium
+    tags: [margem, ebitda, rentabilidade]
+    owner: controladoria
+    formula_spec:
+      formula_id: f.ebitda_margin
+      name: margem_ebitda
+      expression: mul(div(sum(ebitda), sum(net_revenue)), 100)
+      input_metrics: [fact_finance_statement.ebitda, revenue.net]
+      output_type: decimal
+      output_unit: percent
+      precision: 2
+      owner: controladoria
+      version: 1
+      effective_from: 2026-07-10
+
+  FIN-03:
+    id: FIN-03
+    code: operating_cash_flow
+    name: Fluxo de Caixa Operacional
+    short_name: Caixa Oper.
+    description: Capacidade da operacao de gerar caixa real.
+    category: Financeiro
+    subcategory: Caixa
+    unit: BRL
+    display_format: currency_compact
+    precision: 2
+    icon: account_balance
+    color: success
+    display_order: 3
+    formula_id: cashflow.operating
+    formula: Entradas operacionais menos saidas operacionais de caixa.
+    depends_on: [FIN-01]
+    source_tables: [fact_finance_cashflow]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: rolling_12
+    presentation:
+      title: Fluxo de Caixa Operacional
+      subtitle: Caixa gerado pela operacao.
+      empty_message: Sem fluxo de caixa operacional para o periodo.
+      tooltip: Caixa real gerado pela atividade principal.
+      card_style: premium
+    tags: [caixa, tesouraria, liquidez]
+    owner: tesouraria
+    formula_spec:
+      formula_id: f.operating_cash_flow
+      name: fluxo_caixa_operacional
+      expression: sub(sum(cash_in_amount), sum(cash_out_amount))
+      input_metrics: [fact_finance_cashflow.cash_in_amount, fact_finance_cashflow.cash_out_amount]
+      output_type: decimal
+      output_unit: BRL
+      precision: 2
+      owner: tesouraria
+      version: 1
+      effective_from: 2026-07-10
+
+  FIN-04:
+    id: FIN-04
+    code: gross_margin
+    name: Margem Bruta
+    short_name: Margem Bruta
+    description: Percentual de margem bruta sobre receita liquida.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: local_atm
+    color: success
+    display_order: 4
+    formula_id: margin.gross
+    formula: Lucro bruto dividido pela receita liquida.
+    depends_on: [FIN-01]
+    source_tables: [fact_sales, fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Margem Bruta
+      subtitle: Eficiência antes de despesas operacionais.
+      empty_message: Sem margem bruta calculada.
+      tooltip: Receita apos custo direto dos produtos.
+      card_style: premium
+    tags: [margem, bruto, rentabilidade]
+    owner: controladoria
+
+  FIN-05:
+    id: FIN-05
+    code: ebit_margin
+    name: Margem Operacional (EBIT)
+    short_name: EBIT
+    description: Rentabilidade operacional antes de juros e impostos.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: trending_up
+    color: success
+    display_order: 5
+    formula_id: margin.ebit
+    formula: Lucro operacional dividido pela receita liquida.
+    depends_on: [FIN-04]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Margem Operacional
+      subtitle: Resultado da operacao antes do financeiro.
+      empty_message: Sem margem operacional calculada.
+      tooltip: EBIT sobre receita liquida.
+      card_style: premium
+    tags: [margem, ebit, operacao]
+    owner: controladoria
+
+  FIN-06:
+    id: FIN-06
+    code: net_margin
+    name: Margem Liquida
+    short_name: Margem Liquida
+    description: Percentual do lucro liquido sobre a receita.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: money
+    color: success
+    display_order: 6
+    formula_id: margin.net
+    formula: Lucro liquido dividido pela receita liquida.
+    depends_on: [FIN-05]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Margem Liquida
+      subtitle: Lucro final do negocio.
+      empty_message: Sem margem liquida calculada.
+      tooltip: Lucro apos todos os custos e impostos.
+      card_style: premium
+    tags: [margem, lucro, rentabilidade]
+    owner: financeiro
+
+  FIN-07:
+    id: FIN-07
+    code: roe
+    name: ROE
+    short_name: ROE
+    description: Retorno sobre o patrimonio liquido.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: leaderboard
+    color: success
+    display_order: 7
+    formula_id: return.equity
+    formula: Lucro liquido dividido pelo patrimonio liquido.
+    depends_on: [FIN-06]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: rolling_12
+    presentation:
+      title: ROE
+      subtitle: Retorno para o acionista.
+      empty_message: Sem ROE calculado.
+      tooltip: Retorno sobre patrimonio liquido.
+      card_style: premium
+    tags: [roe, rentabilidade, patrimonio]
+    owner: financeiro
+
+  FIN-08:
+    id: FIN-08
+    code: roa
+    name: ROA
+    short_name: ROA
+    description: Retorno sobre os ativos totais.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: account_tree
+    color: success
+    display_order: 8
+    formula_id: return.assets
+    formula: Lucro liquido dividido pelos ativos totais.
+    depends_on: [FIN-06]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: rolling_12
+    presentation:
+      title: ROA
+      subtitle: Eficiência dos ativos.
+      empty_message: Sem ROA calculado.
+      tooltip: Retorno sobre ativos.
+      card_style: premium
+    tags: [roa, ativos, rentabilidade]
+    owner: financeiro
+
+  FIN-09:
+    id: FIN-09
+    code: roic
+    name: ROIC
+    short_name: ROIC
+    description: Retorno sobre o capital investido.
+    category: Financeiro
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: paid
+    color: success
+    display_order: 9
+    formula_id: return.invested_capital
+    formula: NOPAT dividido pelo capital investido.
+    depends_on: [FIN-05]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: rolling_12
+    presentation:
+      title: ROIC
+      subtitle: Retorno sobre o capital investido.
+      empty_message: Sem ROIC calculado.
+      tooltip: Lucro operacional apos impostos sobre capital investido.
+      card_style: premium
+    tags: [roic, capital, rentabilidade]
+    owner: financeiro
+
+  FIN-10:
+    id: FIN-10
+    code: current_ratio
+    name: Liquidez Corrente
+    short_name: Liquidez Corrente
+    description: Capacidade de honrar obrigações de curto prazo.
+    category: Financeiro
+    subcategory: Liquidez
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: stack
+    color: info
+    display_order: 10
+    formula_id: liquidity.current
+    formula: Ativo circulante dividido pelo passivo circulante.
+    depends_on: [FIN-03]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Liquidez Corrente
+      subtitle: Solvencia de curto prazo.
+      empty_message: Sem liquidez corrente calculada.
+      tooltip: Ativos de curto prazo sobre passivos de curto prazo.
+      card_style: premium
+    tags: [liquidez, curto_prazo]
+    owner: tesouraria
+
+  FIN-11:
+    id: FIN-11
+    code: quick_ratio
+    name: Liquidez Seca
+    short_name: Liquidez Seca
+    description: Liquidez sem considerar estoques.
+    category: Financeiro
+    subcategory: Liquidez
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: water_drop
+    color: info
+    display_order: 11
+    formula_id: liquidity.quick
+    formula: Ativo circulante menos estoques dividido pelo passivo circulante.
+    depends_on: [FIN-10, FIN-19]
+    source_tables: [fact_finance_statement, fact_inventory_snapshot]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Liquidez Seca
+      subtitle: Solvencia sem estoques.
+      empty_message: Sem liquidez seca calculada.
+      tooltip: Liquidez sem considerar estoque.
+      card_style: premium
+    tags: [liquidez, caixa]
+    owner: tesouraria
+
+  FIN-12:
+    id: FIN-12
+    code: cash_ratio
+    name: Liquidez Imediata
+    short_name: Liquidez Imediata
+    description: Disponibilidade imediata para obrigações correntes.
+    category: Financeiro
+    subcategory: Liquidez
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: currency_exchange
+    color: info
+    display_order: 12
+    formula_id: liquidity.cash
+    formula: Caixa e equivalentes dividido pelo passivo circulante.
+    depends_on: [FIN-03]
+    source_tables: [fact_finance_cashflow, fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Liquidez Imediata
+      subtitle: Caixa disponível agora.
+      empty_message: Sem liquidez imediata calculada.
+      tooltip: Caixa e equivalentes sobre passivos de curto prazo.
+      card_style: premium
+    tags: [liquidez, caixa, curto_prazo]
+    owner: tesouraria
+
+  FIN-13:
+    id: FIN-13
+    code: general_liquidity
+    name: Liquidez Geral
+    short_name: Liquidez Geral
+    description: Liquidez de curto e longo prazo.
+    category: Financeiro
+    subcategory: Liquidez
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: view_week
+    color: info
+    display_order: 13
+    formula_id: liquidity.general
+    formula: Ativo total dividido pelo passivo total.
+    depends_on: [FIN-10]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Liquidez Geral
+      subtitle: Solvencia total do negocio.
+      empty_message: Sem liquidez geral calculada.
+      tooltip: Ativos totais sobre passivos totais.
+      card_style: premium
+    tags: [liquidez, solvencia]
+    owner: tesouraria
+
+  FIN-14:
+    id: FIN-14
+    code: debt_ratio
+    name: Endividamento Geral
+    short_name: Endividamento
+    description: Nivel de endividamento total da companhia.
+    category: Financeiro
+    subcategory: Estrutura de Capital
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: domain
+    color: warning
+    display_order: 14
+    formula_id: leverage.total
+    formula: Passivo total dividido pelo ativo total.
+    depends_on: [FIN-13]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Endividamento Geral
+      subtitle: Estrutura de capital e risco.
+      empty_message: Sem endividamento calculado.
+      tooltip: Passivos sobre ativos totais.
+      card_style: premium
+    tags: [endividamento, capital]
+    owner: financeiro
+
+  FIN-15:
+    id: FIN-15
+    code: debt_composition
+    name: Composicao do Endividamento
+    short_name: Composicao
+    description: Participacao da divida de curto prazo no total.
+    category: Financeiro
+    subcategory: Estrutura de Capital
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: segment
+    color: warning
+    display_order: 15
+    formula_id: leverage.composition
+    formula: Divida de curto prazo dividida pela divida total.
+    depends_on: [FIN-14]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Composicao do Endividamento
+      subtitle: Perfil da divida.
+      empty_message: Sem composicao do endividamento calculada.
+      tooltip: Parcela da divida concentrada no curto prazo.
+      card_style: premium
+    tags: [divida, endividamento]
+    owner: financeiro
+
+  FIN-16:
+    id: FIN-16
+    code: net_debt_ebitda
+    name: Divida Liquida / EBITDA
+    short_name: DL/EBITDA
+    description: Grau de alavancagem em relacao ao EBITDA.
+    category: Financeiro
+    subcategory: Alavancagem
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: currency_bitcoin
+    color: warning
+    display_order: 16
+    formula_id: leverage.net_debt_ebitda
+    formula: Divida liquida dividida pelo EBITDA.
+    depends_on: [FIN-02, FIN-03]
+    source_tables: [fact_finance_statement, fact_finance_cashflow]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Divida Liquida / EBITDA
+      subtitle: Alavancagem financeira.
+      empty_message: Sem alavancagem calculada.
+      tooltip: Divida liquida sobre EBITDA.
+      card_style: premium
+    tags: [divida, ebitda, alavancagem]
+    owner: financeiro
+
+  FIN-17:
+    id: FIN-17
+    code: interest_coverage
+    name: Cobertura de Juros
+    short_name: Cobertura Juros
+    description: Capacidade de pagar encargos financeiros.
+    category: Financeiro
+    subcategory: Alavancagem
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: percent
+    color: warning
+    display_order: 17
+    formula_id: leverage.interest_coverage
+    formula: EBIT dividido pelas despesas de juros.
+    depends_on: [FIN-05]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Cobertura de Juros
+      subtitle: Folga para despesas financeiras.
+      empty_message: Sem cobertura de juros calculada.
+      tooltip: EBIT sobre juros.
+      card_style: premium
+    tags: [juros, cobertura, alavancagem]
+    owner: financeiro
+
+  FIN-18:
+    id: FIN-18
+    code: asset_turnover
+    name: Giro do Ativo
+    short_name: Giro do Ativo
+    description: Eficiência do ativo na geracao de receita.
+    category: Financeiro
+    subcategory: Eficiência
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: moving
+    color: info
+    display_order: 18
+    formula_id: efficiency.asset_turnover
+    formula: Receita liquida dividida pelo ativo total medio.
+    depends_on: [FIN-01]
+    source_tables: [fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Giro do Ativo
+      subtitle: Receita por ativo.
+      empty_message: Sem giro do ativo calculado.
+      tooltip: Receita gerada por unidade de ativo.
+      card_style: premium
+    tags: [giro, ativos]
+    owner: financeiro
+
+  FIN-19:
+    id: FIN-19
+    code: inventory_turnover
+    name: Giro de Estoques
+    short_name: Giro Estoque
+    description: Frequencia de renovacao do estoque.
+    category: Estoque
+    subcategory: Eficiência
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: inventory
+    color: info
+    display_order: 19
+    formula_id: efficiency.inventory_turnover
+    formula: CPV dividido pelo estoque medio.
+    depends_on: [EST-01]
+    source_tables: [fact_inventory_snapshot, fact_sales]
+    business_area: Estoque
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Giro de Estoques
+      subtitle: Renovacao do estoque.
+      empty_message: Sem giro de estoques calculado.
+      tooltip: Custo das vendas sobre estoque medio.
+      card_style: premium
+    tags: [estoque, giro]
+    owner: suprimentos
+
+  FIN-20:
+    id: FIN-20
+    code: average_days_inventory
+    name: PME
+    short_name: PME
+    description: Prazo medio de estocagem.
+    category: Estoque
+    subcategory: Prazo Medio
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: schedule
+    color: info
+    display_order: 20
+    formula_id: efficiency.pme
+    formula: 365 dividido pelo giro de estoques.
+    depends_on: [FIN-19]
+    source_tables: [fact_inventory_snapshot]
+    business_area: Estoque
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: PME
+      subtitle: Prazo medio de estocagem.
+      empty_message: Sem PME calculado.
+      tooltip: Tempo medio em dias do estoque.
+      card_style: premium
+    tags: [pme, estoque, prazo]
+    owner: suprimentos
+
+  FIN-21:
+    id: FIN-21
+    code: average_days_receivable
+    name: PMR
+    short_name: PMR
+    description: Prazo medio de recebimento.
+    category: Financeiro
+    subcategory: Prazo Medio
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: payments
+    color: info
+    display_order: 21
+    formula_id: efficiency.pmr
+    formula: Contas a receber medio dividido pela receita diaria.
+    depends_on: [FIN-01]
+    source_tables: [fact_sales, fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: PMR
+      subtitle: Prazo medio de recebimento.
+      empty_message: Sem PMR calculado.
+      tooltip: Tempo medio para receber vendas.
+      card_style: premium
+    tags: [pmr, recebimento, caixa]
+    owner: financeiro
+
+  FIN-22:
+    id: FIN-22
+    code: average_days_payable
+    name: PMP
+    short_name: PMP
+    description: Prazo medio de pagamento.
+    category: Financeiro
+    subcategory: Prazo Medio
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: receipt_long
+    color: info
+    display_order: 22
+    formula_id: efficiency.pmp
+    formula: Contas a pagar medio dividido pelas compras diarias.
+    depends_on: [CPR-02]
+    source_tables: [fact_procurement, fact_finance_statement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: PMP
+      subtitle: Prazo medio de pagamento.
+      empty_message: Sem PMP calculado.
+      tooltip: Tempo medio para pagar fornecedores.
+      card_style: premium
+    tags: [pmp, pagamento, caixa]
+    owner: financeiro
+
+  FIN-23:
+    id: FIN-23
+    code: cash_conversion_cycle
+    name: Ciclo de Caixa
+    short_name: Ciclo de Caixa
+    description: Tempo entre pagar, estocar e receber.
+    category: Financeiro
+    subcategory: Caixa
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: timeline
+    color: warning
+    display_order: 23
+    formula_id: efficiency.cash_cycle
+    formula: PME + PMR - PMP.
+    depends_on: [FIN-20, FIN-21, FIN-22]
+    source_tables: [fact_inventory_snapshot, fact_sales, fact_procurement]
+    business_area: Financeiro
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Ciclo de Caixa
+      subtitle: Tempo de conversao do caixa.
+      empty_message: Sem ciclo de caixa calculado.
+      tooltip: Dias para transformar investimento em caixa.
+      card_style: premium
+    tags: [ciclo, caixa, capital_de_giro]
+    owner: financeiro
+
+  FIN-24:
+    id: FIN-24
+    code: revenue_per_employee
+    name: Receita por Funcionário
+    short_name: Receita / Func.
+    description: Receita gerada por colaborador.
+    category: Produtividade
+    subcategory: Produtividade Comercial
+    unit: BRL
+    display_format: currency_compact
+    precision: 2
+    icon: people
+    color: info
+    display_order: 24
+    formula_id: productivity.revenue_per_employee
+    formula: Receita liquida dividida pelo headcount medio.
+    depends_on: [FIN-01, RH-01]
+    source_tables: [fact_sales, fact_hr_workforce]
+    business_area: Produtividade
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Receita por Funcionário
+      subtitle: Produtividade por colaborador.
+      empty_message: Sem receita por funcionário calculada.
+      tooltip: Receita gerada por colaborador ativo.
+      card_style: premium
+    tags: [produtividade, receita, rh]
+    owner: pessoas
+
+  COM-01:
+    id: COM-01
+    code: sales_conversion
+    name: Taxa de Conversao de Vendas
+    short_name: Conversao
+    description: Eficiência do funil comercial.
+    category: Comercial
+    subcategory: Conversão
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: ads_click
+    color: success
+    display_order: 25
+    formula_id: sales.conversion
+    formula: Vendas fechadas divididas por oportunidades qualificadas.
+    depends_on: [FIN-01]
+    source_tables: [fact_sales]
+    business_area: Comercial
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Taxa de Conversao
+      subtitle: Conversao do funil comercial.
+      empty_message: Sem conversao calculada.
+      tooltip: Vendas fechadas sobre oportunidades.
+      card_style: premium
+    tags: [conversao, vendas, funil]
+    owner: comercial
+    formula_spec:
+      formula_id: f.sales_conversion
+      name: taxa_conversao
+      expression: mul(div(sum(sales_closed), sum(sales_opportunity)), 100)
+      input_metrics: [fact_sales.sales_closed, fact_sales.sales_opportunity]
+      output_type: decimal
+      output_unit: percent
+      precision: 2
+      owner: comercial
+      version: 1
+      effective_from: 2026-07-10
+
+  COM-02:
+    id: COM-02
+    code: average_ticket
+    name: Ticket Medio
+    short_name: Ticket Medio
+    description: Valor medio por pedido.
+    category: Comercial
+    subcategory: Receita por Pedido
+    unit: BRL
+    display_format: currency_compact
+    precision: 2
+    icon: point_of_sale
+    color: info
+    display_order: 26
+    formula_id: sales.average_ticket
+    formula: Receita liquida dividida pelo numero de pedidos.
+    depends_on: [FIN-01]
+    source_tables: [fact_sales]
+    business_area: Comercial
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Ticket Medio
+      subtitle: Valor por pedido.
+      empty_message: Sem ticket medio calculado.
+      tooltip: Receita media por pedido.
+      card_style: premium
+    tags: [ticket, vendas, receita]
+    owner: comercial
+
+  COM-03:
+    id: COM-03
+    code: cac
+    name: CAC
+    short_name: CAC
+    description: Custo de aquisição de cliente.
+    category: Comercial
+    subcategory: Aquisição
+    unit: BRL
+    display_format: currency_compact
+    precision: 2
+    icon: family_restroom
+    color: warning
+    display_order: 27
+    formula_id: sales.cac
+    formula: Investimento comercial e marketing por novo cliente.
+    depends_on: [COM-01]
+    source_tables: [fact_sales, fact_finance_statement]
+    business_area: Comercial
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: CAC
+      subtitle: Custo para adquirir cliente.
+      empty_message: Sem CAC calculado.
+      tooltip: Quanto custa ganhar um cliente novo.
+      card_style: premium
+    tags: [cac, aquisicao, marketing]
+    owner: marketing
+
+  CON-01:
+    id: CON-01
+    code: accounting_close_days
+    name: Prazo Medio de Fechamento Contabil
+    short_name: Fechamento
+    description: Velocidade do fechamento contábil.
+    category: Fiscal
+    subcategory: Fechamento
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: event_note
+    color: info
+    display_order: 28
+    formula_id: accounting.close_days
+    formula: Data final de fechamento menos ultimo dia da competencia.
+    depends_on: [FIN-03]
+    source_tables: [fact_finance_statement]
+    business_area: Contabil
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Fechamento Contabil
+      subtitle: Tempo de fechamento do mes.
+      empty_message: Sem fechamento contabil calculado.
+      tooltip: Dias para fechar a contabilidade.
+      card_style: premium
+    tags: [fechamento, contabil]
+    owner: contabil
+
+  CON-02:
+    id: CON-02
+    code: accounting_reconciliation
+    name: Indice de Conciliacao Contabil
+    short_name: Conciliacao
+    description: Qualidade das conciliacoes contabeis.
+    category: Fiscal
+    subcategory: Conciliação
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: fact_check
+    color: success
+    display_order: 29
+    formula_id: accounting.reconciliation
+    formula: Contas conciliadas dividido por contas criticas.
+    depends_on: [CON-01]
+    source_tables: [fact_finance_statement]
+    business_area: Contabil
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Conciliacao Contabil
+      subtitle: Qualidade de conciliacao.
+      empty_message: Sem indice de conciliacao calculado.
+      tooltip: Contas conciliadas sobre contas criticas.
+      card_style: premium
+    tags: [conciliacao, contabil]
+    owner: contabil
+
+  CON-03:
+    id: CON-03
+    code: reclassification_rate
+    name: Taxa de Reclassificacao
+    short_name: Reclassificacao
+    description: Proporcao de lancamentos reclassificados.
+    category: Fiscal
+    subcategory: Qualidade Contábil
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: transform
+    color: warning
+    display_order: 30
+    formula_id: accounting.reclassification_rate
+    formula: Lancamentos reclassificados dividido pelos lancamentos totais.
+    depends_on: [CON-02]
+    source_tables: [fact_finance_statement]
+    business_area: Contabil
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Reclassificacao
+      subtitle: Retrabalho contabil.
+      empty_message: Sem taxa de reclassificacao calculada.
+      tooltip: Percentual de ajustes posteriores.
+      card_style: premium
+    tags: [reclassificacao, contabil]
+    owner: contabil
+
+  EST-01:
+    id: EST-01
+    code: inventory_turnover_kpi
+    name: Giro de Estoque
+    short_name: Giro Estoque
+    description: Velocidade de renovacao do estoque.
+    category: Estoque
+    subcategory: Giro
+    unit: RATIO
+    display_format: ratio_compact
+    precision: 2
+    icon: inventory
+    color: info
+    display_order: 31
+    formula_id: inventory.turnover
+    formula: CPV dividido pelo estoque medio.
+    depends_on: [FIN-01]
+    source_tables: [fact_inventory_snapshot, fact_sales]
+    business_area: Estoque
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Giro de Estoque
+      subtitle: Renovacao do estoque.
+      empty_message: Sem giro de estoque calculado.
+      tooltip: Giro do estoque por periodo.
+      card_style: premium
+    tags: [estoque, giro]
+    owner: suprimentos
+    formula_spec:
+      formula_id: f.inventory_turnover
+      name: giro_de_estoque
+      expression: div(sum(cogs_amount), avg(inventory_value))
+      input_metrics: [fact_sales.cogs_amount, fact_inventory_snapshot.inventory_value]
+      output_type: decimal
+      output_unit: ratio
+      precision: 2
+      owner: suprimentos
+      version: 1
+      effective_from: 2026-07-10
+
+  EST-02:
+    id: EST-02
+    code: stockout_rate
+    name: Ruptura de Estoque
+    short_name: Ruptura
+    description: Perda de venda por falta de item.
+    category: Estoque
+    subcategory: Disponibilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: inventory_2
+    color: warning
+    display_order: 32
+    formula_id: inventory.stockout_rate
+    formula: SKUs em ruptura divididos pelos SKUs demandados.
+    depends_on: [EST-01]
+    source_tables: [fact_inventory_snapshot, fact_sales]
+    business_area: Estoque
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Ruptura de Estoque
+      subtitle: Falta de itens para venda.
+      empty_message: Sem ruptura calculada.
+      tooltip: Percentual de demanda perdida por indisponibilidade.
+      card_style: premium
+    tags: [ruptura, estoque, disponibilidade]
+    owner: suprimentos
+    formula_spec:
+      formula_id: f.stockout_rate
+      name: taxa_ruptura
+      expression: mul(div(count(stockout_skus), count(demanded_skus)), 100)
+      input_metrics: [fact_inventory_snapshot.available_qty]
+      output_type: decimal
+      output_unit: percent
+      precision: 2
+      owner: suprimentos
+      version: 1
+      effective_from: 2026-07-10
+
+  EST-03:
+    id: EST-03
+    code: inventory_accuracy
+    name: Acuracia de Inventario
+    short_name: Acuracia
+    description: Confiabilidade entre estoque fisico e sistema.
+    category: Estoque
+    subcategory: Qualidade de Estoque
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: checklist
+    color: success
+    display_order: 33
+    formula_id: inventory.accuracy
+    formula: Itens sem divergencia divididos pelos itens inventariados.
+    depends_on: [EST-02]
+    source_tables: [fact_inventory_snapshot]
+    business_area: Estoque
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Acuracia de Inventario
+      subtitle: Estoque fisico versus sistema.
+      empty_message: Sem acuracia calculada.
+      tooltip: Percentual de itens sem divergencia.
+      card_style: premium
+    tags: [acuracia, inventario]
+    owner: suprimentos
+
+  CPR-01:
+    id: CPR-01
+    code: procurement_savings
+    name: Saving de Compras
+    short_name: Saving
+    description: Ganha de negociacao em compras.
+    category: Economico
+    subcategory: Saving
+    unit: BRL
+    display_format: currency_compact
+    precision: 2
+    icon: savings
+    color: success
+    display_order: 34
+    formula_id: procurement.savings
+    formula: (Preco referencia menos preco negociado) vezes quantidade comprada.
+    depends_on: [EST-01]
+    source_tables: [fact_procurement]
+    business_area: Compras
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Saving de Compras
+      subtitle: Economia obtida em negociacoes.
+      empty_message: Sem saving de compras calculado.
+      tooltip: Economia financeira por negociacao.
+      card_style: premium
+    tags: [compras, saving]
+    owner: compras
+
+  CPR-02:
+    id: CPR-02
+    code: procurement_lead_time
+    name: Lead Time de Suprimento
+    short_name: Lead Time
+    description: Tempo entre pedido e recebimento.
+    category: Operacional
+    subcategory: Suprimentos
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: local_shipping
+    color: info
+    display_order: 35
+    formula_id: procurement.lead_time
+    formula: Data de recebimento menos data do pedido.
+    depends_on: [CPR-01]
+    source_tables: [fact_procurement]
+    business_area: Compras
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Lead Time de Suprimento
+      subtitle: Tempo de reposicao de compra.
+      empty_message: Sem lead time calculado.
+      tooltip: Tempo medio de entrega do fornecedor.
+      card_style: premium
+    tags: [lead_time, compras]
+    owner: compras
+
+  CPR-03:
+    id: CPR-03
+    code: supplier_ontime_delivery
+    name: OTD de Fornecedores
+    short_name: OTD Fornecedor
+    description: Confiabilidade de entrega dos fornecedores.
+    category: Operacional
+    subcategory: Qualidade do Fornecedor
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: verified
+    color: success
+    display_order: 36
+    formula_id: procurement.on_time_delivery
+    formula: Entregas no prazo divididas pelas entregas totais.
+    depends_on: [CPR-02]
+    source_tables: [fact_procurement]
+    business_area: Compras
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: OTD de Fornecedores
+      subtitle: Confiabilidade de entrega.
+      empty_message: Sem OTD calculado.
+      tooltip: Percentual de entregas no prazo.
+      card_style: premium
+    tags: [otd, fornecedor]
+    owner: compras
+
+  RH-01:
+    id: RH-01
+    code: turnover
+    name: Turnover
+    short_name: Turnover
+    description: Rotatividade de pessoas.
+    category: RH
+    subcategory: Rotatividade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: group_off
+    color: warning
+    display_order: 37
+    formula_id: hr.turnover
+    formula: Movimentacoes de pessoal sobre headcount medio.
+    depends_on: [CPR-03]
+    source_tables: [fact_hr_workforce]
+    business_area: RH
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Turnover
+      subtitle: Rotatividade de colaboradores.
+      empty_message: Sem turnover calculado.
+      tooltip: Rotatividade de pessoas no periodo.
+      card_style: premium
+    tags: [rh, turnover]
+    owner: pessoas
+
+  RH-02:
+    id: RH-02
+    code: absenteeism
+    name: Absenteismo
+    short_name: Absenteismo
+    description: Ausencias nao planejadas.
+    category: RH
+    subcategory: Presença
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: event_busy
+    color: warning
+    display_order: 38
+    formula_id: hr.absenteeism
+    formula: Horas de ausencia divididas pelas horas previstas.
+    depends_on: [RH-01]
+    source_tables: [fact_hr_workforce]
+    business_area: RH
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Absenteismo
+      subtitle: Ausencias nao planejadas.
+      empty_message: Sem absenteismo calculado.
+      tooltip: Percentual de faltas sobre horas previstas.
+      card_style: premium
+    tags: [rh, ausencias]
+    owner: pessoas
+
+  RH-03:
+    id: RH-03
+    code: payroll_cost_ratio
+    name: Custo de Pessoal sobre Receita
+    short_name: Custo Pessoal
+    description: Peso da folha sobre a receita.
+    category: RH
+    subcategory: Estrutura de Custo
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: badge
+    color: warning
+    display_order: 39
+    formula_id: hr.payroll_ratio
+    formula: Custo total de pessoal dividido pela receita liquida.
+    depends_on: [FIN-01, RH-01]
+    source_tables: [fact_hr_workforce, fact_sales]
+    business_area: RH
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Custo de Pessoal / Receita
+      subtitle: Peso da folha no faturamento.
+      empty_message: Sem custo de pessoal calculado.
+      tooltip: Custo de pessoal sobre receita liquida.
+      card_style: premium
+    tags: [rh, custo, receita]
+    owner: pessoas
+
+  ATD-01:
+    id: ATD-01
+    code: first_response_time
+    name: Tempo Medio de Primeira Resposta
+    short_name: Primeira Resposta
+    description: Agilidade inicial no atendimento.
+    category: Clientes
+    subcategory: Atendimento
+    unit: MINUTES
+    display_format: minutes_compact
+    precision: 0
+    icon: schedule_send
+    color: info
+    display_order: 40
+    formula_id: service.first_response
+    formula: Soma do tempo ate primeira resposta dividido pelo numero de chamados.
+    depends_on: [RH-02]
+    source_tables: [fact_service]
+    business_area: Atendimento
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Primeira Resposta
+      subtitle: Tempo para primeira interação.
+      empty_message: Sem tempo de primeira resposta calculado.
+      tooltip: Minutos para o primeiro contato.
+      card_style: premium
+    tags: [atendimento, resposta]
+    owner: atendimento
+
+  ATD-02:
+    id: ATD-02
+    code: first_contact_resolution
+    name: Taxa de Resolucao no Primeiro Contato
+    short_name: FCR
+    description: Efetividade do atendimento sem retrabalho.
+    category: Clientes
+    subcategory: Resolução
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: support_agent
+    color: success
+    display_order: 41
+    formula_id: service.fcr
+    formula: Chamados resolvidos no primeiro contato divididos pelos chamados totais.
+    depends_on: [ATD-01]
+    source_tables: [fact_service]
+    business_area: Atendimento
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: FCR
+      subtitle: Resolucao no primeiro contato.
+      empty_message: Sem FCR calculado.
+      tooltip: Percentual resolvido no primeiro atendimento.
+      card_style: premium
+    tags: [atendimento, fcr]
+    owner: atendimento
+
+  ATD-03:
+    id: ATD-03
+    code: nps
+    name: NPS
+    short_name: NPS
+    description: Lealdade e recomendacao dos clientes.
+    category: Clientes
+    subcategory: Satisfação
+    unit: SCORE
+    display_format: score_compact
+    precision: 0
+    icon: recommend
+    color: success
+    display_order: 42
+    formula_id: service.nps
+    formula: Percentual de promotores menos percentual de detratores.
+    depends_on: [ATD-02]
+    source_tables: [fact_service]
+    business_area: Atendimento
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: NPS
+      subtitle: Recomendacao dos clientes.
+      empty_message: Sem NPS calculado.
+      tooltip: Net Promoter Score da base.
+      card_style: premium
+    tags: [nps, clientes]
+    owner: cx
+
+  PRD-01:
+    id: PRD-01
+    code: oee
+    name: OEE
+    short_name: OEE
+    description: Eficiencia global do equipamento.
+    category: Operacional
+    subcategory: Producao
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: precision_manufacturing
+    color: success
+    display_order: 43
+    formula_id: production.oee
+    formula: Disponibilidade vezes performance vezes qualidade.
+    depends_on: [ATD-03]
+    source_tables: [fact_production]
+    business_area: Producao
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: OEE
+      subtitle: Eficiência global do equipamento.
+      empty_message: Sem OEE calculado.
+      tooltip: Disponibilidade, performance e qualidade.
+      card_style: premium
+    tags: [oee, producao]
+    owner: producao
+    formula_spec:
+      formula_id: f.business_health_index
+      name: business_health_index
+      expression: weighted_avg(metric_value, metric_weight)
+      input_metrics: [kpi_score.FIN-01, kpi_score.FIN-02, kpi_score.COM-01, kpi_score.EST-02, kpi_score.PRD-01]
+      output_type: decimal
+      output_unit: score_0_100
+      precision: 2
+      owner: executivo
+      version: 1
+      effective_from: 2026-07-10
+
+  PRD-02:
+    id: PRD-02
+    code: scrap_rate
+    name: Taxa de Refugo
+    short_name: Refugo
+    description: Perdas de producao por defeitos irrecuperaveis.
+    category: Operacional
+    subcategory: Qualidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: dangerous
+    color: warning
+    display_order: 44
+    formula_id: production.scrap_rate
+    formula: Quantidade refugada dividida pela quantidade produzida.
+    depends_on: [PRD-01]
+    source_tables: [fact_production]
+    business_area: Producao
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Taxa de Refugo
+      subtitle: Perdas por defeito.
+      empty_message: Sem taxa de refugo calculada.
+      tooltip: Percentual de itens refutados.
+      card_style: premium
+    tags: [refugo, qualidade]
+    owner: producao
+
+  PRD-03:
+    id: PRD-03
+    code: production_plan_adherence
+    name: Aderencia ao Plano de Producao
+    short_name: Plano
+    description: Quanto do planejado foi entregue.
+    category: Operacional
+    subcategory: Planejamento
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: checklist_rtl
+    color: info
+    display_order: 45
+    formula_id: production.plan_adherence
+    formula: Quantidade produzida conforme plano dividida pela quantidade planejada.
+    depends_on: [PRD-02]
+    source_tables: [fact_production]
+    business_area: Producao
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_month
+    presentation:
+      title: Aderencia ao Plano
+      subtitle: Entrega contra plano.
+      empty_message: Sem aderencia ao plano calculada.
+      tooltip: Percentual do plano produzido.
+      card_style: premium
+    tags: [planejamento, producao]
+    owner: producao
+
+  EXE-01:
+    id: EXE-01
+    code: revenue_growth
+    name: Crescimento de Receita
+    short_name: Cresc. Receita
+    description: Evolucao da receita liquida no tempo.
+    category: Executivo
+    subcategory: Crescimento
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: show_chart
+    color: success
+    display_order: 46
+    formula_id: executive.revenue_growth
+    formula: Receita atual menos receita anterior dividido pela receita anterior.
+    depends_on: [FIN-01]
+    source_tables: [fact_sales]
+    business_area: Executivo
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_year
+    presentation:
+      title: Crescimento de Receita
+      subtitle: Evolucao do faturamento.
+      empty_message: Sem crescimento de receita calculado.
+      tooltip: Variação de receita no periodo.
+      card_style: premium
+    tags: [executivo, crescimento]
+    owner: executivo
+
+  EXE-02:
+    id: EXE-02
+    code: net_margin_executive
+    name: Margem Liquida
+    short_name: Margem Liquida
+    description: Retorno final sobre a receita.
+    category: Executivo
+    subcategory: Rentabilidade
+    unit: PERCENT
+    display_format: percent_compact
+    precision: 2
+    icon: monetization_on
+    color: success
+    display_order: 47
+    formula_id: executive.net_margin
+    formula: Lucro liquido dividido pela receita liquida.
+    depends_on: [FIN-06]
+    source_tables: [fact_finance_statement]
+    business_area: Executivo
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_year
+    presentation:
+      title: Margem Liquida
+      subtitle: Lucro final do negocio.
+      empty_message: Sem margem liquida executiva.
+      tooltip: Margem liquida consolidada.
+      card_style: premium
+    tags: [executivo, margem, lucro]
+    owner: executivo
+
+  EXE-03:
+    id: EXE-03
+    code: cash_conversion_cycle_executive
+    name: Ciclo de Conversao de Caixa
+    short_name: CCC
+    description: Tempo que o caixa fica preso na operacao.
+    category: Executivo
+    subcategory: Caixa
+    unit: DAYS
+    display_format: days_compact
+    precision: 0
+    icon: payments
+    color: warning
+    display_order: 48
+    formula_id: executive.cash_conversion_cycle
+    formula: PME mais PMR menos PMP.
+    depends_on: [FIN-23]
+    source_tables: [fact_inventory_snapshot, fact_sales, fact_procurement]
+    business_area: Executivo
+    health_ranges: *default_health_ranges
+    trend_strategy: compare_previous_year
+    presentation:
+      title: Ciclo de Conversao de Caixa
+      subtitle: Caixa travado na operacao.
+      empty_message: Sem ciclo de conversao calculado.
+      tooltip: Dias para o caixa voltar ao negocio.
+      card_style: premium
+    tags: [executivo, caixa]
+    owner: executivo
+
+  EXE-04:
+    id: EXE-04
+    code: business_health_index
+    name: Indice de Saude Empresarial Composto
+    short_name: Saude Empresarial
+    description: Visao executiva unica do desempenho global.
+    category: Executivo
+    subcategory: Score
+    unit: SCORE
+    display_format: score_compact
+    precision: 2
+    icon: monitor_heart
+    color: success
+    display_order: 49
+    formula_id: executive.business_health_index
+    formula: Soma ponderada dos KPIs criticos.
+    depends_on: [FIN-01, FIN-02, FIN-03, COM-01, EST-01, PRD-01]
+    source_tables: [fact_sales, fact_finance_cashflow, fact_inventory_snapshot, fact_procurement, fact_hr_workforce, fact_service, fact_production]
+    business_area: Executivo
+    health_ranges: *default_health_ranges
+    trend_strategy: rolling_12
+    presentation:
+      title: Saude Empresarial
+      subtitle: Score composto executivo.
+      empty_message: Sem score executivo calculado.
+      tooltip: Score agregado dos KPIs principais.
+      card_style: premium
+    tags: [executivo, score, health]
+    owner: executivo
+    formula_spec:
+      formula_id: f.business_health_index
+      name: business_health_index
+      expression: weighted_avg(metric_value, metric_weight)
+      input_metrics: [kpi_score.FIN-01, kpi_score.FIN-02, kpi_score.COM-01, kpi_score.EST-02, kpi_score.PRD-01]
+      output_type: decimal
+      output_unit: score_0_100
+      precision: 2
+      owner: executivo
+      version: 1
+      effective_from: 2026-07-10

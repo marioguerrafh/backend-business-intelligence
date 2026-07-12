@@ -1,0 +1,2 @@
+company_id,period_ref,source_record_id,gross_revenue,net_revenue,cogs,gross_profit,operating_expenses,ebit,depreciation,amortization,ebitda,financial_income,financial_expense,income_before_tax,income_tax,net_income,nopat
+cmp_acme,2026-07,SRC-IS-1001,820000.00,760000.00,420000.00,340000.00,180000.00,160000.00,15000.00,5000.00,180000.00,4000.00,12000.00,152000.00,38000.00,114000.00,112000.00

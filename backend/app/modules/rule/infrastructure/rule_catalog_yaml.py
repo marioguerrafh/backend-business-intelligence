@@ -23,7 +23,7 @@ _CACHE: _CatalogCache | None = None
 
 class YamlRuleCatalogReader:
     def __init__(self, path: Path | None = None) -> None:
-        self.path = path or self._default_path("rule-dsl.v1.yaml")
+        self.path = path or self._module_local_path("rule-dsl.v1.yaml")
 
     def load_rules(self) -> tuple[RuleDefinition, ...]:
         global _CACHE
@@ -84,3 +84,6 @@ class YamlRuleCatalogReader:
 
     def _default_path(self, filename: str) -> Path:
         return Path(__file__).resolve().parents[4] / "docs" / "semantic-layer" / filename
+
+    def _module_local_path(self, filename: str) -> Path:
+        return Path(__file__).resolve().parent / filename

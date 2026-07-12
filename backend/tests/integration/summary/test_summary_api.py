@@ -90,10 +90,10 @@ def _seed(session_factory) -> None:
                 kpi_result_id="k1",
                 company_id="cmp_acme",
                 period_ref="2026-07",
-                kpi_id="kpi.margin",
-                kpi_name="Margem",
-                value=22.5,
-                unit="%",
+                kpi_id="FIN-01",
+                kpi_name="receita_liquida",
+                value=1635916.85,
+                unit="BRL",
                 trend="up",
                 health="green",
                 calculated_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
@@ -104,13 +104,13 @@ def _seed(session_factory) -> None:
                 rule_result_id="rr_1",
                 company_id="cmp_acme",
                 period_ref="2026-07",
-                kpi_id="FIN-03",
-                rule_id="r.cash",
-                severity="HIGH",
+                kpi_id="FIN-01",
+                rule_id="r.fin01.net_revenue_below_target",
+                severity="MEDIUM",
                 priority="p1",
-                alert_title="Fluxo de caixa pressionado",
-                alert_description="Quebra de margem de seguranca",
-                metric_value=-1200.0,
+                alert_title="FIN-01 - receita_liquida_abaixo_meta",
+                alert_description="Rule r.fin01...",
+                metric_value=186000.0,
                 fired_at=datetime(2026, 7, 10, tzinfo=timezone.utc),
                 orchestrator_run_id="run_rule_1",
             )
@@ -189,12 +189,27 @@ def test_summary_endpoint_composes_single_payload_and_audits() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["company_id"] == "cmp_acme"
-    assert payload["scores"]["overall"] == 80.0
+    assert payload["hero"]["title"] == "Saude da Empresa"
+    assert len(payload["highlights"]) == 4
+    assert payload["sections"][0]["type"] == "hero"
+    assert payload["scores"]["executive_score"]["overall"] == 80.0
+    assert payload["scores"]["executive_score"]["status"]
     assert len(payload["kpis"]) == 1
+    assert payload["kpis"][0]["id"] == "FIN-01"
+    assert payload["kpis"][0]["title"] == "Receita Liquida"
+    assert payload["kpis"][0]["display_value"].startswith("R$")
     assert len(payload["alerts"]) == 1
+    assert payload["alerts"][0]["severity"]["code"] == "MEDIUM"
+    assert "Rule" not in payload["alerts"][0]["message"]
     assert len(payload["insights"]) == 1
+    assert payload["insights"][0]["title"]
     assert len(payload["recommendations"]) == 1
-    assert payload["next_risks"][0]["risk_code"] == "cash.low"
+    assert payload["recommendations"][0]["action_button"]
+    assert payload["timeline"]["points"][0]["formatted_date"]
+    assert payload["timeline"]["points"][0]["formatted_label"]
+    assert payload["trends"]["monthly"]["display"]
+    assert payload["trends"]["monthly"]["trend_icon"]
+    assert payload["next_risks"][0]["probability"] == "80%"
 
     with session_factory() as session:
         audits = session.execute(select(SummaryAuditLogModel)).scalars().all()

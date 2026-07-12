@@ -211,7 +211,7 @@ def test_gate_decision_engines_pipeline_and_summary() -> None:
     )
     assert summary.status_code == 200
     payload = summary.json()
-    assert payload["scores"]["overall"] >= 0
+    assert payload["scores"]["executive_score"]["overall"] >= 0
     assert isinstance(payload["insights"], list)
     assert isinstance(payload["recommendations"], list)
 

@@ -6,3 +6,4 @@ class GetSummaryQuery:
     company_id: str
     period_ref: str | None = None
     correlation_id: str | None = None
+    force_refresh: bool = False

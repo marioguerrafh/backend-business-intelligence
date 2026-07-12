@@ -19,6 +19,7 @@ class SummarySourcePayload:
     recommendations: tuple[dict[str, Any], ...]
     timeline_points: tuple[dict[str, Any], ...]
     next_risks: tuple[dict[str, Any], ...]
+    dashboard: dict[str, Any]
 
 
 @dataclass(slots=True, frozen=True)

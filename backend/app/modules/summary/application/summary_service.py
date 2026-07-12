@@ -26,31 +26,37 @@ class SummaryService:
         builder: SummaryBuilder,
         projection: SummaryProjection,
         cache: SummaryCache,
+        presenter: object,
     ) -> None:
         self.repository = repository
         self.builder = builder
         self.projection = projection
         self.cache = cache
+        self.presenter = presenter
 
     def get_summary(self, query: GetSummaryQuery) -> SummaryResult:
         started = perf_counter()
         cache_key = self._cache_key(query.company_id, query.period_ref)
 
-        cached = self.cache.get(cache_key)
-        if cached is not None:
-            period_ref = str(cached["period_ref"])
-            summary_id = str(cached["summary_id"])
-            self.repository.audit_access(
-                company_id=query.company_id,
-                period_ref=period_ref,
-                summary_id=summary_id,
-                correlation_id=query.correlation_id,
-                cache_hit=True,
-                duration_ms=self._duration_ms(started),
-            )
-            return SummaryResult(payload=cached, cache_hit=True)
+        if not query.force_refresh:
+            cached = self.cache.get(cache_key)
+            if cached is not None:
+                period_ref = str(cached["period_ref"])
+                summary_id = str(cached["summary_id"])
+                self.repository.audit_access(
+                    company_id=query.company_id,
+                    period_ref=period_ref,
+                    summary_id=summary_id,
+                    correlation_id=query.correlation_id,
+                    cache_hit=True,
+                    duration_ms=self._duration_ms(started),
+                )
+                return SummaryResult(payload=cached, cache_hit=True)
 
-        projection = self.repository.get_projection(company_id=query.company_id, period_ref=query.period_ref)
+        projection: SummaryProjectionRecord | None = None
+        if not query.force_refresh:
+            projection = self.repository.get_projection(company_id=query.company_id, period_ref=query.period_ref)
+
         if projection is None:
             source = self.repository.load_source_payload(company_id=query.company_id, period_ref=query.period_ref)
             if source is None:
@@ -59,7 +65,7 @@ class SummaryService:
             self.repository.save_projection(aggregate)
             projection = self.projection.to_record(aggregate)
 
-        payload = projection.payload
+        payload = self.presenter.present(dict(projection.payload))
         self.cache.set(cache_key, payload)
         self.repository.audit_access(
             company_id=query.company_id,

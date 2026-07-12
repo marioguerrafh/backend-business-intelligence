@@ -1,0 +1,2 @@
+company_id,period_ref,source_record_id,product_id,warehouse_id,snapshot_date,opening_quantity,closing_quantity,average_quantity,average_cost,inventory_value,stock_turnover,days_in_inventory
+cmp_acme,2026-07,SRC-INV-1001,PROD-001,WH-01,2026-07-31,400.0000,360.0000,380.0000,45.5000,17290.00,2.40,30.00

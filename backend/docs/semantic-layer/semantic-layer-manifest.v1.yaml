@@ -16,17 +16,32 @@ mission:
     are runtime-configurable, and AI responses are constrained to official DSLs.
 
 artifacts:
+  kpi_catalog:
+    file: kpi-catalog.v1.yaml
+    purpose: define the official KPI source of truth for every engine
+  presentation_catalog:
+    file: presentation-catalog.v1.yaml
+    purpose: define executive presentation strings and section metadata
+  rule_mapping:
+    file: rule-mapping.v1.yaml
+    purpose: map KPI rules to official KPI identifiers and severities
+  score_mapping:
+    file: score-mapping.v1.yaml
+    purpose: define score composition and weights for executive health
   business_semantic_dictionary:
     file: business-semantic-dictionary.v1.yaml
     purpose: define official business terms and governance semantics
   canonical_data_model:
     file: canonical-data-model.v1.yaml
     purpose: define ERP-independent entities, events, measures, and dimensions
+  canonical_data_model_v2:
+    file: canonical-data-model.v2.yaml
+    purpose: extend canonical facts for full KPI catalog coverage with additive compatibility
   erp_mapping_catalog:
     file: erp-mapping-catalog.v1.yaml
     purpose: map source ERP fields/events to canonical model
   formula_dsl:
-    file: formula-dsl.v1.yaml
+    file: formula-dsl.v2.yaml
     purpose: define KPI formulas and metric computations without code changes
   rule_dsl:
     file: rule-dsl.v1.yaml

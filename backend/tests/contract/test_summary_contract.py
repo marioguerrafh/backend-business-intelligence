@@ -26,6 +26,9 @@ REQUIRED_TOP_LEVEL_KEYS = {
     "company_id",
     "period_ref",
     "generated_at",
+    "hero",
+    "highlights",
+    "sections",
     "scores",
     "kpis",
     "alerts",
@@ -181,12 +184,29 @@ def test_summary_contract_v1_shape_is_stable() -> None:
     payload = response.json()
 
     assert REQUIRED_TOP_LEVEL_KEYS.issubset(payload.keys())
-    assert isinstance(payload["scores"]["overall"], (int, float))
+    assert isinstance(payload["scores"]["executive_score"]["overall"], (int, float))
+    assert isinstance(payload["scores"]["executive_score"]["status"], str)
+    assert isinstance(payload["hero"]["last_updated"], str)
+    assert isinstance(payload["highlights"], list)
+    assert payload["sections"][0]["type"] == "hero"
     assert isinstance(payload["kpis"], list)
+    assert "id" in payload["kpis"][0]
+    assert "display_value" in payload["kpis"][0]
+    assert "display_name" in payload["kpis"][0]
     assert isinstance(payload["alerts"], list)
+    assert "severity" in payload["alerts"][0]
+    assert "message" in payload["alerts"][0]
+    assert "icon" in payload["alerts"][0]
     assert isinstance(payload["insights"], list)
+    assert "summary" in payload["insights"][0]
     assert isinstance(payload["recommendations"], list)
+    assert "action_button" in payload["recommendations"][0]
+    assert "estimated_impact" in payload["recommendations"][0]
     assert isinstance(payload["next_risks"], list)
+    assert "probability" in payload["next_risks"][0]
     assert "points" in payload["timeline"]
+    assert "formatted_date" in payload["timeline"]["points"][0]
+    assert "formatted_label" in payload["timeline"]["points"][0]
+    assert "trend_icon" in payload["trends"]["monthly"]
 
     app.dependency_overrides.clear()

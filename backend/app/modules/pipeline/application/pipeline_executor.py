@@ -137,6 +137,7 @@ class PipelineExecutor:
                 company_id=context.company_id,
                 period_ref=context.period_ref,
                 correlation_id=context.correlation_id,
+                force_refresh=True,
             )
         )
         return {

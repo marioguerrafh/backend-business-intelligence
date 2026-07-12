@@ -9,7 +9,7 @@ def test_formula_engine_internal_api_evaluates_formula() -> None:
     response = client.post(
         "/v1/kpi/internal/formulas/evaluate",
         json={
-            "formula_id": "f.net_revenue",
+            "formula_id": "revenue.net",
             "company_id": "cmp_acme",
             "period_ref": "2026-07",
             "metrics": {
@@ -23,7 +23,7 @@ def test_formula_engine_internal_api_evaluates_formula() -> None:
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["formula_id"] == "f.net_revenue"
+    assert payload["formula_id"] == "revenue.net"
     assert payload["value"] == 830.0
     assert payload["unit"] == "BRL"
     assert payload["audit"]["company_id"] == "cmp_acme"

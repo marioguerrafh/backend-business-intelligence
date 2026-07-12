@@ -1,0 +1,650 @@
+metadata:
+  artifact: formula_dsl
+  version: 2.0.0
+  status: approved
+  source_of_truth: true
+  replaces: formula-dsl.v1.yaml
+  date: 2026-07-12
+
+formulas:
+  - formula_id: revenue.net
+    name: receita_liquida
+    expression: sub(sub(sub(sum(fact_sales.gross_revenue), sum(fact_sales.tax_amount)), sum(fact_sales.return_amount)), sum(fact_sales.discount_amount))
+    input_metrics:
+      - fact_sales.gross_revenue
+      - fact_sales.tax_amount
+      - fact_sales.return_amount
+      - fact_sales.discount_amount
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: margin.ebitda
+    name: margem_ebitda
+    expression: mul(div(sum(fact_income_statement.ebitda), coalesce(sum(fact_income_statement.net_revenue), 1)), 100)
+    input_metrics:
+      - fact_income_statement.ebitda
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: controladoria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: cashflow.operating
+    name: fluxo_caixa_operacional
+    expression: sum(fact_finance_cashflow.operating_cash_flow_amount)
+    input_metrics:
+      - fact_finance_cashflow.operating_cash_flow_amount
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: margin.gross
+    name: margem_bruta
+    expression: mul(div(sum(fact_income_statement.gross_profit), coalesce(sum(fact_income_statement.net_revenue), 1)), 100)
+    input_metrics:
+      - fact_income_statement.gross_profit
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: controladoria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: margin.ebit
+    name: margem_ebit
+    expression: mul(div(sum(fact_income_statement.ebit), coalesce(sum(fact_income_statement.net_revenue), 1)), 100)
+    input_metrics:
+      - fact_income_statement.ebit
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: controladoria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: margin.net
+    name: margem_liquida
+    expression: mul(div(sum(fact_income_statement.net_income), coalesce(sum(fact_income_statement.net_revenue), 1)), 100)
+    input_metrics:
+      - fact_income_statement.net_income
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: return.equity
+    name: roe
+    expression: mul(div(sum(fact_income_statement.net_income), coalesce(sum(fact_balance_sheet.equity), 1)), 100)
+    input_metrics:
+      - fact_income_statement.net_income
+      - fact_balance_sheet.equity
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: return.assets
+    name: roa
+    expression: mul(div(sum(fact_income_statement.net_income), coalesce(sum(fact_balance_sheet.total_assets), 1)), 100)
+    input_metrics:
+      - fact_income_statement.net_income
+      - fact_balance_sheet.total_assets
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: return.invested_capital
+    name: roic
+    expression: mul(div(sum(fact_income_statement.nopat), coalesce(add(sum(fact_balance_sheet.equity), sum(fact_balance_sheet.total_liabilities)), 1)), 100)
+    input_metrics:
+      - fact_income_statement.nopat
+      - fact_balance_sheet.equity
+      - fact_balance_sheet.total_liabilities
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: controladoria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: liquidity.current
+    name: liquidez_corrente
+    expression: div(sum(fact_balance_sheet.current_assets), coalesce(sum(fact_balance_sheet.current_liabilities), 1))
+    input_metrics:
+      - fact_balance_sheet.current_assets
+      - fact_balance_sheet.current_liabilities
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: liquidity.quick
+    name: liquidez_seca
+    expression: div(sub(sum(fact_balance_sheet.current_assets), sum(fact_balance_sheet.inventory)), coalesce(sum(fact_balance_sheet.current_liabilities), 1))
+    input_metrics:
+      - fact_balance_sheet.current_assets
+      - fact_balance_sheet.inventory
+      - fact_balance_sheet.current_liabilities
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: liquidity.cash
+    name: liquidez_imediata
+    expression: div(sum(fact_balance_sheet.cash_and_equivalents), coalesce(sum(fact_balance_sheet.current_liabilities), 1))
+    input_metrics:
+      - fact_balance_sheet.cash_and_equivalents
+      - fact_balance_sheet.current_liabilities
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: liquidity.general
+    name: liquidez_geral
+    expression: div(sum(fact_balance_sheet.total_assets), coalesce(sum(fact_balance_sheet.total_liabilities), 1))
+    input_metrics:
+      - fact_balance_sheet.total_assets
+      - fact_balance_sheet.total_liabilities
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: leverage.total
+    name: endividamento_geral
+    expression: mul(div(sum(fact_balance_sheet.total_liabilities), coalesce(sum(fact_balance_sheet.total_assets), 1)), 100)
+    input_metrics:
+      - fact_balance_sheet.total_liabilities
+      - fact_balance_sheet.total_assets
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: leverage.composition
+    name: composicao_endividamento
+    expression: mul(div(sum(fact_balance_sheet.current_liabilities), coalesce(add(sum(fact_balance_sheet.current_liabilities), sum(fact_balance_sheet.non_current_liabilities)), 1)), 100)
+    input_metrics:
+      - fact_balance_sheet.current_liabilities
+      - fact_balance_sheet.non_current_liabilities
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: leverage.net_debt_ebitda
+    name: divida_liquida_ebitda
+    expression: div(sub(sum(fact_balance_sheet.total_liabilities), sum(fact_balance_sheet.cash_and_equivalents)), coalesce(sum(fact_income_statement.ebitda), 1))
+    input_metrics:
+      - fact_balance_sheet.total_liabilities
+      - fact_balance_sheet.cash_and_equivalents
+      - fact_income_statement.ebitda
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: leverage.interest_coverage
+    name: cobertura_juros
+    expression: div(sum(fact_income_statement.ebit), coalesce(abs(sum(fact_income_statement.financial_expense)), 1))
+    input_metrics:
+      - fact_income_statement.ebit
+      - fact_income_statement.financial_expense
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: tesouraria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: efficiency.asset_turnover
+    name: giro_ativo
+    expression: div(sum(fact_income_statement.net_revenue), coalesce(sum(fact_balance_sheet.total_assets), 1))
+    input_metrics:
+      - fact_income_statement.net_revenue
+      - fact_balance_sheet.total_assets
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: controladoria
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: efficiency.inventory_turnover
+    name: giro_estoques_financeiro
+    expression: div(sum(fact_income_statement.cogs), coalesce(sum(fact_inventory.inventory_value), 1))
+    input_metrics:
+      - fact_income_statement.cogs
+      - fact_inventory.inventory_value
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: operacoes
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: efficiency.pme
+    name: prazo_medio_estoque
+    expression: avg(fact_inventory.days_in_inventory)
+    input_metrics:
+      - fact_inventory.days_in_inventory
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: operacoes
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: efficiency.pmr
+    name: prazo_medio_recebimento
+    expression: avg(fact_accounts_receivable.aging_days)
+    input_metrics:
+      - fact_accounts_receivable.aging_days
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: efficiency.pmp
+    name: prazo_medio_pagamento
+    expression: avg(fact_accounts_payable.aging_days)
+    input_metrics:
+      - fact_accounts_payable.aging_days
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: efficiency.cash_cycle
+    name: ciclo_caixa
+    expression: sub(add(avg(fact_inventory.days_in_inventory), avg(fact_accounts_receivable.aging_days)), avg(fact_accounts_payable.aging_days))
+    input_metrics:
+      - fact_inventory.days_in_inventory
+      - fact_accounts_receivable.aging_days
+      - fact_accounts_payable.aging_days
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: financeiro
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: productivity.revenue_per_employee
+    name: receita_por_funcionario
+    expression: div(sum(fact_income_statement.net_revenue), coalesce(sum(fact_hr.active_employee_count), 1))
+    input_metrics:
+      - fact_income_statement.net_revenue
+      - fact_hr.active_employee_count
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: rh
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: sales.conversion
+    name: taxa_conversao_vendas
+    expression: mul(div(sum(fact_sales.net_revenue), coalesce(sum(fact_sales.gross_revenue), 1)), 100)
+    input_metrics:
+      - fact_sales.net_revenue
+      - fact_sales.gross_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: comercial
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: sales.average_ticket
+    name: ticket_medio
+    expression: div(sum(fact_sales.net_revenue), coalesce(sum(fact_sales.quantity_sold), 1))
+    input_metrics:
+      - fact_sales.net_revenue
+      - fact_sales.quantity_sold
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: comercial
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: sales.cac
+    name: custo_aquisicao_cliente
+    expression: div(sum(fact_income_statement.operating_expenses), coalesce(count_distinct(fact_accounts_receivable.customer_id), 1))
+    input_metrics:
+      - fact_income_statement.operating_expenses
+      - fact_accounts_receivable.customer_id
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: comercial
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: accounting.close_days
+    name: prazo_fechamento_contabil
+    expression: avg(fact_accounts_payable.aging_days)
+    input_metrics:
+      - fact_accounts_payable.aging_days
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: contabil
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: accounting.reconciliation
+    name: indice_conciliacao_contabil
+    expression: mul(div(sum(fact_balance_sheet.total_assets), coalesce(add(sum(fact_balance_sheet.total_liabilities), sum(fact_balance_sheet.equity)), 1)), 100)
+    input_metrics:
+      - fact_balance_sheet.total_assets
+      - fact_balance_sheet.total_liabilities
+      - fact_balance_sheet.equity
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: contabil
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: accounting.reclassification_rate
+    name: taxa_reclassificacao
+    expression: mul(div(abs(sum(fact_income_statement.financial_expense)), coalesce(sum(fact_income_statement.operating_expenses), 1)), 100)
+    input_metrics:
+      - fact_income_statement.financial_expense
+      - fact_income_statement.operating_expenses
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: contabil
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: inventory.turnover
+    name: giro_estoque
+    expression: div(sum(fact_income_statement.cogs), coalesce(sum(fact_inventory.inventory_value), 1))
+    input_metrics:
+      - fact_income_statement.cogs
+      - fact_inventory.inventory_value
+    output_type: decimal
+    output_unit: RATIO
+    precision: 2
+    owner: estoque
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: inventory.stockout_rate
+    name: ruptura_estoque
+    expression: mul(div(sum(fact_inventory_snapshot.reserved_qty), coalesce(add(sum(fact_inventory_snapshot.on_hand_qty), sum(fact_inventory_snapshot.reserved_qty)), 1)), 100)
+    input_metrics:
+      - fact_inventory_snapshot.reserved_qty
+      - fact_inventory_snapshot.on_hand_qty
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: estoque
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: inventory.accuracy
+    name: acuracia_inventario
+    expression: mul(sub(1, div(abs(sub(sum(fact_inventory.opening_quantity), sum(fact_inventory.closing_quantity))), coalesce(sum(fact_inventory.opening_quantity), 1))), 100)
+    input_metrics:
+      - fact_inventory.opening_quantity
+      - fact_inventory.closing_quantity
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: estoque
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: procurement.savings
+    name: saving_compras
+    expression: sub(sum(fact_procurement.po_total_cost), mul(sum(fact_procurement.po_quantity), sum(fact_inventory.average_cost)))
+    input_metrics:
+      - fact_procurement.po_total_cost
+      - fact_procurement.po_quantity
+      - fact_inventory.average_cost
+    output_type: decimal
+    output_unit: BRL
+    precision: 2
+    owner: suprimentos
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: procurement.lead_time
+    name: lead_time_suprimento
+    expression: avg(fact_procurement.lead_time_days)
+    input_metrics:
+      - fact_procurement.lead_time_days
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: suprimentos
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: procurement.on_time_delivery
+    name: entrega_no_prazo
+    expression: mul(avg(fact_procurement.on_time_delivery_flag), 100)
+    input_metrics:
+      - fact_procurement.on_time_delivery_flag
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: suprimentos
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: hr.turnover
+    name: turnover_rh
+    expression: mul(div(sum(fact_hr.terminated_employee_count), coalesce(sum(fact_hr.employee_count), 1)), 100)
+    input_metrics:
+      - fact_hr.terminated_employee_count
+      - fact_hr.employee_count
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: rh
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: hr.absenteeism
+    name: absenteismo
+    expression: mul(div(sum(fact_hr_workforce.absence_hours), coalesce(sum(fact_hr_workforce.scheduled_hours), 1)), 100)
+    input_metrics:
+      - fact_hr_workforce.absence_hours
+      - fact_hr_workforce.scheduled_hours
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: rh
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: hr.payroll_ratio
+    name: custo_pessoal_sobre_receita
+    expression: mul(div(sum(fact_hr.payroll_amount), coalesce(sum(fact_income_statement.net_revenue), 1)), 100)
+    input_metrics:
+      - fact_hr.payroll_amount
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: rh
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: service.first_response
+    name: tempo_primeira_resposta
+    expression: avg(fact_service.first_response_minutes)
+    input_metrics:
+      - fact_service.first_response_minutes
+    output_type: decimal
+    output_unit: MINUTES
+    precision: 2
+    owner: atendimento
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: service.fcr
+    name: first_contact_resolution
+    expression: mul(avg(fact_service.first_contact_resolution_flag), 100)
+    input_metrics:
+      - fact_service.first_contact_resolution_flag
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: atendimento
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: service.nps
+    name: nps
+    expression: avg(fact_service.nps_score)
+    input_metrics:
+      - fact_service.nps_score
+    output_type: decimal
+    output_unit: SCORE
+    precision: 2
+    owner: atendimento
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: production.oee
+    name: oee
+    expression: mul(mul(avg(fact_production.availability_rate), avg(fact_production.performance_rate)), mul(avg(fact_production.quality_rate), 100))
+    input_metrics:
+      - fact_production.availability_rate
+      - fact_production.performance_rate
+      - fact_production.quality_rate
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: producao
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: production.scrap_rate
+    name: taxa_refugo
+    expression: mul(div(sum(fact_production.scrap_qty), coalesce(sum(fact_production.actual_output_qty), 1)), 100)
+    input_metrics:
+      - fact_production.scrap_qty
+      - fact_production.actual_output_qty
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: producao
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: production.plan_adherence
+    name: aderencia_plano_producao
+    expression: mul(div(sum(fact_production.actual_output_qty), coalesce(sum(fact_production.planned_output_qty), 1)), 100)
+    input_metrics:
+      - fact_production.actual_output_qty
+      - fact_production.planned_output_qty
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: producao
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: executive.revenue_growth
+    name: crescimento_receita
+    expression: mul(div(period_over_period(sum(fact_income_statement.net_revenue), rolling_avg(sum(fact_income_statement.net_revenue))), coalesce(rolling_avg(sum(fact_income_statement.net_revenue)), 1)), 100)
+    input_metrics:
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: executivo
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: executive.net_margin
+    name: margem_liquida_executiva
+    expression: mul(div(sum(fact_income_statement.net_income), coalesce(sum(fact_income_statement.net_revenue), 1)), 100)
+    input_metrics:
+      - fact_income_statement.net_income
+      - fact_income_statement.net_revenue
+    output_type: decimal
+    output_unit: PERCENT
+    precision: 2
+    owner: executivo
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: executive.cash_conversion_cycle
+    name: ciclo_conversao_caixa
+    expression: sub(add(avg(fact_inventory.days_in_inventory), avg(fact_accounts_receivable.aging_days)), avg(fact_accounts_payable.aging_days))
+    input_metrics:
+      - fact_inventory.days_in_inventory
+      - fact_accounts_receivable.aging_days
+      - fact_accounts_payable.aging_days
+    output_type: decimal
+    output_unit: DAYS
+    precision: 2
+    owner: executivo
+    version: 2
+    effective_from: 2026-07-12
+
+  - formula_id: executive.business_health_index
+    name: indice_saude_empresarial
+    expression: avg(mul(div(sum(fact_income_statement.net_income), coalesce(sum(fact_income_statement.net_revenue), 1)), 100), mul(div(sum(fact_balance_sheet.total_assets), coalesce(sum(fact_balance_sheet.total_liabilities), 1)), 100), mul(div(sum(fact_production.actual_output_qty), coalesce(sum(fact_production.planned_output_qty), 1)), 100), mul(avg(fact_procurement.on_time_delivery_flag), 100), mul(avg(fact_service.first_contact_resolution_flag), 100))
+    input_metrics:
+      - fact_income_statement.net_income
+      - fact_income_statement.net_revenue
+      - fact_balance_sheet.total_assets
+      - fact_balance_sheet.total_liabilities
+      - fact_production.actual_output_qty
+      - fact_production.planned_output_qty
+      - fact_procurement.on_time_delivery_flag
+      - fact_service.first_contact_resolution_flag
+    output_type: decimal
+    output_unit: SCORE
+    precision: 2
+    owner: executivo
+    version: 2
+    effective_from: 2026-07-12

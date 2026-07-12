@@ -1,0 +1,2 @@
+company_id,period_ref,source_record_id,employee_count,active_employee_count,terminated_employee_count,payroll_amount,average_salary,hours_worked
+cmp_acme,2026-07,SRC-HR-1001,120,116,4,540000.00,4655.17,19200.00
