@@ -303,11 +303,52 @@ class KPIOrchestratorUseCase:
     def _impacted_formula_ids(self, *, template: str, formulas: dict[str, FormulaDefinition]) -> set[str]:
         prefixes_by_template = {
             "sales": ("fact_sales.",),
+            "cashflow": ("fact_finance_cashflow.",),
             "financial": ("fact_finance_cashflow.",),
+            "balance_sheet": ("fact_balance_sheet.",),
+            "income_statement": ("fact_income_statement.",),
+            "accounts_receivable": ("fact_accounts_receivable.",),
+            "accounts_payable": ("fact_accounts_payable.",),
+            "inventory": ("fact_inventory.", "fact_inventory_snapshot."),
+            "hr": ("fact_hr.", "fact_hr_workforce."),
+            "procurement": ("fact_procurement.",),
+            "service": ("fact_service.",),
+            "production": ("fact_production.",),
             "customers": ("dim_customer.",),
             "products": ("dim_product.",),
         }
         prefixes = prefixes_by_template.get(template, ())
+
+        # Any factual import should refresh the full KPI fact graph. This avoids
+        # partial KPI snapshots (e.g. only 3 KPIs) when historical periods were
+        # imported in separate template batches.
+        factual_templates = {
+            "sales",
+            "cashflow",
+            "financial",
+            "balance_sheet",
+            "income_statement",
+            "accounts_receivable",
+            "accounts_payable",
+            "inventory",
+            "hr",
+        }
+        if template in factual_templates:
+            prefixes = (
+                "fact_sales.",
+                "fact_finance_cashflow.",
+                "fact_balance_sheet.",
+                "fact_income_statement.",
+                "fact_accounts_receivable.",
+                "fact_accounts_payable.",
+                "fact_inventory.",
+                "fact_inventory_snapshot.",
+                "fact_hr.",
+                "fact_hr_workforce.",
+                "fact_procurement.",
+                "fact_service.",
+                "fact_production.",
+            )
 
         direct: set[str] = set()
         for formula_id, definition in formulas.items():

@@ -12,7 +12,19 @@ PipelineStageStatus = Literal["PENDING", "RUNNING", "SUCCESS", "FAILED", "SKIPPE
 class StartPipelineCommand:
     company_id: str
     import_job_id: str
-    template: Literal["customers", "products", "sales", "financial"]
+    template: Literal[
+        "customers",
+        "products",
+        "sales",
+        "cashflow",
+        "financial",
+        "balance_sheet",
+        "income_statement",
+        "accounts_receivable",
+        "accounts_payable",
+        "inventory",
+        "hr",
+    ]
     source_system: str
     ingest_event_id: str | None = None
     correlation_id: str | None = None

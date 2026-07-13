@@ -131,25 +131,39 @@ class _FakeRepository:
 class _FakeExecutor:
     def run_kpi_orchestrator(self, *, context, fallback_run_id: str):
         context.period_ref = "2026-07"
-        context.orchestrator_run_id = fallback_run_id
-        return {"period_ref": "2026-07", "orchestrator_run_id": fallback_run_id}
+        context.orchestrator_run_id = f"{fallback_run_id}-p1"
+        return {
+            "period_ref": "2026-07",
+            "orchestrator_run_id": f"{fallback_run_id}-p1",
+            "periods": [
+                {"period_ref": "2026-07", "orchestrator_run_id": f"{fallback_run_id}-p1"},
+                {"period_ref": "2026-06", "orchestrator_run_id": f"{fallback_run_id}-p2"},
+            ],
+        }
 
-    def run_rule_engine(self, *, context):
-        assert context.period_ref == "2026-07"
+    def run_rule_engine(self, *, context, period_ref: str, orchestrator_run_id: str):
+        assert period_ref in {"2026-07", "2026-06"}
+        assert orchestrator_run_id in {"plr_1-p1", "plr_1-p2"}
         return {"fired_rules": 0}
 
-    def run_recommendation_engine(self, *, context):
-        assert context.orchestrator_run_id == "plr_1"
+    def run_recommendation_engine(self, *, context, period_ref: str, orchestrator_run_id: str):
+        assert period_ref in {"2026-07", "2026-06"}
+        assert orchestrator_run_id in {"plr_1-p1", "plr_1-p2"}
         return {"generated_count": 0}
 
-    def run_insight_engine(self, *, context):
+    def run_insight_engine(self, *, context, period_ref: str, orchestrator_run_id: str):
+        assert period_ref in {"2026-07", "2026-06"}
+        assert orchestrator_run_id in {"plr_1-p1", "plr_1-p2"}
         return {"generated_count": 0}
 
-    def run_executive_score_engine(self, *, context):
+    def run_executive_score_engine(self, *, context, period_ref: str, orchestrator_run_id: str):
+        assert period_ref in {"2026-07", "2026-06"}
+        assert orchestrator_run_id in {"plr_1-p1", "plr_1-p2"}
         return {"executive_score": 0.0}
 
-    def run_summary_engine(self, *, context):
-        return {"summary_updated": True, "period_ref": context.period_ref}
+    def run_summary_engine(self, *, context, period_ref: str, orchestrator_run_id: str):
+        assert orchestrator_run_id in {"plr_1-p1", "plr_1-p2"}
+        return {"summary_updated": True, "period_ref": period_ref}
 
 
 class _FakePublisher:
@@ -207,3 +221,10 @@ def test_pipeline_service_executes_all_stages_and_completes() -> None:
     assert kpi_step["details_json"] is not None
     kpi_details = json.loads(str(kpi_step["details_json"]))
     assert kpi_details["period_ref"] == "2026-07"
+    assert len(kpi_details["periods"]) == 2
+
+    summary_step = next(item for item in repository.steps if item["step_name"] == "Summary Engine")
+    assert summary_step["details_json"] is not None
+    summary_details = json.loads(str(summary_step["details_json"]))
+    assert summary_details["total_periods"] == 2
+    assert {item["period_ref"] for item in summary_details["periods"]} == {"2026-07", "2026-06"}

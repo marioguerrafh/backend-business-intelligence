@@ -24,7 +24,12 @@ class EvaluateFormulaRequest(BaseModel):
 class KPIOrchestratorIngestCompletedRequest(BaseModel):
     company_id: str = Field(min_length=1)
     import_job_id: str = Field(min_length=1)
-    template: str = Field(pattern="^(customers|products|sales|financial)$")
+    template: str = Field(
+        pattern=(
+            "^(customers|products|sales|cashflow|financial|balance_sheet|income_statement|"
+            "accounts_receivable|accounts_payable|inventory|hr|procurement|service|production)$"
+        )
+    )
     source_system: str = Field(default="csv_official_template", min_length=1)
     event_id: str | None = None
     orchestrator_run_id: str | None = None

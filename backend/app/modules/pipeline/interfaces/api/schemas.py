@@ -9,7 +9,19 @@ from pydantic import BaseModel, Field
 class StartPipelineRequest(BaseModel):
     company_id: str = Field(min_length=1)
     import_job_id: str = Field(min_length=1)
-    template: Literal["customers", "products", "sales", "financial"]
+    template: Literal[
+        "customers",
+        "products",
+        "sales",
+        "cashflow",
+        "financial",
+        "balance_sheet",
+        "income_statement",
+        "accounts_receivable",
+        "accounts_payable",
+        "inventory",
+        "hr",
+    ]
     source_system: str = Field(min_length=1)
     ingest_event_id: str | None = None
     correlation_id: str | None = None

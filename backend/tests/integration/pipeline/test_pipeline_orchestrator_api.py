@@ -19,7 +19,13 @@ from app.modules.business.infrastructure.models import (
 )
 from app.modules.executive_score.infrastructure.models import ExecutiveScoreAuditLogModel, ExecutiveScorePublishedEventModel
 from app.modules.imports.infrastructure.models import (
+    ImportedAccountsPayableFactModel,
+    ImportedAccountsReceivableFactModel,
+    ImportedBalanceSheetFactModel,
     ImportedFinancialFactModel,
+    ImportedHrFactModel,
+    ImportedIncomeStatementFactModel,
+    ImportedInventoryFactModel,
     ImportedSaleFactModel,
     ImportInconsistencyModel,
     ImportJobModel,
@@ -56,6 +62,12 @@ def _build_session_factory():
             ImportInconsistencyModel.__table__,
             ImportedSaleFactModel.__table__,
             ImportedFinancialFactModel.__table__,
+            ImportedBalanceSheetFactModel.__table__,
+            ImportedIncomeStatementFactModel.__table__,
+            ImportedAccountsReceivableFactModel.__table__,
+            ImportedAccountsPayableFactModel.__table__,
+            ImportedInventoryFactModel.__table__,
+            ImportedHrFactModel.__table__,
             ImportPublishedEventModel.__table__,
             CustomerModel.__table__,
             CustomerContactModel.__table__,
@@ -124,9 +136,9 @@ def test_import_sales_triggers_pipeline_automatically_and_updates_summary() -> N
 
     token = _token(client)
     csv_content = (
-        "source_record_id,transaction_date,invoice_id,invoice_line_id,product_external_id,customer_external_id,"
+        "company_id,period_ref,source_record_id,transaction_date,invoice_id,invoice_line_id,product_external_id,customer_external_id,"
         "gross_revenue,tax_amount,discount_amount,return_amount,net_revenue,quantity_sold,cogs_amount\n"
-        "SRC-1,2026-07-10,NF-1,1,PRD-1,CLI-1,1000,100,20,10,870,3,600\n"
+        "cmp_acme,2026-07,SRC-1,2026-07-10,NF-1,1,PRD-1,CLI-1,1000,100,20,10,870,3,600\n"
     )
 
     response = client.post(

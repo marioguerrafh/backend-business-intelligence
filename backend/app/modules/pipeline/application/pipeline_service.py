@@ -66,6 +66,7 @@ class PipelineService:
             ingest_event_id=command.ingest_event_id,
             correlation_id=command.correlation_id,
         )
+        period_contexts: list[dict[str, str]] = []
 
         for order, stage_name in self.STAGES:
             step_start = perf_counter()
@@ -98,6 +99,13 @@ class PipelineService:
                     step_name=stage_name.value,
                     context=context,
                 )
+                if stage_name is PipelineStageName.KPI_ORCHESTRATOR:
+                    details = self.repository.get_last_success_step_details(
+                        company_id=run["company_id"],
+                        import_job_id=run["import_job_id"],
+                        step_name=stage_name.value,
+                    )
+                    period_contexts = self._period_contexts_from_kpi_details(details=details, context=context)
                 duration_ms = int((perf_counter() - step_start) * 1000)
                 self.repository.finish_step(
                     step_id=step_id,
@@ -138,7 +146,10 @@ class PipelineService:
                     stage_name=stage_name,
                     context=context,
                     fallback_run_id=run["pipeline_run_id"],
+                    period_contexts=period_contexts,
                 )
+                if stage_name is PipelineStageName.KPI_ORCHESTRATOR:
+                    period_contexts = self._period_contexts_from_kpi_details(details=details, context=context)
                 duration_ms = int((perf_counter() - step_start) * 1000)
                 self.repository.finish_step(
                     step_id=step_id,
@@ -287,18 +298,94 @@ class PipelineService:
         stage_name: PipelineStageName,
         context: PipelineExecutionContext,
         fallback_run_id: str,
+        period_contexts: list[dict[str, str]],
     ) -> dict[str, object]:
         if stage_name is PipelineStageName.KPI_ORCHESTRATOR:
             return self.executor.run_kpi_orchestrator(context=context, fallback_run_id=fallback_run_id)
+
+        resolved_contexts = period_contexts or self._period_contexts_from_kpi_details(details=None, context=context)
+        if not resolved_contexts:
+            raise ValueError("pipeline context missing period list")
+
         if stage_name is PipelineStageName.RULE_ENGINE:
-            return self.executor.run_rule_engine(context=context)
+            return {
+                "total_periods": len(resolved_contexts),
+                "periods": [
+                    {
+                        "period_ref": item["period_ref"],
+                        "orchestrator_run_id": item["orchestrator_run_id"],
+                        **self.executor.run_rule_engine(
+                            context=context,
+                            period_ref=item["period_ref"],
+                            orchestrator_run_id=item["orchestrator_run_id"],
+                        ),
+                    }
+                    for item in resolved_contexts
+                ],
+            }
         if stage_name is PipelineStageName.RECOMMENDATION_ENGINE:
-            return self.executor.run_recommendation_engine(context=context)
+            return {
+                "total_periods": len(resolved_contexts),
+                "periods": [
+                    {
+                        "period_ref": item["period_ref"],
+                        "orchestrator_run_id": item["orchestrator_run_id"],
+                        **self.executor.run_recommendation_engine(
+                            context=context,
+                            period_ref=item["period_ref"],
+                            orchestrator_run_id=item["orchestrator_run_id"],
+                        ),
+                    }
+                    for item in resolved_contexts
+                ],
+            }
         if stage_name is PipelineStageName.INSIGHT_ENGINE:
-            return self.executor.run_insight_engine(context=context)
+            return {
+                "total_periods": len(resolved_contexts),
+                "periods": [
+                    {
+                        "period_ref": item["period_ref"],
+                        "orchestrator_run_id": item["orchestrator_run_id"],
+                        **self.executor.run_insight_engine(
+                            context=context,
+                            period_ref=item["period_ref"],
+                            orchestrator_run_id=item["orchestrator_run_id"],
+                        ),
+                    }
+                    for item in resolved_contexts
+                ],
+            }
         if stage_name is PipelineStageName.EXECUTIVE_SCORE_ENGINE:
-            return self.executor.run_executive_score_engine(context=context)
-        return self.executor.run_summary_engine(context=context)
+            return {
+                "total_periods": len(resolved_contexts),
+                "periods": [
+                    {
+                        "period_ref": item["period_ref"],
+                        "orchestrator_run_id": item["orchestrator_run_id"],
+                        **self.executor.run_executive_score_engine(
+                            context=context,
+                            period_ref=item["period_ref"],
+                            orchestrator_run_id=item["orchestrator_run_id"],
+                        ),
+                    }
+                    for item in resolved_contexts
+                ],
+            }
+        return {
+            "total_periods": len(resolved_contexts),
+            "periods": [
+                {
+                    "period_ref": item["period_ref"],
+                    "orchestrator_run_id": item["orchestrator_run_id"],
+                    **self.executor.run_summary_engine(
+                        context=context,
+                        period_ref=item["period_ref"],
+                        orchestrator_run_id=item["orchestrator_run_id"],
+                    ),
+                }
+                for item in resolved_contexts
+            ],
+        }
 
     def _hydrate_context_from_previous_success(
         self,
@@ -323,6 +410,46 @@ class PipelineService:
                 context.period_ref = period_ref
             if isinstance(orchestrator_run_id, str) and orchestrator_run_id:
                 context.orchestrator_run_id = orchestrator_run_id
+
+    @staticmethod
+    def _period_contexts_from_kpi_details(
+        *,
+        details: dict[str, object] | None,
+        context: PipelineExecutionContext,
+    ) -> list[dict[str, str]]:
+        if isinstance(details, dict):
+            periods = details.get("periods")
+            if isinstance(periods, list):
+                normalized: list[dict[str, str]] = []
+                for item in periods:
+                    if not isinstance(item, dict):
+                        continue
+                    period_ref = str(item.get("period_ref") or "").strip()
+                    run_id = str(item.get("orchestrator_run_id") or "").strip()
+                    if not period_ref or not run_id:
+                        continue
+                    normalized.append(
+                        {
+                            "period_ref": period_ref,
+                            "orchestrator_run_id": run_id,
+                        }
+                    )
+                if normalized:
+                    return normalized
+
+            period_ref = str(details.get("period_ref") or "").strip()
+            run_id = str(details.get("orchestrator_run_id") or "").strip()
+            if period_ref and run_id:
+                return [{"period_ref": period_ref, "orchestrator_run_id": run_id}]
+
+        if context.period_ref and context.orchestrator_run_id:
+            return [
+                {
+                    "period_ref": context.period_ref,
+                    "orchestrator_run_id": context.orchestrator_run_id,
+                }
+            ]
+        return []
 
     @staticmethod
     def _run_result(run: dict[str, object]) -> PipelineRunResult:

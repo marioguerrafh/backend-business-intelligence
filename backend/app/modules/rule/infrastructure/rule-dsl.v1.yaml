@@ -80,7 +80,7 @@ rule_examples:
     scope:
       dimensions:
         - company_id
-    condition: and(lt(metric_value,0), consecutive_periods(3, day))
+    condition: lt(metric_value,0)
     severity: high
     priority: p0
     trigger_window: 3d

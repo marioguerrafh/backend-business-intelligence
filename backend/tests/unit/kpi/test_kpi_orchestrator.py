@@ -36,6 +36,18 @@ class _Catalog(FormulaCatalogReader):
                 owner="financeiro",
                 version=1,
             ),
+            "f.cashflow_operating": FormulaDefinition(
+                formula_id="f.cashflow_operating",
+                kpi_id="FIN-03",
+                name="fluxo_caixa_operacional",
+                expression="sum(fact_finance_cashflow.operating_cash_flow_amount)",
+                input_metrics=("fact_finance_cashflow.operating_cash_flow_amount",),
+                output_type="decimal",
+                output_unit="BRL",
+                precision=2,
+                owner="tesouraria",
+                version=1,
+            ),
         }
 
 
@@ -44,6 +56,7 @@ class _Canonical(CanonicalModelReader):
         return {
             "fact_sales.gross_revenue",
             "fact_sales.tax_amount",
+            "fact_finance_cashflow.operating_cash_flow_amount",
         }
 
 
@@ -102,7 +115,13 @@ def _build_use_case(repo: _FakeRepo) -> KPIOrchestratorUseCase:
 
 def test_orchestrator_resolves_dependencies_and_publishes_for_impacted_formula() -> None:
     repo = _FakeRepo(
-        period_metrics={"2026-07": {"fact_sales.gross_revenue": 1000.0, "fact_sales.tax_amount": 100.0}},
+        period_metrics={
+            "2026-07": {
+                "fact_sales.gross_revenue": 1000.0,
+                "fact_sales.tax_amount": 100.0,
+                "fact_finance_cashflow.operating_cash_flow_amount": 123.0,
+            }
+        },
         existing={},
     )
     use_case = _build_use_case(repo)
@@ -120,11 +139,12 @@ def test_orchestrator_resolves_dependencies_and_publishes_for_impacted_formula()
     assert len(result.periods) == 1
     period = result.periods[0]
     assert period.idempotent_hit is False
-    assert period.recalculated_count == 2
+    assert period.recalculated_count == 3
     assert period.failed_count == 0
-    assert len(repo.persisted) == 2
+    assert len(repo.persisted) == 3
     assert any(item[1] == "f.net_revenue" for item in repo.persisted)
     assert any(item[1] == "f.net_revenue_ratio" for item in repo.persisted)
+    assert any(item[1] == "f.cashflow_operating" for item in repo.persisted)
 
 
 def test_orchestrator_is_idempotent_for_same_company_period_and_run() -> None:
@@ -152,3 +172,74 @@ def test_orchestrator_is_idempotent_for_same_company_period_and_run() -> None:
     assert period.recalculated_count == 0
     assert repo.persisted == []
     assert repo.events == []
+
+
+def test_orchestrator_treats_cashflow_template_as_financial_metrics() -> None:
+    repo = _FakeRepo(
+        period_metrics={"2026-07": {"fact_finance_cashflow.operating_cash_flow_amount": 123.0}},
+        existing={},
+    )
+    use_case = _build_use_case(repo)
+
+    result = use_case.execute(
+        IngestCompletedEvent(
+            company_id="cmp_acme",
+            import_job_id="imp_002",
+            template="cashflow",
+            source_system="csv_manual",
+            orchestrator_run_id="run_002",
+        )
+    )
+
+    assert len(result.periods) == 1
+    period = result.periods[0]
+    assert period.recalculated_count == 1
+    assert any(item[1] == "f.cashflow_operating" for item in repo.persisted)
+
+
+def test_orchestrator_sales_template_expands_to_full_fact_domains() -> None:
+    repo = _FakeRepo(period_metrics={"2026-07": {}}, existing={})
+    use_case = _build_use_case(repo)
+
+    formulas = {
+        "f.sales": FormulaDefinition(
+            formula_id="f.sales",
+            kpi_id="FIN-10",
+            name="sales",
+            expression="sum(fact_sales.net_revenue)",
+            input_metrics=("fact_sales.net_revenue",),
+            output_type="decimal",
+            output_unit="BRL",
+            precision=2,
+            owner="financeiro",
+            version=1,
+        ),
+        "f.service": FormulaDefinition(
+            formula_id="f.service",
+            kpi_id="OPR-20",
+            name="service",
+            expression="sum(fact_service.orders)",
+            input_metrics=("fact_service.orders",),
+            output_type="decimal",
+            output_unit="count",
+            precision=2,
+            owner="operacoes",
+            version=1,
+        ),
+        "f.production": FormulaDefinition(
+            formula_id="f.production",
+            kpi_id="OPR-21",
+            name="production",
+            expression="sum(fact_production.units)",
+            input_metrics=("fact_production.units",),
+            output_type="decimal",
+            output_unit="count",
+            precision=2,
+            owner="operacoes",
+            version=1,
+        ),
+    }
+
+    impacted = use_case._impacted_formula_ids(template="sales", formulas=formulas)
+
+    assert impacted == {"f.sales", "f.service", "f.production"}
