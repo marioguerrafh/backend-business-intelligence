@@ -10,6 +10,7 @@ from app.modules.executive_score.interfaces.api.routes import router as executiv
 from app.modules.imports.interfaces.api.routes import router as imports_router
 from app.modules.insight.interfaces.api.routes import router as insight_router
 from app.modules.kpi.interfaces.api.routes import router as kpi_router
+from app.modules.kpi.interfaces.api.explorer_routes import router as kpi_explorer_router
 from app.modules.notification.interfaces.api.routes import router as notification_router
 from app.modules.omie.interfaces.api.routes import router as omie_router
 from app.modules.pipeline.interfaces.api.routes import router as pipeline_router
@@ -28,6 +29,7 @@ api_v1_router.include_router(imports_router)
 api_v1_router.include_router(pipeline_router)
 api_v1_router.include_router(omie_router)
 api_v1_router.include_router(kpi_router)
+api_v1_router.include_router(kpi_explorer_router)
 api_v1_router.include_router(insight_router)
 api_v1_router.include_router(alert_router)
 api_v1_router.include_router(recommendation_router)

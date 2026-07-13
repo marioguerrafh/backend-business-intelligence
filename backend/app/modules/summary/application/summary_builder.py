@@ -53,8 +53,16 @@ class SummaryBuilder:
             alerts=tuple(
                 SummaryAlert(
                     alert_id=str(item["alert_id"]),
+                    kpi_id=str(item.get("kpi_id") or ""),
+                    rule_id=str(item.get("rule_id") or ""),
+                    rule_name=str(item.get("rule_name") or ""),
                     severity=str(item["severity"]),
                     priority=str(item["priority"]),
+                    metric_value=self._optional_float(item.get("metric_value")),
+                    category=self._optional_str(item.get("category")),
+                    probability=self._optional_float(item.get("probability")),
+                    impact=self._optional_float(item.get("impact")),
+                    related_recommendation_ids=tuple(str(x) for x in (item.get("related_recommendation_ids") or [])),
                     title=str(item["title"]),
                     description=str(item.get("description") or ""),
                 )
@@ -66,6 +74,9 @@ class SummaryBuilder:
                     insight_type=str(item["type"]),
                     statement=str(item["statement"]),
                     evidence=dict(item.get("evidence") or {}),
+                    related_kpis=tuple(str(x) for x in (item.get("related_kpis") or [])),
+                    related_rules=tuple(str(x) for x in (item.get("related_rules") or [])),
+                    related_recommendations=tuple(str(x) for x in (item.get("related_recommendations") or [])),
                 )
                 for item in source.insights
             ),
@@ -77,6 +88,8 @@ class SummaryBuilder:
                     expected_impact=dict(item.get("expected_impact") or {}),
                     owner_role=self._optional_str(item.get("owner_role")),
                     sla_target=self._optional_str(item.get("sla_target")),
+                    related_kpis=tuple(str(x) for x in (item.get("related_kpis") or [])),
+                    related_rules=tuple(str(x) for x in (item.get("related_rules") or [])),
                 )
                 for item in source.recommendations
             ),

@@ -283,8 +283,8 @@ if ($productCreate.status -eq 200 -and $productCreate.body.product_id) {
 
 # 6) Imports endpoint (CSV multipart)
 $financialCsv = @"
-source_record_id,transaction_date,cash_flow_type,account_type,cash_in_amount,cash_out_amount,operating_cash_flow_amount,description
-SMOKE-FIN-$seed,2026-07-10,operating,bank,1000.00,150.00,850.00,Lancamento smoke test
+company_id,period_ref,source_record_id,transaction_date,cash_flow_type,account_type,cash_in_amount,cash_out_amount,operating_cash_flow_amount,description
+${CompanyId},2026-07,SMOKE-FIN-$seed,2026-07-10,operating,bank,1000.00,150.00,850.00,Lancamento smoke test
 "@
 Invoke-ImportCsvMultipart -Token $accessToken -Template "financial" -CsvContent $financialCsv -ExpectedStatuses @(200) | Out-Null
 
@@ -293,14 +293,14 @@ Invoke-Api -Name "summary.get" -Method "GET" -Path "/v1/summary?company_id=$Comp
 
 # 8) KPI formula evaluate
 $kpiPayload = @{
-    formula_id = "f.net_revenue"
+    formula_id = "revenue.net"
     company_id = $CompanyId
     period_ref = "2026-07"
     metrics = @{
-        gross_revenue = @(1000, 900)
-        tax_amount = @(180, 160)
-        return_amount = @(10, 12)
-        discount_amount = @(20, 15)
+        "fact_sales.gross_revenue" = @(1000, 900)
+        "fact_sales.tax_amount" = @(180, 160)
+        "fact_sales.return_amount" = @(10, 12)
+        "fact_sales.discount_amount" = @(20, 15)
     }
 }
 Invoke-Api -Name "kpi.evaluate_formula" -Method "POST" -Path "/v1/kpi/internal/formulas/evaluate" -ExpectedStatuses @(200) -Body $kpiPayload | Out-Null

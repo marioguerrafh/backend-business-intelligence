@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from typing import Any
 from uuid import uuid4
 
 from sqlalchemy import Select, select
@@ -9,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from app.modules.imports.infrastructure.models import ImportJobModel
 from app.modules.pipeline.infrastructure.models import PipelineRunModel
+from app.modules.recommendation.infrastructure.models import RecommendationAuditLogModel
 from app.modules.rule.infrastructure.models import RuleResultModel
 from app.modules.summary.application.ports.repository import (
     SummaryProjectionRecord,
@@ -92,6 +94,42 @@ class SqlAlchemySummaryRepository(SummaryRepository):
             elif failed_ratio >= 0.02:
                 data_quality = "good"
 
+        rule_rows = self._safe_scalars(
+            select(RuleResultModel)
+            .where(
+                RuleResultModel.company_id == company_id,
+                RuleResultModel.period_ref == effective_period,
+            )
+            .order_by(RuleResultModel.fired_at.desc())
+            .limit(50)
+        )
+        recommendation_rows = self._safe_scalars(
+            select(RecommendationResultModel)
+            .where(
+                RecommendationResultModel.company_id == company_id,
+                RecommendationResultModel.period_ref == effective_period,
+            )
+            .order_by(RecommendationResultModel.rank_score.desc())
+            .limit(20)
+        )
+        recommendation_audits = self._safe_scalars(
+            select(RecommendationAuditLogModel)
+            .where(
+                RecommendationAuditLogModel.company_id == company_id,
+                RecommendationAuditLogModel.period_ref == effective_period,
+            )
+            .order_by(RecommendationAuditLogModel.created_at.desc())
+            .limit(100)
+        )
+
+        rec_to_rules: dict[str, set[str]] = {}
+        rule_to_recs: dict[str, set[str]] = {}
+        for audit in recommendation_audits:
+            rule_to_recs.setdefault(audit.trigger_rule_id, set()).add(audit.recommendation_id)
+            rec_to_rules.setdefault(audit.recommendation_id, set()).add(audit.trigger_rule_id)
+
+        rule_to_kpi: dict[str, str] = {row.rule_id: row.kpi_id for row in rule_rows if row.rule_id and row.kpi_id}
+
         return SummarySourcePayload(
             company_id=company_id,
             period_ref=effective_period,
@@ -119,29 +157,25 @@ class SqlAlchemySummaryRepository(SummaryRepository):
                         KPIResultModel.period_ref == effective_period,
                     )
                     .order_by(KPIResultModel.kpi_id.asc())
-                    .limit(20)
                 ).scalars()
             ),
             alerts=tuple(
                 {
                     "alert_id": item.rule_result_id,
                     "rule_id": item.rule_id,
+                    "rule_name": item.alert_title,
                     "kpi_id": item.kpi_id,
                     "metric_value": item.metric_value,
                     "severity": item.severity,
                     "priority": item.priority,
+                    "category": self._infer_category_from_kpi(item.kpi_id),
+                    "probability": self._probability_by_severity(item.severity),
+                    "impact": item.metric_value,
+                    "related_recommendation_ids": sorted(rule_to_recs.get(item.rule_id, set())),
                     "title": item.alert_title,
                     "description": item.alert_description,
                 }
-                for item in self.session.execute(
-                    select(RuleResultModel)
-                    .where(
-                        RuleResultModel.company_id == company_id,
-                        RuleResultModel.period_ref == effective_period,
-                    )
-                    .order_by(RuleResultModel.fired_at.desc())
-                    .limit(10)
-                ).scalars()
+                for item in rule_rows[:10]
             ),
             insights=tuple(
                 {
@@ -149,6 +183,13 @@ class SqlAlchemySummaryRepository(SummaryRepository):
                     "type": item.insight_type,
                     "statement": item.statement,
                     "evidence": item.evidence_json,
+                    "related_kpis": self._extract_related_ids(item.evidence_json, "related_kpis", "kpis"),
+                    "related_rules": self._extract_related_ids(item.evidence_json, "related_rules", "rules"),
+                    "related_recommendations": self._extract_related_ids(
+                        item.evidence_json,
+                        "related_recommendations",
+                        "recommendations",
+                    ),
                 }
                 for item in self.session.execute(
                     select(InsightResultModel)
@@ -168,16 +209,16 @@ class SqlAlchemySummaryRepository(SummaryRepository):
                     "expected_impact": item.expected_impact_json,
                     "owner_role": item.owner_role,
                     "sla_target": item.sla_target,
+                    "related_rules": sorted(rec_to_rules.get(item.recommendation_id, set())),
+                    "related_kpis": sorted(
+                        {
+                            rule_to_kpi[rule_id]
+                            for rule_id in rec_to_rules.get(item.recommendation_id, set())
+                            if rule_id in rule_to_kpi
+                        }
+                    ),
                 }
-                for item in self.session.execute(
-                    select(RecommendationResultModel)
-                    .where(
-                        RecommendationResultModel.company_id == company_id,
-                        RecommendationResultModel.period_ref == effective_period,
-                    )
-                    .order_by(RecommendationResultModel.rank_score.desc())
-                    .limit(10)
-                ).scalars()
+                for item in recommendation_rows[:10]
             ),
             timeline_points=tuple(
                 {
@@ -195,6 +236,14 @@ class SqlAlchemySummaryRepository(SummaryRepository):
                 "last_pipeline": latest_pipeline.status.lower() if latest_pipeline else "unknown",
                 "pipeline_duration_ms": pipeline_duration_ms,
                 "summary_version": "3.1",
+                "formula_dsl_version": "2.0.0",
+                "kpi_catalog_version": "1.0.0",
+                "canonical_model_version": (
+                    str(latest_import.canonical_schema_version)
+                    if latest_import is not None and latest_import.canonical_schema_version
+                    else "2.0.0"
+                ),
+                "pipeline_version": "1.0.0",
                 "refresh_interval_seconds": 300,
                 "data_quality": data_quality,
             },
@@ -251,3 +300,46 @@ class SqlAlchemySummaryRepository(SummaryRepository):
             if "no such table" in message or "does not exist" in message:
                 return None
             raise
+
+    def _safe_scalars(self, statement: Select[Any]) -> list[Any]:
+        try:
+            return list(self.session.execute(statement).scalars().all())
+        except OperationalError as exc:
+            message = str(exc).lower()
+            if "no such table" in message or "does not exist" in message:
+                return []
+            raise
+
+    @staticmethod
+    def _extract_related_ids(evidence: dict[str, Any] | None, *keys: str) -> list[str]:
+        if not isinstance(evidence, dict):
+            return []
+        for key in keys:
+            value = evidence.get(key)
+            if isinstance(value, list):
+                return [str(item) for item in value if str(item).strip()]
+        return []
+
+    @staticmethod
+    def _probability_by_severity(severity: str) -> float:
+        mapping = {
+            "CRITICAL": 0.95,
+            "HIGH": 0.85,
+            "MEDIUM": 0.65,
+            "LOW": 0.4,
+            "INFO": 0.2,
+        }
+        return mapping.get(str(severity).upper(), 0.5)
+
+    @staticmethod
+    def _infer_category_from_kpi(kpi_id: str) -> str:
+        prefix = str(kpi_id).upper().split("-", 1)[0]
+        if prefix == "FIN":
+            return "Financeiro"
+        if prefix == "COM":
+            return "Comercial"
+        if prefix == "EST":
+            return "Estoque"
+        if prefix == "EXE":
+            return "Executivo"
+        return "Operacional"

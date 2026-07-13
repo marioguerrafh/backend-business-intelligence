@@ -3,7 +3,7 @@
     "_postman_id": "4fe84f49-7f55-4606-afce-2a22f0ac7f8f",
     "name": "BI Platform APIs",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Colecao completa para validar os endpoints atuais da plataforma BI em ambiente local.\n\nFluxo sugerido:\n1) Auth > Login\n2) Health endpoints\n3) Business create/get\n4) Imports CSV (customers, products, sales, financial)\n5) Internal Pipeline (KPI -> Rule -> Recommendation -> Insight -> Executive Score)\n6) Summary\n7) KPI Evaluate\n8) Auth > Logout"
+    "description": "Colecao completa para validar os endpoints atuais da plataforma BI em ambiente local.\n\nFluxo sugerido:\n1) Auth > Login\n2) Health endpoints\n3) Business create/get\n4) Imports CSV (customers, products, sales, cashflow, balance_sheet, income_statement, accounts_receivable, accounts_payable, inventory, hr)\n5) Internal Pipeline (KPI -> Rule -> Recommendation -> Insight -> Executive Score)\n6) Summary\n7) KPI Evaluate\n8) Auth > Logout"
   },
   "item": [
     {
@@ -710,7 +710,7 @@
           }
         },
         {
-          "name": "Import Financial CSV",
+          "name": "Import Cashflow CSV",
           "event": [
             {
               "listen": "test",
@@ -718,8 +718,8 @@
                 "exec": [
                   "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
                   "const json = pm.response.json();",
-                  "if (json.job_id) { pm.environment.set('importJobIdFinancial', json.job_id); }",
-                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdFinancial', json.ingest_event_id); }"
+                  "if (json.job_id) { pm.environment.set('importJobIdCashflow', json.job_id); pm.environment.set('importJobIdFinancial', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdCashflow', json.ingest_event_id); pm.environment.set('ingestEventIdFinancial', json.ingest_event_id); }"
                 ],
                 "type": "text/javascript"
               }
@@ -743,7 +743,7 @@
                 },
                 {
                   "key": "template",
-                  "value": "financial",
+                  "value": "cashflow",
                   "type": "text"
                 },
                 {
@@ -770,6 +770,384 @@
               ]
             },
             "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/data/demo/nova_distribuidora/financial.csv)."
+          }
+        },
+        {
+          "name": "Import Balance Sheet CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdBalanceSheet', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdBalanceSheet', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "balance_sheet",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/demo/balance_sheet.csv)."
+          }
+        },
+        {
+          "name": "Import Income Statement CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdIncomeStatement', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdIncomeStatement', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "income_statement",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/demo/income_statement.csv)."
+          }
+        },
+        {
+          "name": "Import Accounts Receivable CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdAccountsReceivable', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdAccountsReceivable', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "accounts_receivable",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/demo/accounts_receivable.csv)."
+          }
+        },
+        {
+          "name": "Import Accounts Payable CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdAccountsPayable', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdAccountsPayable', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "accounts_payable",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/demo/accounts_payable.csv)."
+          }
+        },
+        {
+          "name": "Import Inventory CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdInventory', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdInventory', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "inventory",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/demo/inventory.csv)."
+          }
+        },
+        {
+          "name": "Import HR CSV",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "if (json.job_id) { pm.environment.set('importJobIdHr', json.job_id); }",
+                  "if (json.ingest_event_id) { pm.environment.set('ingestEventIdHr', json.ingest_event_id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "company_id",
+                  "value": "{{companyId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "template",
+                  "value": "hr",
+                  "type": "text"
+                },
+                {
+                  "key": "source_system",
+                  "value": "postman_manual",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/imports/csv",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v1",
+                "imports",
+                "csv"
+              ]
+            },
+            "description": "Selecione um arquivo CSV valido no campo file (exemplo: backend/demo/hr.csv)."
           }
         }
       ]

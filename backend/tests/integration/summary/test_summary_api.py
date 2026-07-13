@@ -194,22 +194,73 @@ def test_summary_endpoint_composes_single_payload_and_audits() -> None:
     assert payload["sections"][0]["type"] == "hero"
     assert payload["scores"]["executive_score"]["overall"] == 80.0
     assert payload["scores"]["executive_score"]["status"]
-    assert len(payload["kpis"]) == 1
-    assert payload["kpis"][0]["id"] == "FIN-01"
-    assert payload["kpis"][0]["title"] == "Receita Liquida"
-    assert payload["kpis"][0]["display_value"].startswith("R$")
+    assert payload["scores"]["financial"]["health"]
+    assert payload["scores"]["financial"]["health_color"]
+    assert payload["scores"]["financial"]["health_icon"]
+    assert payload["scores"]["financial"]["description"]
+    assert len(payload["top_kpis"]) == 1
+    assert payload["kpis"] == payload["top_kpis"]
+    assert payload["top_kpis"][0]["id"] == "FIN-01"
+    assert payload["top_kpis"][0]["title"] == "Receita Liquida"
+    assert payload["top_kpis"][0]["display_value"].startswith("R$")
+    assert payload["kpi_overview"]["total"] == 49
+    category_labels = [item["label"] for item in payload["kpi_overview"]["categories"]]
+    assert "Financeiro" in category_labels
+    assert "Comercial" in category_labels
+    assert "Operacional" in category_labels
+    assert "Estoque" in category_labels
+    assert "Clientes" in category_labels
+    assert "RH" in category_labels
+    assert "Fiscal" in category_labels
+    assert "Executivo" in category_labels
+    first_category = payload["kpi_overview"]["categories"][0]
+    assert "average_score" in first_category
+    assert "top_kpi" in first_category
+    assert "worst_kpi" in first_category
     assert len(payload["alerts"]) == 1
-    assert payload["alerts"][0]["severity"]["code"] == "MEDIUM"
+    assert payload["alerts"][0]["severity"] == "MEDIUM"
+    assert payload["alerts"][0]["severity_meta"]["code"] == "MEDIUM"
+    assert payload["alerts"][0]["kpi_id"] == "FIN-01"
+    assert payload["alerts"][0]["kpi_name"] == "Receita Liquida"
+    assert payload["alerts"][0]["rule_id"] == "r.fin01.net_revenue_below_target"
+    assert payload["alerts"][0]["rule_name"]
+    assert payload["alerts"][0]["category"]
+    assert payload["alerts"][0]["status"]
+    assert payload["alerts"][0]["impact"].startswith("R$")
+    assert payload["alerts"][0]["probability"].endswith("%")
     assert "Rule" not in payload["alerts"][0]["message"]
+    assert payload["alerts"][0]["kpi_name"] not in {"KPI", "Indicador"}
     assert len(payload["insights"]) == 1
     assert payload["insights"][0]["title"]
+    assert payload["insights"][0]["related_kpis"]
+    assert payload["insights"][0]["related_rules"]
+    assert payload["insights"][0]["related_recommendations"]
     assert len(payload["recommendations"]) == 1
     assert payload["recommendations"][0]["action_button"]
-    assert payload["timeline"]["points"][0]["formatted_date"]
-    assert payload["timeline"]["points"][0]["formatted_label"]
+    assert payload["recommendations"][0]["estimated_gain"]
+    assert payload["recommendations"][0]["related_kpis"]
+    assert payload["recommendations"][0]["related_rules"]
+    assert payload["recommendations"][0]["priority_score"]
+    assert payload["hero"]["alerts_active"] == len(payload["alerts"])
+    assert payload["hero"]["recommendations_active"] == len(payload["recommendations"])
+    assert payload["hero"]["insights_generated"] == len(payload["insights"])
+    assert payload["hero"]["kpis_calculated"] == len(payload["kpis"])
+    assert payload["hero"]["pipeline_status"]
+    assert payload["hero"]["pipeline_duration_ms"] >= 0
+    assert payload["hero"]["confidence_score"] > 0
+    timeline_points = payload["timeline"]["points"]
+    assert timeline_points[0]["formatted_date"]
+    assert timeline_points[0]["formatted_label"]
+    assert len(timeline_points) == 4
+    formatted_dates = [item["formatted_date"] for item in timeline_points]
+    assert len(formatted_dates) == len(set(formatted_dates))
     assert payload["trends"]["monthly"]["display"]
     assert payload["trends"]["monthly"]["trend_icon"]
     assert payload["next_risks"][0]["probability"] == "80%"
+    assert payload["dashboard"]["formula_dsl_version"]
+    assert payload["dashboard"]["kpi_catalog_version"]
+    assert payload["dashboard"]["canonical_model_version"]
+    assert payload["dashboard"]["pipeline_version"]
 
     with session_factory() as session:
         audits = session.execute(select(SummaryAuditLogModel)).scalars().all()

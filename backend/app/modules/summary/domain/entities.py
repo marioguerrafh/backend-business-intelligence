@@ -26,8 +26,16 @@ class SummaryKPI:
 @dataclass(slots=True, frozen=True)
 class SummaryAlert:
     alert_id: str
+    kpi_id: str
+    rule_id: str
+    rule_name: str
     severity: str
     priority: str
+    metric_value: float | None
+    category: str | None
+    probability: float | None
+    impact: float | None
+    related_recommendation_ids: tuple[str, ...]
     title: str
     description: str
 
@@ -38,6 +46,9 @@ class SummaryInsight:
     insight_type: str
     statement: str
     evidence: dict[str, Any]
+    related_kpis: tuple[str, ...]
+    related_rules: tuple[str, ...]
+    related_recommendations: tuple[str, ...]
 
 
 @dataclass(slots=True, frozen=True)
@@ -48,6 +59,8 @@ class SummaryRecommendation:
     expected_impact: dict[str, Any]
     owner_role: str | None
     sla_target: str | None
+    related_kpis: tuple[str, ...]
+    related_rules: tuple[str, ...]
 
 
 @dataclass(slots=True, frozen=True)
@@ -108,8 +121,16 @@ class SummaryAggregate:
             "alerts": [
                 {
                     "alert_id": item.alert_id,
+                    "kpi_id": item.kpi_id,
+                    "rule_id": item.rule_id,
+                    "rule_name": item.rule_name,
                     "severity": item.severity,
                     "priority": item.priority,
+                    "metric_value": item.metric_value,
+                    "category": item.category,
+                    "probability": item.probability,
+                    "impact": item.impact,
+                    "related_recommendation_ids": list(item.related_recommendation_ids),
                     "title": item.title,
                     "description": item.description,
                 }
@@ -121,6 +142,9 @@ class SummaryAggregate:
                     "type": item.insight_type,
                     "statement": item.statement,
                     "evidence": item.evidence,
+                    "related_kpis": list(item.related_kpis),
+                    "related_rules": list(item.related_rules),
+                    "related_recommendations": list(item.related_recommendations),
                 }
                 for item in self.insights
             ],
@@ -132,6 +156,8 @@ class SummaryAggregate:
                     "expected_impact": item.expected_impact,
                     "owner_role": item.owner_role,
                     "sla_target": item.sla_target,
+                    "related_kpis": list(item.related_kpis),
+                    "related_rules": list(item.related_rules),
                 }
                 for item in self.recommendations
             ],

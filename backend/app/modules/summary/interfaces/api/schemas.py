@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
-
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class ExecutiveScoreResponse(BaseModel):
@@ -23,6 +21,10 @@ class ScoreDimensionResponse(BaseModel):
     label: str
     value: float
     display: str
+    health: str
+    health_color: str
+    health_icon: str
+    description: str
     status: str
     status_color: str
 
@@ -63,12 +65,6 @@ class SummarySeverityResponse(BaseModel):
     icon: str
 
 
-class SummaryImpactResponse(BaseModel):
-    label: str
-    display_value: str
-    description: str
-
-
 class SummaryAlertKPIResponse(BaseModel):
     name: str
     display_value: str
@@ -76,16 +72,25 @@ class SummaryAlertKPIResponse(BaseModel):
 
 class SummaryAlertResponse(BaseModel):
     alert_id: str
-    severity: SummarySeverityResponse
+    rule_id: str
+    rule_name: str
+    severity: str
+    severity_meta: SummarySeverityResponse
     priority: str
     category: str
+    status: str
+    probability: str
     title: str
     subtitle: str
     message: str
-    impact: SummaryImpactResponse | None
+    impact: str
     kpi: SummaryAlertKPIResponse
+    kpi_id: str
+    kpi_name: str
     recommended_action: str
+    details: str
     details_available: bool
+    related_recommendation_ids: list[str]
     icon: str
     color: str
 
@@ -96,6 +101,9 @@ class SummaryInsightResponse(BaseModel):
     importance: str
     icon: str
     category: str
+    related_kpis: list[str]
+    related_rules: list[str]
+    related_recommendations: list[str]
     display_order: int
 
 
@@ -104,12 +112,17 @@ class SummaryRecommendationResponse(BaseModel):
     title: str
     priority_label: str
     estimated_impact: str
+    estimated_gain: str
     estimated_effort: str
     estimated_time: str
+    owner: str
+    related_kpis: list[str]
+    related_rules: list[str]
     category: str
     icon: str
     color: str
     action_button: str
+    priority_score: float
 
 
 class SummaryTrendAxisResponse(BaseModel):
@@ -166,6 +179,19 @@ class SummaryHeroResponse(BaseModel):
     comparison: str
     description: str
     last_updated: str
+    score_trend: str
+    previous_score: float
+    confidence: str
+    confidence_score: float
+    pipeline_execution: str
+    alerts_active: int
+    recommendations_active: int
+    insights_generated: int
+    kpis_calculated: int
+    rules_triggered: int
+    pipeline_status: str
+    pipeline_duration_ms: int
+    data_quality: str
 
 
 class SummaryHighlightResponse(BaseModel):
@@ -186,12 +212,41 @@ class SummarySectionResponse(BaseModel):
 
 
 class SummaryDashboardResponse(BaseModel):
-    last_import: str | None
+    last_import: str | None = None
     last_pipeline: str
-    pipeline_duration_ms: int | None
+    pipeline_duration_ms: int | None = None
+    formula_dsl_version: str
+    kpi_catalog_version: str
+    canonical_model_version: str
+    pipeline_version: str
     summary_version: str
     refresh_interval_seconds: int
     data_quality: str
+
+
+class KpiOverviewKpiRefResponse(BaseModel):
+    id: str
+    name: str
+    score: float
+
+
+class KpiOverviewCategoryResponse(BaseModel):
+    id: str
+    label: str
+    average_score: float
+    healthy: int
+    warning: int
+    critical: int
+    top_kpi: KpiOverviewKpiRefResponse | None = None
+    worst_kpi: KpiOverviewKpiRefResponse | None = None
+
+
+class KpiOverviewResponse(BaseModel):
+    total: int
+    healthy: int
+    warning: int
+    critical: int
+    categories: list[KpiOverviewCategoryResponse]
 
 
 class GetSummaryResponse(BaseModel):
@@ -204,6 +259,9 @@ class GetSummaryResponse(BaseModel):
     sections: list[SummarySectionResponse]
     dashboard: SummaryDashboardResponse
     scores: SummaryScoresResponse
+    top_kpis: list[SummaryKPIResponse]
+    kpi_overview: KpiOverviewResponse
+    # Deprecated alias kept for Flutter compatibility.
     kpis: list[SummaryKPIResponse]
     alerts: list[SummaryAlertResponse]
     insights: list[SummaryInsightResponse]

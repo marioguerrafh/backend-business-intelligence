@@ -89,7 +89,22 @@ class PresentationCatalog:
         payload = dict(payload)
         payload["kpis"] = merged_kpis
         payload["official_kpi_catalog_version"] = str(kpi_payload.get("metadata", {}).get("version", "1.0.0"))
+        payload["official_formula_dsl_version"] = self._read_semantic_version("formula-dsl.v2.yaml", default="2.0.0")
+        payload["official_canonical_model_version"] = self._read_semantic_version(
+            "canonical-data-model.v2.yaml",
+            default="2.0.0",
+        )
         return payload
+
+    def _read_semantic_version(self, filename: str, *, default: str) -> str:
+        path = self._default_path(filename)
+        if not path.exists():
+            return default
+        with path.open("r", encoding="utf-8") as fp:
+            loaded = yaml.safe_load(fp) or {}
+        if not isinstance(loaded, dict):
+            return default
+        return str(loaded.get("metadata", {}).get("version", default))
 
     def _default_path(self, filename: str) -> Path:
         return Path(__file__).resolve().parents[4] / "docs" / "semantic-layer" / filename

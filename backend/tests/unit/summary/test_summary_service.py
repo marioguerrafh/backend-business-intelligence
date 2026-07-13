@@ -64,6 +64,10 @@ def _source() -> SummarySourcePayload:
             "last_pipeline": "completed",
             "pipeline_duration_ms": 3200,
             "summary_version": "3.1",
+            "formula_dsl_version": "2.0.0",
+            "kpi_catalog_version": "1.0.0",
+            "canonical_model_version": "2.0.0",
+            "pipeline_version": "1.0.0",
             "refresh_interval_seconds": 300,
             "data_quality": "excellent",
         },
@@ -85,6 +89,10 @@ def test_summary_service_builds_projection_and_audits() -> None:
     assert result.cache_hit is False
     assert result.payload["company_id"] == "cmp_acme"
     assert "executive_score" in result.payload["scores"]
+    assert result.payload["kpis"] == result.payload["top_kpis"]
+    assert "kpi_overview" in result.payload
+    assert result.payload["hero"]["alerts_active"] >= 0
+    assert result.payload["dashboard"]["formula_dsl_version"] == "2.0.0"
     assert repo.projection is not None
     assert repo.audited[-1]["cache_hit"] is False
 
@@ -176,6 +184,10 @@ def test_summary_service_force_refresh_bypasses_stale_projection_and_cache() -> 
             "last_pipeline": "completed",
             "pipeline_duration_ms": 3200,
             "summary_version": "3.1",
+            "formula_dsl_version": "2.0.0",
+            "kpi_catalog_version": "1.0.0",
+            "canonical_model_version": "2.0.0",
+            "pipeline_version": "1.0.0",
             "refresh_interval_seconds": 300,
             "data_quality": "excellent",
         },
@@ -200,5 +212,6 @@ def test_summary_service_force_refresh_bypasses_stale_projection_and_cache() -> 
     )
 
     assert refreshed.cache_hit is False
-    assert len(refreshed.payload["kpis"]) == 1
-    assert refreshed.payload["kpis"][0]["id"] == "kpi.margin"
+    assert len(refreshed.payload["top_kpis"]) == 1
+    assert refreshed.payload["kpis"] == refreshed.payload["top_kpis"]
+    assert refreshed.payload["top_kpis"][0]["id"] == "kpi.margin"

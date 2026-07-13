@@ -33,6 +33,30 @@ syntax:
     - high
 
 recommendation_examples:
+  - recommendation_id: rec.fin01.001
+    name: plano_recuperacao_receita_liquida
+    trigger_ref:
+      rule_id: r.fin01.net_revenue_below_target
+    applicability_conditions:
+      - gt(metric_value,0)
+    impact_model:
+      primary_dimension: revenue
+      expected_impact_formula: mul(metric_value, 0.08)
+      expected_impact_unit: BRL
+      impact_horizon: 30d
+    effort_level: medium
+    confidence_score: 0.79
+    owner_role: revenue_manager
+    sla_target: 72h
+    message_template: >
+      Receita liquida abaixo da meta: executar plano comercial tatico pode recuperar
+      ate {expected_impact_value} em {impact_horizon}.
+    action_playbook:
+      - revisar_mix_produtos_margem
+      - ativar_campanha_clientes_inativos
+      - renegociar_condicoes_para_top_contas
+    enabled: true
+
   - recommendation_id: rec.cash.001
     name: acelerar_recebiveis_criticos
     trigger_ref:

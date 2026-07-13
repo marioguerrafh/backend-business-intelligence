@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from uuid import uuid4
 
-from sqlalchemy import select
+from sqlalchemy import inspect, select, text
 from sqlalchemy.orm import Session
 
 from app.modules.imports.application.contracts import ImportInconsistency
@@ -115,28 +115,30 @@ class ImportRepository:
         if self._already_exists(ImportedSaleFactModel, company_id, source_system, source_record_id):
             return False
 
-        self.session.add(
-            ImportedSaleFactModel(
-                sale_fact_id=f"sale_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                transaction_date=transaction_date,
-                invoice_id=invoice_id,
-                invoice_line_id=invoice_line_id,
-                product_external_id=product_external_id,
-                customer_external_id=customer_external_id,
-                gross_revenue=gross_revenue,
-                tax_amount=tax_amount,
-                discount_amount=discount_amount,
-                return_amount=return_amount,
-                net_revenue=net_revenue,
-                quantity_sold=quantity_sold,
-                cogs_amount=cogs_amount,
-            )
-        )
+        values: dict[str, object] = {
+            "sale_fact_id": f"sale_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "transaction_date": transaction_date,
+            "invoice_id": invoice_id,
+            "invoice_line_id": invoice_line_id,
+            "product_external_id": product_external_id,
+            "customer_external_id": customer_external_id,
+            "gross_revenue": gross_revenue,
+            "tax_amount": tax_amount,
+            "discount_amount": discount_amount,
+            "return_amount": return_amount,
+            "net_revenue": net_revenue,
+            "quantity_sold": quantity_sold,
+            "cogs_amount": cogs_amount,
+            "imported_at": datetime.now(timezone.utc),
+        }
+        if self._table_has_column("imported_sale_facts", "period_ref"):
+            values["period_ref"] = period_ref
+
+        self._insert_row("imported_sale_facts", values)
         self.session.flush()
         return True
 
@@ -159,23 +161,25 @@ class ImportRepository:
         if self._already_exists(ImportedFinancialFactModel, company_id, source_system, source_record_id):
             return False
 
-        self.session.add(
-            ImportedFinancialFactModel(
-                financial_fact_id=f"fin_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                transaction_date=transaction_date,
-                cash_flow_type=cash_flow_type,
-                account_type=account_type,
-                cash_in_amount=cash_in_amount,
-                cash_out_amount=cash_out_amount,
-                operating_cash_flow_amount=operating_cash_flow_amount,
-                description=description,
-            )
-        )
+        values: dict[str, object] = {
+            "financial_fact_id": f"fin_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "transaction_date": transaction_date,
+            "cash_flow_type": cash_flow_type,
+            "account_type": account_type,
+            "cash_in_amount": cash_in_amount,
+            "cash_out_amount": cash_out_amount,
+            "operating_cash_flow_amount": operating_cash_flow_amount,
+            "description": description,
+            "imported_at": datetime.now(timezone.utc),
+        }
+        if self._table_has_column("imported_financial_facts", "period_ref"):
+            values["period_ref"] = period_ref
+
+        self._insert_row("imported_financial_facts", values)
         self.session.flush()
         return True
 
@@ -479,9 +483,30 @@ class ImportRepository:
         return event
 
     def _already_exists(self, model, company_id: str, source_system: str, source_record_id: str) -> bool:
-        stmt = select(model).where(
-            model.company_id == company_id,
-            model.source_system == source_system,
-            model.source_record_id == source_record_id,
+        stmt = text(
+            f"SELECT 1 FROM {model.__tablename__} "
+            "WHERE company_id = :company_id AND source_system = :source_system "
+            "AND source_record_id = :source_record_id LIMIT 1"
         )
-        return self.session.execute(stmt).scalar_one_or_none() is not None
+        return (
+            self.session.execute(
+                stmt,
+                {
+                    "company_id": company_id,
+                    "source_system": source_system,
+                    "source_record_id": source_record_id,
+                },
+            ).scalar_one_or_none()
+            is not None
+        )
+
+    def _table_has_column(self, table_name: str, column_name: str) -> bool:
+        inspector = inspect(self.session.connection())
+        columns = {column["name"] for column in inspector.get_columns(table_name)}
+        return column_name in columns
+
+    def _insert_row(self, table_name: str, values: dict[str, object]) -> None:
+        columns = ", ".join(values.keys())
+        placeholders = ", ".join(f":{key}" for key in values)
+        stmt = text(f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})")
+        self.session.execute(stmt, values)

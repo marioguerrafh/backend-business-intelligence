@@ -37,6 +37,8 @@ REQUIRED_TOP_LEVEL_KEYS = {
     "trends",
     "next_risks",
     "timeline",
+        "top_kpis",
+        "kpi_overview",
 }
 
 
@@ -189,24 +191,56 @@ def test_summary_contract_v1_shape_is_stable() -> None:
     assert isinstance(payload["hero"]["last_updated"], str)
     assert isinstance(payload["highlights"], list)
     assert payload["sections"][0]["type"] == "hero"
+    assert isinstance(payload["top_kpis"], list)
+    assert payload["kpis"] == payload["top_kpis"]
     assert isinstance(payload["kpis"], list)
-    assert "id" in payload["kpis"][0]
-    assert "display_value" in payload["kpis"][0]
-    assert "display_name" in payload["kpis"][0]
+    assert "id" in payload["top_kpis"][0]
+    assert "display_value" in payload["top_kpis"][0]
+    assert "display_name" in payload["top_kpis"][0]
+    assert payload["kpi_overview"]["total"] >= 1
+    assert payload["kpi_overview"]["categories"]
+    assert "average_score" in payload["kpi_overview"]["categories"][0]
+    assert "top_kpi" in payload["kpi_overview"]["categories"][0]
+    assert "worst_kpi" in payload["kpi_overview"]["categories"][0]
     assert isinstance(payload["alerts"], list)
-    assert "severity" in payload["alerts"][0]
+    assert payload["alerts"][0]["severity"]
+    assert "severity_meta" in payload["alerts"][0]
+    assert payload["alerts"][0]["kpi_name"]
+    assert payload["alerts"][0]["kpi_id"]
+    assert payload["alerts"][0]["rule_id"]
+    assert payload["alerts"][0]["rule_name"]
+    assert "related_recommendation_ids" in payload["alerts"][0]
     assert "message" in payload["alerts"][0]
     assert "icon" in payload["alerts"][0]
+    assert payload["alerts"][0]["kpi_name"] not in {"KPI", "Indicador"}
     assert isinstance(payload["insights"], list)
     assert "summary" in payload["insights"][0]
+    assert "related_kpis" in payload["insights"][0]
+    assert "related_rules" in payload["insights"][0]
+    assert "related_recommendations" in payload["insights"][0]
     assert isinstance(payload["recommendations"], list)
     assert "action_button" in payload["recommendations"][0]
-    assert "estimated_impact" in payload["recommendations"][0]
+    assert payload["recommendations"][0]["estimated_gain"]
+    assert payload["recommendations"][0]["owner"]
+    assert payload["recommendations"][0]["related_kpis"]
+    assert payload["recommendations"][0]["related_rules"]
+    assert payload["recommendations"][0]["priority_score"] > 0
     assert isinstance(payload["next_risks"], list)
     assert "probability" in payload["next_risks"][0]
     assert "points" in payload["timeline"]
     assert "formatted_date" in payload["timeline"]["points"][0]
     assert "formatted_label" in payload["timeline"]["points"][0]
     assert "trend_icon" in payload["trends"]["monthly"]
+    assert payload["hero"]["alerts_active"] >= 0
+    assert payload["hero"]["recommendations_active"] >= 0
+    assert payload["hero"]["insights_generated"] >= 0
+    assert payload["hero"]["kpis_calculated"] >= 0
+    assert payload["hero"]["rules_triggered"] >= 0
+    assert payload["hero"]["pipeline_status"]
+    assert payload["hero"]["confidence_score"] > 0
+    assert payload["dashboard"]["formula_dsl_version"]
+    assert payload["dashboard"]["kpi_catalog_version"]
+    assert payload["dashboard"]["canonical_model_version"]
+    assert payload["dashboard"]["pipeline_version"]
 
     app.dependency_overrides.clear()
