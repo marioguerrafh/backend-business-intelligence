@@ -1,0 +1,15 @@
+omie:
+  max_requests_per_minute_ip: 960
+  max_requests_per_method: 240
+  max_parallel_requests: 4
+  page_size_max: 500
+  cache_ttl_seconds: 60
+  retry_attempts: 5
+  backoff_base_seconds: 1
+  backoff_max_seconds: 16
+  connection_timeout: 30
+  read_timeout: 60
+  write_timeout: 30
+  circuit_breaker_threshold: 5
+  circuit_breaker_timeout: 300
+  http_425_cooldown_seconds: 60

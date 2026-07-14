@@ -62,3 +62,15 @@ class IntegrationSyncJobResult:
     records_imported: int
     records_failed: int
     pipeline_run_id: str | None
+
+
+@dataclass(slots=True, frozen=True)
+class IntegrationHealthResult:
+    provider: str
+    status: str
+    last_sync: datetime | None
+    last_error: str | None
+    avg_latency_ms: float
+    queue: dict[str, int]
+    circuit_breaker: dict[str, Any]
+    metrics: dict[str, float]

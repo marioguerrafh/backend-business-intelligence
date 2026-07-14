@@ -27,6 +27,7 @@ class SqlAlchemyProductRepository(SqlAlchemyIdempotencyMixin, ProductRepository)
 
     def save(self, product: ProductAggregate) -> None:
         model = self.session.get(ProductModel, product.product_id)
+        is_existing = model is not None
         if model is None:
             model = ProductModel(product_id=product.product_id)
             self.session.add(model)
@@ -41,6 +42,12 @@ class SqlAlchemyProductRepository(SqlAlchemyIdempotencyMixin, ProductRepository)
         model.default_price = str(product.pricing.default_price)
         model.tax_profile_ref = product.tax_profile_ref
         model.updated_at = datetime.now(timezone.utc)
+
+        # Keep updates idempotent when source payload repeats external refs.
+        # Clearing first avoids transient unique conflicts on (company_id, source_system, external_id).
+        if is_existing:
+            model.external_refs.clear()
+            self.session.flush()
 
         model.external_refs = [
             ProductExternalRefModel(

@@ -81,52 +81,72 @@ def _token(client: TestClient) -> str:
 def test_integrations_contract_shape() -> None:
     session_factory = _build_session_factory()
     app.dependency_overrides[get_db] = _override_db(session_factory)
+    try:
+        client = TestClient(app)
+        token = _token(client)
 
-    client = TestClient(app)
-    token = _token(client)
+        connect_response = client.post(
+            "/v1/integrations/connect",
+            json={
+                "provider": "omie",
+                "credentials": {"app_key": "key", "app_secret": "secret", "period_ref": "2026-07"},
+            },
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert connect_response.status_code == 200
+        payload = connect_response.json()
+        expected = {
+            "id",
+            "company_id",
+            "provider",
+            "status",
+            "enabled",
+            "last_sync",
+            "last_success_sync",
+            "created_at",
+            "updated_at",
+        }
+        assert expected.issubset(payload.keys())
 
-    connect_response = client.post(
-        "/v1/integrations/connect",
-        json={
-            "provider": "omie",
-            "credentials": {"app_key": "key", "app_secret": "secret", "period_ref": "2026-07"},
-        },
-        headers={"Authorization": f"Bearer {token}"},
-    )
-    assert connect_response.status_code == 200
-    payload = connect_response.json()
-    expected = {
-        "id",
-        "company_id",
-        "provider",
-        "status",
-        "enabled",
-        "last_sync",
-        "last_success_sync",
-        "created_at",
-        "updated_at",
-    }
-    assert expected.issubset(payload.keys())
+        sync_response = client.post(
+            f"/v1/integrations/{payload['id']}/sync",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert sync_response.status_code == 200, sync_response.json()
+        job_payload = sync_response.json()
+        expected_job = {
+            "job_id",
+            "provider",
+            "company_id",
+            "status",
+            "started_at",
+            "finished_at",
+            "duration_ms",
+            "records_read",
+            "records_imported",
+            "records_failed",
+            "pipeline_run_id",
+        }
+        assert expected_job.issubset(job_payload.keys())
 
-    sync_response = client.post(
-        f"/v1/integrations/{payload['id']}/sync",
-        headers={"Authorization": f"Bearer {token}"},
-    )
-    assert sync_response.status_code == 200
-    job_payload = sync_response.json()
-    expected_job = {
-        "job_id",
-        "provider",
-        "company_id",
-        "status",
-        "started_at",
-        "finished_at",
-        "duration_ms",
-        "records_read",
-        "records_imported",
-        "records_failed",
-        "pipeline_run_id",
-    }
-    assert expected_job.issubset(job_payload.keys())
-
-    app.dependency_overrides.clear()
+        health_response = client.get(
+            "/v1/integrations/health",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert health_response.status_code == 200
+        health_payload = health_response.json()
+        assert isinstance(health_payload, list)
+        assert len(health_payload) >= 1
+        expected_health = {
+            "provider",
+            "status",
+            "last_sync",
+            "last_error",
+            "avg_latency_ms",
+            "queue",
+            "circuit_breaker",
+            "metrics",
+        }
+        assert expected_health.issubset(set(health_payload[0].keys()))
+    finally:
+        app.dependency_overrides.clear()

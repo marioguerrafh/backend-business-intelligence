@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 from app.modules.integrations.application.contracts import (
     ConnectIntegrationCommand,
+    IntegrationHealthResult,
     IntegrationConnectionResult,
     IntegrationSyncJobResult,
     RunIntegrationSyncCommand,
@@ -57,9 +58,14 @@ class IntegrationService:
             raise ValueError("integration connection not found")
         if not connection.enabled:
             raise ValueError("integration connection is disabled")
+        if self.repository.has_running_job(company_id=command.company_id, provider=connection.provider):
+            raise ValueError("integration sync already running for this provider")
 
         provider = self.provider_registry.get(connection.provider)
         credentials = self.credential_cipher.decrypt(connection.credentials)
+        if connection.last_success_sync is not None:
+            credentials = dict(credentials)
+            credentials["last_success_sync"] = connection.last_success_sync.isoformat()
 
         job = self.repository.create_sync_job(provider=connection.provider, company_id=command.company_id)
         started = time.monotonic()
@@ -161,6 +167,65 @@ class IntegrationService:
 
     def list_jobs(self, *, company_id: str) -> list[IntegrationSyncJobResult]:
         return [self._to_job_result(item) for item in self.repository.list_jobs(company_id=company_id)]
+
+    def health(self, *, company_id: str) -> list[IntegrationHealthResult]:
+        results: list[IntegrationHealthResult] = []
+        for connection in self.repository.list_connections(company_id=company_id):
+            provider = self.provider_registry.get(connection.provider)
+            credentials = self.credential_cipher.decrypt(connection.credentials)
+
+            try:
+                provider_health = provider.health(company_id=company_id, credentials=credentials)
+                status = str(provider_health.get("status") or connection.status)
+                queue = provider_health.get("queue") if isinstance(provider_health.get("queue"), dict) else {}
+                circuit_breaker = (
+                    provider_health.get("circuit_breaker")
+                    if isinstance(provider_health.get("circuit_breaker"), dict)
+                    else {}
+                )
+                metrics = provider_health.get("metrics") if isinstance(provider_health.get("metrics"), dict) else {}
+            except Exception as exc:
+                status = "error"
+                queue = {}
+                circuit_breaker = {}
+                metrics = {"health_error": 1.0}
+                self.repository.add_log(
+                    company_id=company_id,
+                    provider=connection.provider,
+                    endpoint="health",
+                    request_payload={"provider": connection.provider},
+                    duration_ms=0,
+                    status="failed",
+                    error_message=str(exc),
+                )
+
+            results.append(
+                IntegrationHealthResult(
+                    provider=connection.provider,
+                    status=status,
+                    last_sync=connection.last_sync,
+                    last_error=self.repository.get_last_error_message(
+                        company_id=company_id,
+                        provider=connection.provider,
+                    ),
+                    avg_latency_ms=self.repository.get_avg_latency_ms(
+                        company_id=company_id,
+                        provider=connection.provider,
+                    ),
+                    queue={
+                        "in_flight": int(queue.get("in_flight", 0)),
+                        "queued": int(queue.get("queued", 0)),
+                    },
+                    circuit_breaker={str(key): value for key, value in circuit_breaker.items()},
+                    metrics={
+                        str(key): float(value)
+                        for key, value in metrics.items()
+                        if isinstance(value, (int, float))
+                    },
+                )
+            )
+
+        return results
 
     def get_job(self, *, company_id: str, job_id: str) -> IntegrationSyncJobResult:
         model = self.repository.get_job(company_id=company_id, job_id=job_id)

@@ -21,6 +21,42 @@ from app.shared.infrastructure.messaging.events import IntegrationEvent
 class IntegrationRepository:
     session: Session
 
+    def has_running_job(self, *, company_id: str, provider: str) -> bool:
+        stmt = (
+            select(IntegrationSyncJobModel.job_id)
+            .where(
+                IntegrationSyncJobModel.company_id == company_id,
+                IntegrationSyncJobModel.provider == provider,
+                IntegrationSyncJobModel.status == "running",
+            )
+            .limit(1)
+        )
+        return self.session.execute(stmt).scalar_one_or_none() is not None
+
+    def get_last_error_message(self, *, company_id: str, provider: str) -> str | None:
+        stmt = (
+            select(IntegrationLogModel.error_message)
+            .where(
+                IntegrationLogModel.company_id == company_id,
+                IntegrationLogModel.provider == provider,
+                IntegrationLogModel.status == "failed",
+                IntegrationLogModel.error_message.is_not(None),
+            )
+            .order_by(desc(IntegrationLogModel.created_at))
+            .limit(1)
+        )
+        return self.session.execute(stmt).scalar_one_or_none()
+
+    def get_avg_latency_ms(self, *, company_id: str, provider: str) -> float:
+        stmt = select(IntegrationLogModel.duration_ms).where(
+            IntegrationLogModel.company_id == company_id,
+            IntegrationLogModel.provider == provider,
+        )
+        rows = self.session.execute(stmt).scalars().all()
+        if not rows:
+            return 0.0
+        return float(sum(rows) / len(rows))
+
     def create_connection(
         self,
         *,

@@ -11,6 +11,7 @@ from app.modules.integrations.infrastructure.container import build_integrations
 from app.modules.integrations.interfaces.api.schemas import (
     ConnectIntegrationRequest,
     IntegrationConnectionResponse,
+    IntegrationHealthResponse,
     IntegrationSyncJobResponse,
 )
 from app.shared.interfaces.api.error_mapper import ErrorMapper
@@ -71,6 +72,29 @@ def list_integrations(
             last_success_sync=item.last_success_sync,
             created_at=item.created_at,
             updated_at=item.updated_at,
+        )
+        for item in result
+    ]
+
+
+@router.get("/health", response_model=list[IntegrationHealthResponse])
+def integrations_health(
+    principal: AuthPrincipal = Depends(get_current_principal),
+    db: Session = Depends(get_db),
+) -> list[IntegrationHealthResponse]:
+    container = build_integrations_container(db)
+    tx = TransactionBoundary(db)
+    result = tx.execute(lambda: container.service.health(company_id=principal.company_id))
+    return [
+        IntegrationHealthResponse(
+            provider=item.provider,
+            status=item.status,
+            last_sync=item.last_sync,
+            last_error=item.last_error,
+            avg_latency_ms=item.avg_latency_ms,
+            queue=item.queue,
+            circuit_breaker=item.circuit_breaker,
+            metrics=item.metrics,
         )
         for item in result
     ]
