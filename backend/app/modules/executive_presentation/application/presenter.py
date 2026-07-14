@@ -864,7 +864,8 @@ class ExecutivePresentationMapper:
     def _prune_payload(self, payload: dict[str, Any]) -> dict[str, Any]:
         def _clean(value: Any) -> Any:
             if isinstance(value, dict):
-                cleaned = {k: _clean(v) for k, v in value.items()}
+                cleaned = {k: _clean(v) for k, 
+                           v in value.items()}
                 return {k: v for k, v in cleaned.items() if v is not None and v != ""}
             if isinstance(value, list):
                 cleaned_list = [_clean(v) for v in value]

@@ -9,6 +9,7 @@ from app.modules.company.interfaces.api.routes import router as company_router
 from app.modules.executive_score.interfaces.api.routes import router as executive_score_router
 from app.modules.imports.interfaces.api.routes import router as imports_router
 from app.modules.insight.interfaces.api.routes import router as insight_router
+from app.modules.integrations.interfaces.api.routes import router as integrations_router
 from app.modules.kpi.interfaces.api.routes import router as kpi_router
 from app.modules.kpi.interfaces.api.explorer_routes import router as kpi_explorer_router
 from app.modules.notification.interfaces.api.routes import router as notification_router
@@ -26,6 +27,7 @@ api_v1_router.include_router(business_product_router)
 api_v1_router.include_router(company_router)
 api_v1_router.include_router(executive_score_router)
 api_v1_router.include_router(imports_router)
+api_v1_router.include_router(integrations_router)
 api_v1_router.include_router(pipeline_router)
 api_v1_router.include_router(omie_router)
 api_v1_router.include_router(kpi_router)

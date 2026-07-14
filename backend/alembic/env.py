@@ -12,6 +12,7 @@ from app.shared.infrastructure.db.base import Base
 from app.modules.auth.infrastructure import models as auth_models  # noqa: F401
 from app.modules.business.infrastructure import models as business_models  # noqa: F401
 from app.modules.imports.infrastructure import models as imports_models  # noqa: F401
+from app.modules.integrations.infrastructure import models as integrations_models  # noqa: F401
 from app.modules.summary.infrastructure import models as summary_models  # noqa: F401
 
 config = context.config

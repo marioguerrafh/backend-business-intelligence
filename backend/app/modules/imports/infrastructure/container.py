@@ -14,17 +14,17 @@ class ImportsContainer:
     import_csv: ImportCsvUseCase
 
 
-def build_imports_container(session: Session) -> ImportsContainer:
+def build_imports_container(session: Session, *, enable_pipeline: bool = True) -> ImportsContainer:
     repository = ImportRepository(session=session)
     customer_container = build_customer_container(session)
     product_container = build_product_container(session)
-    pipeline_container = build_pipeline_container(session)
+    pipeline_coordinator = build_pipeline_container(session).coordinator if enable_pipeline else None
 
     return ImportsContainer(
         import_csv=ImportCsvUseCase(
             repository=repository,
             upsert_customer=customer_container.upsert_customer,
             upsert_product=product_container.upsert_product,
-            pipeline_coordinator=pipeline_container.coordinator,
+            pipeline_coordinator=pipeline_coordinator,
         )
     )

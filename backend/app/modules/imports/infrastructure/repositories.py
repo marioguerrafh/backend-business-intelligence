@@ -1,23 +1,17 @@
 ﻿from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
+from typing import cast
 from uuid import uuid4
 
-from sqlalchemy import inspect, select, text
+from sqlalchemy import inspect, text
+from sqlalchemy.engine import CursorResult
 from sqlalchemy.orm import Session
 
 from app.modules.imports.application.contracts import ImportInconsistency
 from app.modules.imports.infrastructure.models import (
-    ImportedAccountsPayableFactModel,
-    ImportedAccountsReceivableFactModel,
-    ImportedBalanceSheetFactModel,
-    ImportedFinancialFactModel,
-    ImportedHrFactModel,
-    ImportedIncomeStatementFactModel,
-    ImportedInventoryFactModel,
-    ImportedSaleFactModel,
     ImportInconsistencyModel,
     ImportJobModel,
     ImportPublishedEventModel,
@@ -28,6 +22,7 @@ from app.shared.infrastructure.messaging.events import IntegrationEvent
 @dataclass(slots=True)
 class ImportRepository:
     session: Session
+    _table_columns_cache: dict[str, set[str]] = field(default_factory=dict, init=False, repr=False)
 
     def create_job(
         self,
@@ -112,9 +107,6 @@ class ImportRepository:
         quantity_sold: float,
         cogs_amount: float,
     ) -> bool:
-        if self._already_exists(ImportedSaleFactModel, company_id, source_system, source_record_id):
-            return False
-
         values: dict[str, object] = {
             "sale_fact_id": f"sale_{uuid4().hex[:16]}",
             "import_job_id": job_id,
@@ -138,9 +130,11 @@ class ImportRepository:
         if self._table_has_column("imported_sale_facts", "period_ref"):
             values["period_ref"] = period_ref
 
-        self._insert_row("imported_sale_facts", values)
-        self.session.flush()
-        return True
+        return self._insert_row(
+            "imported_sale_facts",
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
+        )
 
     def persist_financial_fact(
         self,
@@ -158,9 +152,6 @@ class ImportRepository:
         operating_cash_flow_amount: float,
         description: str | None,
     ) -> bool:
-        if self._already_exists(ImportedFinancialFactModel, company_id, source_system, source_record_id):
-            return False
-
         values: dict[str, object] = {
             "financial_fact_id": f"fin_{uuid4().hex[:16]}",
             "import_job_id": job_id,
@@ -179,9 +170,11 @@ class ImportRepository:
         if self._table_has_column("imported_financial_facts", "period_ref"):
             values["period_ref"] = period_ref
 
-        self._insert_row("imported_financial_facts", values)
-        self.session.flush()
-        return True
+        return self._insert_row(
+            "imported_financial_facts",
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
+        )
 
     def persist_balance_sheet_fact(
         self,
@@ -205,34 +198,37 @@ class ImportRepository:
         total_liabilities: float,
         equity: float,
     ) -> bool:
-        if self._already_exists(ImportedBalanceSheetFactModel, company_id, source_system, source_record_id):
-            return False
+        table_name = "imported_balance_sheet_facts"
+        values: dict[str, object] = {
+            "balance_sheet_fact_id": f"bal_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "reference_date": reference_date,
+            "current_assets": current_assets,
+            "non_current_assets": non_current_assets,
+            "cash_and_equivalents": cash_and_equivalents,
+            "inventory": inventory,
+            "accounts_receivable": accounts_receivable,
+            "other_current_assets": other_current_assets,
+            "current_liabilities": current_liabilities,
+            "non_current_liabilities": non_current_liabilities,
+            "accounts_payable": accounts_payable,
+            "total_assets": total_assets,
+            "total_liabilities": total_liabilities,
+            "equity": equity,
+        }
+        if self._table_has_column(table_name, "period_ref"):
+            values["period_ref"] = period_ref
+        if self._table_has_column(table_name, "imported_at"):
+            values["imported_at"] = datetime.now(timezone.utc)
 
-        self.session.add(
-            ImportedBalanceSheetFactModel(
-                balance_sheet_fact_id=f"bal_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                reference_date=reference_date,
-                current_assets=current_assets,
-                non_current_assets=non_current_assets,
-                cash_and_equivalents=cash_and_equivalents,
-                inventory=inventory,
-                accounts_receivable=accounts_receivable,
-                other_current_assets=other_current_assets,
-                current_liabilities=current_liabilities,
-                non_current_liabilities=non_current_liabilities,
-                accounts_payable=accounts_payable,
-                total_assets=total_assets,
-                total_liabilities=total_liabilities,
-                equity=equity,
-            )
+        return self._insert_row(
+            table_name,
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
         )
-        self.session.flush()
-        return True
 
     def persist_income_statement_fact(
         self,
@@ -258,36 +254,39 @@ class ImportRepository:
         net_income: float,
         nopat: float,
     ) -> bool:
-        if self._already_exists(ImportedIncomeStatementFactModel, company_id, source_system, source_record_id):
-            return False
+        table_name = "imported_income_statement_facts"
+        values: dict[str, object] = {
+            "income_statement_fact_id": f"is_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "gross_revenue": gross_revenue,
+            "net_revenue": net_revenue,
+            "cogs": cogs,
+            "gross_profit": gross_profit,
+            "operating_expenses": operating_expenses,
+            "ebit": ebit,
+            "depreciation": depreciation,
+            "amortization": amortization,
+            "ebitda": ebitda,
+            "financial_income": financial_income,
+            "financial_expense": financial_expense,
+            "income_before_tax": income_before_tax,
+            "income_tax": income_tax,
+            "net_income": net_income,
+            "nopat": nopat,
+        }
+        if self._table_has_column(table_name, "period_ref"):
+            values["period_ref"] = period_ref
+        if self._table_has_column(table_name, "imported_at"):
+            values["imported_at"] = datetime.now(timezone.utc)
 
-        self.session.add(
-            ImportedIncomeStatementFactModel(
-                income_statement_fact_id=f"is_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                gross_revenue=gross_revenue,
-                net_revenue=net_revenue,
-                cogs=cogs,
-                gross_profit=gross_profit,
-                operating_expenses=operating_expenses,
-                ebit=ebit,
-                depreciation=depreciation,
-                amortization=amortization,
-                ebitda=ebitda,
-                financial_income=financial_income,
-                financial_expense=financial_expense,
-                income_before_tax=income_before_tax,
-                income_tax=income_tax,
-                net_income=net_income,
-                nopat=nopat,
-            )
+        return self._insert_row(
+            table_name,
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
         )
-        self.session.flush()
-        return True
 
     def persist_accounts_receivable_fact(
         self,
@@ -308,31 +307,34 @@ class ImportRepository:
         status: str,
         aging_days: int,
     ) -> bool:
-        if self._already_exists(ImportedAccountsReceivableFactModel, company_id, source_system, source_record_id):
-            return False
+        table_name = "imported_accounts_receivable_facts"
+        values: dict[str, object] = {
+            "accounts_receivable_fact_id": f"ar_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "customer_id": customer_id,
+            "invoice_number": invoice_number,
+            "issue_date": issue_date,
+            "due_date": due_date,
+            "payment_date": payment_date,
+            "amount": amount,
+            "received_amount": received_amount,
+            "outstanding_amount": outstanding_amount,
+            "status": status,
+            "aging_days": aging_days,
+        }
+        if self._table_has_column(table_name, "period_ref"):
+            values["period_ref"] = period_ref
+        if self._table_has_column(table_name, "imported_at"):
+            values["imported_at"] = datetime.now(timezone.utc)
 
-        self.session.add(
-            ImportedAccountsReceivableFactModel(
-                accounts_receivable_fact_id=f"ar_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                customer_id=customer_id,
-                invoice_number=invoice_number,
-                issue_date=issue_date,
-                due_date=due_date,
-                payment_date=payment_date,
-                amount=amount,
-                received_amount=received_amount,
-                outstanding_amount=outstanding_amount,
-                status=status,
-                aging_days=aging_days,
-            )
+        return self._insert_row(
+            table_name,
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
         )
-        self.session.flush()
-        return True
 
     def persist_accounts_payable_fact(
         self,
@@ -353,31 +355,34 @@ class ImportRepository:
         status: str,
         aging_days: int,
     ) -> bool:
-        if self._already_exists(ImportedAccountsPayableFactModel, company_id, source_system, source_record_id):
-            return False
+        table_name = "imported_accounts_payable_facts"
+        values: dict[str, object] = {
+            "accounts_payable_fact_id": f"ap_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "supplier_id": supplier_id,
+            "invoice_number": invoice_number,
+            "issue_date": issue_date,
+            "due_date": due_date,
+            "payment_date": payment_date,
+            "amount": amount,
+            "paid_amount": paid_amount,
+            "outstanding_amount": outstanding_amount,
+            "status": status,
+            "aging_days": aging_days,
+        }
+        if self._table_has_column(table_name, "period_ref"):
+            values["period_ref"] = period_ref
+        if self._table_has_column(table_name, "imported_at"):
+            values["imported_at"] = datetime.now(timezone.utc)
 
-        self.session.add(
-            ImportedAccountsPayableFactModel(
-                accounts_payable_fact_id=f"ap_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                supplier_id=supplier_id,
-                invoice_number=invoice_number,
-                issue_date=issue_date,
-                due_date=due_date,
-                payment_date=payment_date,
-                amount=amount,
-                paid_amount=paid_amount,
-                outstanding_amount=outstanding_amount,
-                status=status,
-                aging_days=aging_days,
-            )
+        return self._insert_row(
+            table_name,
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
         )
-        self.session.flush()
-        return True
 
     def persist_inventory_fact(
         self,
@@ -398,31 +403,34 @@ class ImportRepository:
         stock_turnover: float,
         days_in_inventory: float,
     ) -> bool:
-        if self._already_exists(ImportedInventoryFactModel, company_id, source_system, source_record_id):
-            return False
+        table_name = "imported_inventory_facts"
+        values: dict[str, object] = {
+            "inventory_fact_id": f"inv_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "product_id": product_id,
+            "warehouse_id": warehouse_id,
+            "snapshot_date": snapshot_date,
+            "opening_quantity": opening_quantity,
+            "closing_quantity": closing_quantity,
+            "average_quantity": average_quantity,
+            "average_cost": average_cost,
+            "inventory_value": inventory_value,
+            "stock_turnover": stock_turnover,
+            "days_in_inventory": days_in_inventory,
+        }
+        if self._table_has_column(table_name, "period_ref"):
+            values["period_ref"] = period_ref
+        if self._table_has_column(table_name, "imported_at"):
+            values["imported_at"] = datetime.now(timezone.utc)
 
-        self.session.add(
-            ImportedInventoryFactModel(
-                inventory_fact_id=f"inv_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                product_id=product_id,
-                warehouse_id=warehouse_id,
-                snapshot_date=snapshot_date,
-                opening_quantity=opening_quantity,
-                closing_quantity=closing_quantity,
-                average_quantity=average_quantity,
-                average_cost=average_cost,
-                inventory_value=inventory_value,
-                stock_turnover=stock_turnover,
-                days_in_inventory=days_in_inventory,
-            )
+        return self._insert_row(
+            table_name,
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
         )
-        self.session.flush()
-        return True
 
     def persist_hr_fact(
         self,
@@ -439,27 +447,30 @@ class ImportRepository:
         average_salary: float,
         hours_worked: float,
     ) -> bool:
-        if self._already_exists(ImportedHrFactModel, company_id, source_system, source_record_id):
-            return False
+        table_name = "imported_hr_facts"
+        values: dict[str, object] = {
+            "hr_fact_id": f"hr_{uuid4().hex[:16]}",
+            "import_job_id": job_id,
+            "company_id": company_id,
+            "source_system": source_system,
+            "source_record_id": source_record_id,
+            "employee_count": employee_count,
+            "active_employee_count": active_employee_count,
+            "terminated_employee_count": terminated_employee_count,
+            "payroll_amount": payroll_amount,
+            "average_salary": average_salary,
+            "hours_worked": hours_worked,
+        }
+        if self._table_has_column(table_name, "period_ref"):
+            values["period_ref"] = period_ref
+        if self._table_has_column(table_name, "imported_at"):
+            values["imported_at"] = datetime.now(timezone.utc)
 
-        self.session.add(
-            ImportedHrFactModel(
-                hr_fact_id=f"hr_{uuid4().hex[:16]}",
-                import_job_id=job_id,
-                company_id=company_id,
-                source_system=source_system,
-                source_record_id=source_record_id,
-                period_ref=period_ref,
-                employee_count=employee_count,
-                active_employee_count=active_employee_count,
-                terminated_employee_count=terminated_employee_count,
-                payroll_amount=payroll_amount,
-                average_salary=average_salary,
-                hours_worked=hours_worked,
-            )
+        return self._insert_row(
+            table_name,
+            values,
+            conflict_columns=("company_id", "source_system", "source_record_id"),
         )
-        self.session.flush()
-        return True
 
     def publish_ingest_completed(
         self,
@@ -482,31 +493,26 @@ class ImportRepository:
         self.session.flush()
         return event
 
-    def _already_exists(self, model, company_id: str, source_system: str, source_record_id: str) -> bool:
-        stmt = text(
-            f"SELECT 1 FROM {model.__tablename__} "
-            "WHERE company_id = :company_id AND source_system = :source_system "
-            "AND source_record_id = :source_record_id LIMIT 1"
-        )
-        return (
-            self.session.execute(
-                stmt,
-                {
-                    "company_id": company_id,
-                    "source_system": source_system,
-                    "source_record_id": source_record_id,
-                },
-            ).scalar_one_or_none()
-            is not None
-        )
-
     def _table_has_column(self, table_name: str, column_name: str) -> bool:
-        inspector = inspect(self.session.connection())
-        columns = {column["name"] for column in inspector.get_columns(table_name)}
+        columns = self._table_columns_cache.get(table_name)
+        if columns is None:
+            inspector = inspect(self.session.connection())
+            columns = {column["name"] for column in inspector.get_columns(table_name)}
+            self._table_columns_cache[table_name] = columns
         return column_name in columns
 
-    def _insert_row(self, table_name: str, values: dict[str, object]) -> None:
+    def _insert_row(
+        self,
+        table_name: str,
+        values: dict[str, object],
+        *,
+        conflict_columns: tuple[str, ...] | None = None,
+    ) -> bool:
         columns = ", ".join(values.keys())
         placeholders = ", ".join(f":{key}" for key in values)
-        stmt = text(f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})")
-        self.session.execute(stmt, values)
+        sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+        if conflict_columns:
+            sql += f" ON CONFLICT ({', '.join(conflict_columns)}) DO NOTHING"
+        result = self.session.execute(text(sql), values)
+        cursor_result = cast(CursorResult[object], result)
+        return bool(cursor_result.rowcount and cursor_result.rowcount > 0)
