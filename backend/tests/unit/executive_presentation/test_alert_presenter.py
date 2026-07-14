@@ -28,9 +28,10 @@ def test_alert_presenter_hides_technical_rule_language() -> None:
 
     assert payload["title"] == "Receita abaixo da meta"
     assert payload["message"] == "A receita liquida ficou abaixo da meta definida para este periodo."
-    assert payload["severity"]["label"] == "Media"
+    assert payload["severity"] == "MEDIUM"
+    assert payload["severity_meta"]["label"] == "Media"
     assert payload["priority"] == "P1"
     assert payload["kpi"]["name"] == "Receita Liquida"
-    assert payload["impact"]["display_value"] == "R$ 186 mil"
+    assert payload["impact"] == "R$ 186 mil"
     assert payload["icon"] == "payments"
     assert payload["color"] == "warning"

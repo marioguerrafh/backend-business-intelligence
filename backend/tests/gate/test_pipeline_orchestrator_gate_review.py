@@ -10,7 +10,13 @@ from app.config.dependencies import get_db
 from app.main import app
 from app.modules.executive_score.infrastructure.models import ExecutiveScoreAuditLogModel, ExecutiveScorePublishedEventModel
 from app.modules.imports.infrastructure.models import (
+    ImportedAccountsPayableFactModel,
+    ImportedAccountsReceivableFactModel,
+    ImportedBalanceSheetFactModel,
     ImportedFinancialFactModel,
+    ImportedHrFactModel,
+    ImportedIncomeStatementFactModel,
+    ImportedInventoryFactModel,
     ImportedSaleFactModel,
     ImportInconsistencyModel,
     ImportJobModel,
@@ -47,6 +53,12 @@ def _build_session_factory():
             ImportInconsistencyModel.__table__,
             ImportedSaleFactModel.__table__,
             ImportedFinancialFactModel.__table__,
+            ImportedBalanceSheetFactModel.__table__,
+            ImportedIncomeStatementFactModel.__table__,
+            ImportedAccountsReceivableFactModel.__table__,
+            ImportedAccountsPayableFactModel.__table__,
+            ImportedInventoryFactModel.__table__,
+            ImportedHrFactModel.__table__,
             ImportPublishedEventModel.__table__,
             KPIResultModel.__table__,
             OrchestratorRunModel.__table__,

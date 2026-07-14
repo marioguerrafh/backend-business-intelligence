@@ -237,7 +237,7 @@ class KPIOrchestratorUseCase:
             self.repository.finish_run(
                 company_id=event.company_id,
                 period_ref=period_ref,
-                orchestrator_run_id=run_id,
+                  orchestrator_run_id=run_id,
                 status=status,
                 error_summary="; ".join(errors) if errors else None,
             )

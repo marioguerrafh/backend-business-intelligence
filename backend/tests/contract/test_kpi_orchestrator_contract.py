@@ -7,7 +7,17 @@ from sqlalchemy.pool import StaticPool
 
 from app.config.dependencies import get_db
 from app.main import app
-from app.modules.imports.infrastructure.models import ImportedSaleFactModel, ImportJobModel
+from app.modules.imports.infrastructure.models import (
+    ImportedAccountsPayableFactModel,
+    ImportedAccountsReceivableFactModel,
+    ImportedBalanceSheetFactModel,
+    ImportedFinancialFactModel,
+    ImportedHrFactModel,
+    ImportedIncomeStatementFactModel,
+    ImportedInventoryFactModel,
+    ImportedSaleFactModel,
+    ImportJobModel,
+)
 from app.modules.kpi.infrastructure.models import KPIPublishedEventModel, KPIOrchestratorAuditLogModel, OrchestratorRunModel
 from app.modules.summary.infrastructure.models import KPIResultModel
 from app.shared.infrastructure.db.base import Base
@@ -25,6 +35,13 @@ def _build_session_factory():
         tables=[
             ImportJobModel.__table__,
             ImportedSaleFactModel.__table__,
+            ImportedFinancialFactModel.__table__,
+            ImportedBalanceSheetFactModel.__table__,
+            ImportedIncomeStatementFactModel.__table__,
+            ImportedAccountsReceivableFactModel.__table__,
+            ImportedAccountsPayableFactModel.__table__,
+            ImportedInventoryFactModel.__table__,
+            ImportedHrFactModel.__table__,
             KPIResultModel.__table__,
             OrchestratorRunModel.__table__,
             KPIOrchestratorAuditLogModel.__table__,
@@ -70,6 +87,7 @@ def _seed(session_factory) -> None:
                 company_id="cmp_acme",
                 source_system="csv_manual",
                 source_record_id="SRC-1",
+                period_ref="2026-07",
                 transaction_date=date(2026, 7, 10),
                 invoice_id="NF-1",
                 invoice_line_id="1",

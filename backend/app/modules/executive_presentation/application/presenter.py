@@ -129,9 +129,9 @@ class AlertPresenter:
         else:
             kpi_display = self.money_formatter.format(float(kpi_value), "BRL")
 
-        impact = self.money_formatter.format(0.0, "BRL")
+        impact_display = self.money_formatter.format(0.0, "BRL")
         if metric_value is not None and abs(metric_value) > 0:
-            impact = self.money_formatter.format(abs(metric_value), "BRL")
+            impact_display = self.money_formatter.format(abs(metric_value), "BRL")
 
         title_template = str(meta.get("title_template", "{kpi_name} com desvio relevante"))
         message_template = str(
@@ -167,7 +167,7 @@ class AlertPresenter:
             "title": title_value,
             "subtitle": self.date_formatter.period_subtitle(period_ref),
             "message": message_value,
-            "impact": impact,
+            "impact": impact_display,
             "kpi": {
                 "name": kpi_name,
                 "display_value": kpi_display,
@@ -527,6 +527,9 @@ class ExecutivePresentationMapper:
         if not trend_template:
             trend_template = "Tendencia estavel"
 
+        executive_score_card = dict(highlights_catalog.get("executive_score", {}))
+        executive_score_value = str(executive_score.get("display") or f"{int(round(float(executive_score.get('overall', 0.0))))} / 100")
+
         return [
             {
                 "icon": str(revenue_card.get("icon", "payments")),
@@ -545,20 +548,20 @@ class ExecutivePresentationMapper:
                 "trend": "stable",
             },
             {
-                "icon": str(recommendation_card.get("icon", "task_alt")),
-                "title": "Recomendacoes",
-                "value": recommendations_template.format(count=recommendations_count),
-                "subtitle": self.date_formatter.period_subtitle(period_ref),
-                "color": str(recommendation_card.get("color", "primary")),
-                "trend": "stable",
-            },
-            {
                 "icon": str(trend_card.get("icon", "trending_up")),
                 "title": "Tendencia de receita",
                 "value": trend_template.format(value=trend_value) if "{value}" in trend_template else trend_template,
                 "subtitle": self.date_formatter.period_subtitle(period_ref),
                 "color": str(trend_card.get(f"color_{trend_direction}", trend_card.get("color_stable", "info"))),
                 "trend": trend_direction,
+            },
+            {
+                "icon": str(executive_score_card.get("icon", "workspace_premium")),
+                "title": "Executive Score",
+                "value": str(executive_score_card.get("template", "Executive Score {value}")).format(value=executive_score_value),
+                "subtitle": self.date_formatter.period_subtitle(period_ref),
+                "color": str(executive_score_card.get("color", "primary")),
+                "trend": "stable",
             },
         ]
 

@@ -289,7 +289,14 @@ class PipelineRepository:
         avg_ms = 2000
         finished_with_duration = [item for item in steps if item["duration_ms"] and item["status"] in {"SUCCESS", "SKIPPED"}]
         if finished_with_duration:
-            avg_ms = int(sum(int(item["duration_ms"]) for item in finished_with_duration) / len(finished_with_duration))
+            durations_ms = [
+                duration
+                for item in finished_with_duration
+                for duration in [item["duration_ms"]]
+                if isinstance(duration, int)
+            ]
+            if durations_ms:
+                avg_ms = int(sum(durations_ms) / len(durations_ms))
         remaining = max(total_steps - len(completed_steps) - (1 if running_step else 0), 0)
         est_seconds = max(int((avg_ms * remaining) / 1000), 0)
 

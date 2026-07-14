@@ -77,6 +77,7 @@ def _seed(session_factory) -> None:
                 company_id="cmp_acme",
                 source_system="csv_manual",
                 source_record_id="SRC-1",
+                period_ref="2026-07",
                 transaction_date=datetime(2026, 7, 10, tzinfo=timezone.utc).date(),
                 invoice_id="NF-1",
                 invoice_line_id="1",

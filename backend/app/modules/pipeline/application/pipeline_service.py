@@ -4,11 +4,13 @@ import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from time import perf_counter
+from typing import Any, Mapping, Protocol, cast
 
 from app.modules.pipeline.application.contracts import (
     ImportJobProgressResult,
     PipelineLogResult,
     PipelineRunResult,
+    PipelineStageStatus,
     PipelineStepResult,
     StartPipelineCommand,
 )
@@ -16,11 +18,131 @@ from app.modules.pipeline.application.pipeline_executor import PipelineExecution
 from app.modules.pipeline.domain.entities import PipelineStageName, PipelineStatus
 
 
+class PipelineRepository(Protocol):
+    def create_or_reuse_run(
+        self,
+        *,
+        company_id: str,
+        import_job_id: str,
+        template: str,
+        source_system: str,
+        correlation_id: str | None,
+        allow_retry: bool,
+    ) -> dict[str, Any]: ...
+
+    def mark_run_running(self, *, pipeline_run_id: str) -> None: ...
+
+    def start_step(self, *, pipeline_run_id: str, company_id: str, step_name: str, step_order: int) -> str: ...
+
+    def was_step_successful_for_job(self, *, company_id: str, import_job_id: str, step_name: str) -> bool: ...
+
+    def get_last_success_step_details(
+        self,
+        *,
+        company_id: str,
+        import_job_id: str,
+        step_name: str,
+    ) -> dict[str, object] | None: ...
+
+    def finish_step(
+        self,
+        *,
+        step_id: str,
+        status: str,
+        duration_ms: int,
+        details_json: str | None,
+        error_message: str | None,
+    ) -> None: ...
+
+    def add_log(
+        self,
+        *,
+        pipeline_run_id: str,
+        company_id: str,
+        step_name: str | None,
+        status: str,
+        message: str,
+        duration_ms: int | None,
+        correlation_id: str | None,
+        error_message: str | None,
+    ) -> None: ...
+
+    def update_progress(self, *, pipeline_run_id: str, current_step: str) -> None: ...
+
+    def mark_run_failed(self, *, pipeline_run_id: str, current_step: str) -> None: ...
+
+    def get_run(self, pipeline_run_id: str) -> dict[str, Any] | None: ...
+
+    def mark_run_success(self, *, pipeline_run_id: str, current_step: str) -> None: ...
+
+    def list_steps(self, pipeline_run_id: str) -> list[dict[str, Any]]: ...
+
+    def list_logs(self, pipeline_run_id: str) -> list[dict[str, Any]]: ...
+
+    def get_import_job_progress(self, *, company_id: str, job_id: str) -> dict[str, Any] | None: ...
+
+
+class PipelineExecutorPort(Protocol):
+    def run_kpi_orchestrator(self, *, context: PipelineExecutionContext, fallback_run_id: str) -> dict[str, object]: ...
+
+    def run_rule_engine(
+        self,
+        *,
+        context: PipelineExecutionContext,
+        period_ref: str,
+        orchestrator_run_id: str,
+    ) -> dict[str, object]: ...
+
+    def run_recommendation_engine(
+        self,
+        *,
+        context: PipelineExecutionContext,
+        period_ref: str,
+        orchestrator_run_id: str,
+    ) -> dict[str, object]: ...
+
+    def run_insight_engine(
+        self,
+        *,
+        context: PipelineExecutionContext,
+        period_ref: str,
+        orchestrator_run_id: str,
+    ) -> dict[str, object]: ...
+
+    def run_executive_score_engine(
+        self,
+        *,
+        context: PipelineExecutionContext,
+        period_ref: str,
+        orchestrator_run_id: str,
+    ) -> dict[str, object]: ...
+
+    def run_summary_engine(
+        self,
+        *,
+        context: PipelineExecutionContext,
+        period_ref: str,
+        orchestrator_run_id: str,
+    ) -> dict[str, object]: ...
+
+
+class PipelineEventPublisher(Protocol):
+    def pipeline_started(self, *, pipeline_run_id: str, company_id: str, payload: dict[str, object]) -> str: ...
+
+    def step_started(self, *, pipeline_run_id: str, company_id: str, payload: dict[str, object]) -> str: ...
+
+    def step_completed(self, *, pipeline_run_id: str, company_id: str, payload: dict[str, object]) -> str: ...
+
+    def pipeline_failed(self, *, pipeline_run_id: str, company_id: str, payload: dict[str, object]) -> str: ...
+
+    def pipeline_completed(self, *, pipeline_run_id: str, company_id: str, payload: dict[str, object]) -> str: ...
+
+
 @dataclass(slots=True)
 class PipelineService:
-    repository: object
-    executor: object
-    event_publisher: object
+    repository: PipelineRepository
+    executor: PipelineExecutorPort
+    event_publisher: PipelineEventPublisher
 
     STAGES: tuple[tuple[int, PipelineStageName], ...] = (
         (1, PipelineStageName.KPI_ORCHESTRATOR),
@@ -219,7 +341,10 @@ class PipelineService:
                         "duration_ms": duration_ms,
                     },
                 )
-                return self._run_result(self.repository.get_run(run["pipeline_run_id"]))
+                failed_run = self.repository.get_run(run["pipeline_run_id"])
+                if failed_run is None:
+                    raise ValueError("pipeline run not found")
+                return self._run_result(failed_run)
 
         self.repository.mark_run_success(
             pipeline_run_id=run["pipeline_run_id"],
@@ -236,7 +361,10 @@ class PipelineService:
                 "summary_updated": True,
             },
         )
-        return self._run_result(self.repository.get_run(run["pipeline_run_id"]))
+        completed_run = self.repository.get_run(run["pipeline_run_id"])
+        if completed_run is None:
+            raise ValueError("pipeline run not found")
+        return self._run_result(completed_run)
 
     def get_run(self, pipeline_run_id: str) -> PipelineRunResult:
         run = self.repository.get_run(pipeline_run_id)
@@ -452,19 +580,19 @@ class PipelineService:
         return []
 
     @staticmethod
-    def _run_result(run: dict[str, object]) -> PipelineRunResult:
+    def _run_result(run: Mapping[str, Any]) -> PipelineRunResult:
         return PipelineRunResult(
-            pipeline_run_id=run["pipeline_run_id"],
-            company_id=run["company_id"],
-            import_job_id=run["import_job_id"],
-            template=run["template"],
-            status=run["status"],
-            progress=run["progress"],
-            current_step=run["current_step"],
-            started_at=run["started_at"],
-            finished_at=run["finished_at"],
-            correlation_id=run.get("correlation_id"),
+            pipeline_run_id=str(run["pipeline_run_id"]),
+            company_id=str(run["company_id"]),
+            import_job_id=str(run["import_job_id"]),
+            template=str(run["template"]),
+            status=cast(PipelineStageStatus, run["status"]),
+            progress=int(run["progress"]),
+            current_step=cast(str | None, run["current_step"]),
+            started_at=cast(datetime, run["started_at"]),
+            finished_at=cast(datetime | None, run["finished_at"]),
+            correlation_id=cast(str | None, run.get("correlation_id")),
             reused_existing_run=bool(run.get("reused_existing_run", False)),
-            retry_of_pipeline_run_id=run.get("retry_of_pipeline_run_id"),
+            retry_of_pipeline_run_id=cast(str | None, run.get("retry_of_pipeline_run_id")),
             attempt=int(run.get("attempt", 1)),
         )

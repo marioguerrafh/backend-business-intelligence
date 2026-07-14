@@ -1,11 +1,23 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Protocol
+
+
+class PipelineEventRepository(Protocol):
+    def publish_event(
+        self,
+        *,
+        pipeline_run_id: str,
+        company_id: str,
+        topic: str,
+        payload: dict[str, object],
+    ) -> str: ...
 
 
 @dataclass(slots=True)
 class PipelineEventPublisher:
-    repository: object
+    repository: PipelineEventRepository
 
     def pipeline_started(self, *, pipeline_run_id: str, company_id: str, payload: dict[str, object]) -> str:
         return self.repository.publish_event(
