@@ -1,0 +1,81 @@
+# Synchronization Orchestrator Configuration
+# This file controls how domain-specific synchronizations are scheduled
+
+# CUSTOMERS - Low priority, daily sync, large window (10 years of data)
+customers:
+  frequency: daily              # Run once per day
+  window_days: 3650            # 10 years window for full sync
+  priority: low
+  enabled: true
+  max_parallel_jobs: 1
+
+# PRODUCTS - Low priority, daily sync, large window (10 years of data)
+products:
+  frequency: daily
+  window_days: 3650
+  priority: low
+  enabled: true
+  max_parallel_jobs: 1
+
+# SUPPLIERS - Low priority, daily sync
+suppliers:
+  frequency: daily
+  window_days: 3650
+  priority: low
+  enabled: true
+  max_parallel_jobs: 1
+
+# SALES - High priority, frequent updates, 7-day windows
+sales:
+  frequency: 15m               # Every 15 minutes
+  window_days: 7              # Process in 1-week windows
+  priority: high
+  enabled: true
+  max_parallel_jobs: 1
+
+# ACCOUNTS RECEIVABLE - Normal priority, 30-minute intervals, monthly windows
+accounts_receivable:
+  frequency: 30m
+  window_days: 30
+  priority: normal
+  enabled: true
+  max_parallel_jobs: 1
+
+# ACCOUNTS PAYABLE - Normal priority, 30-minute intervals, monthly windows
+accounts_payable:
+  frequency: 30m
+  window_days: 30
+  priority: normal
+  enabled: true
+  max_parallel_jobs: 1
+
+# CASHFLOW - High priority, 10-minute intervals, monthly windows
+cashflow:
+  frequency: 10m
+  window_days: 30
+  priority: high
+  enabled: true
+  max_parallel_jobs: 1
+
+# INVENTORY - Normal priority, hourly sync, monthly windows
+inventory:
+  frequency: 60m
+  window_days: 30
+  priority: normal
+  enabled: true
+  max_parallel_jobs: 1
+
+# HR - Low priority, daily sync, monthly windows
+hr:
+  frequency: daily
+  window_days: 30
+  priority: low
+  enabled: true
+  max_parallel_jobs: 1
+
+# Notes:
+# - frequency can be: "daily", "hourly", or specific like "15m", "30m", "2h"
+# - window_days: number of days per synchronization window
+# - priority: critical, high, normal, low
+# - enabled: true/false to enable/disable domain sync
+# - max_parallel_jobs: maximum number of parallel jobs for this domain

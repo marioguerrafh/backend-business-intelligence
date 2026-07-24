@@ -22,7 +22,7 @@ from app.shared.infrastructure.messaging.events import IntegrationEvent
 @dataclass(slots=True)
 class ImportRepository:
     session: Session
-    _table_columns_cache: dict[str, set[str]] = field(default_factory=dict, init=False, repr=False)
+    _table_columns_cache: dict[str, set[str]] = field(default_factory=dict, repr=False)
 
     def create_job(
         self,

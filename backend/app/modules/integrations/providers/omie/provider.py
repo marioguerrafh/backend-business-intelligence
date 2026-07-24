@@ -689,11 +689,11 @@ class OmieProvider:
     def _resolve_endpoint_config(self, *, credentials: dict[str, Any], endpoint: str) -> dict[str, Any] | None:
         configured = self._safe_dict(credentials.get("omie_endpoints")).get(endpoint)
         if isinstance(configured, dict):
-            base = dict(self._DEFAULT_ENDPOINTS.get(endpoint, {}))
+            base = self._DEFAULT_ENDPOINTS.get(endpoint, {}).copy()
             base.update(configured)
             return base
         if endpoint in self._DEFAULT_ENDPOINTS:
-            return dict(self._DEFAULT_ENDPOINTS[endpoint])
+            return self._DEFAULT_ENDPOINTS[endpoint].copy()
         return None
 
     @staticmethod

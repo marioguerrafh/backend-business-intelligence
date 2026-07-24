@@ -172,13 +172,13 @@ class OmieRateLimiter:
 @dataclass(slots=True)
 class OmieRuntime:
     config: OmieProviderConfig
-    worker_pool: WorkerPool = field(init=False)
-    rate_limiter: OmieRateLimiter = field(init=False)
-    cache: TTLCache = field(init=False)
-    metrics: OmieMetrics = field(init=False)
-    _blocked_methods: dict[str, float] = field(default_factory=dict)
-    _blocked_lock: threading.Lock = field(default_factory=threading.Lock)
-    _last_rate_limit_remaining: dict[str, str] = field(default_factory=dict)
+    worker_pool: WorkerPool = field(init=False, repr=False)
+    rate_limiter: OmieRateLimiter = field(init=False, repr=False)
+    cache: TTLCache = field(init=False, repr=False)
+    metrics: OmieMetrics = field(init=False, repr=False)
+    _blocked_methods: dict[str, float] = field(default_factory=dict, repr=False)
+    _blocked_lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
+    _last_rate_limit_remaining: dict[str, str] = field(default_factory=dict, repr=False)
 
     def __post_init__(self) -> None:
         self.worker_pool = WorkerPool(max_workers=max(1, self.config.max_parallel_requests))
