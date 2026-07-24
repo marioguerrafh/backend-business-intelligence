@@ -8,7 +8,7 @@ from typing import Any
 import yaml
 from sqlalchemy.orm import Session
 
-from app.core.database import get_db
+from app.config.dependencies import get_db
 from app.modules.integrations.application.provider_registry import ProviderRegistry
 from app.modules.integrations.infrastructure.container import build_integrations_container
 from app.modules.integrations.infrastructure.security import CredentialCipher
@@ -126,8 +126,8 @@ def build_orchestrator(session: Session) -> SynchronizationOrchestrator:
 
     # Get integration components
     integrations_container = build_integrations_container(session)
-    provider_registry = integrations_container["provider_registry"]
-    credential_cipher = integrations_container["credential_cipher"]
+    provider_registry = integrations_container.service.provider_registry
+    credential_cipher = integrations_container.service.credential_cipher
 
     # Build dispatcher
     job_dispatcher = JobDispatcher(

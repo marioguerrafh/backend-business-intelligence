@@ -462,6 +462,16 @@ class OmieProvider:
                 )
                 runtime.cache.set(cache_key, response_json, ttl_seconds=runtime.config.cache_ttl_seconds)
 
+            # Handle Omie SOAP faults
+            fault_code = response_json.get("faultcode", "")
+            fault_string = response_json.get("faultstring", "")
+            if fault_code or fault_string:
+                # Error 5113 means no records found - treat as success with empty result
+                if "5113" in str(fault_code):
+                    break
+                # Other faults are real errors
+                raise ValueError(f"omie api error {fault_code}: {fault_string}")
+
             page_records = self._extract_records(response_json, endpoint_config)
             records.extend(page_records)
             runtime.metrics.inc("pages_processed")

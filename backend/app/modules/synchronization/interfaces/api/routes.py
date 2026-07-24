@@ -6,7 +6,7 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.database import get_db
+from app.config.dependencies import get_db
 from app.modules.synchronization.application.orchestrator import SynchronizationOrchestrator
 from app.modules.synchronization.application.scheduler import SynchronizationScheduler
 from app.modules.synchronization.domain.entities import TimeWindow
@@ -27,7 +27,7 @@ from app.modules.synchronization.interfaces.api.schemas import (
     TimeWindowResponse,
 )
 
-router = APIRouter(prefix="/v1/synchronization", tags=["synchronization"])
+router = APIRouter(prefix="/synchronization", tags=["synchronization"])
 
 
 @router.get("/health", response_model=OrchestratorHealthResponse)
@@ -62,6 +62,182 @@ def stop_scheduler(
     """Stop the scheduler."""
     scheduler.stop()
     return {"message": "Scheduler stopped"}
+
+
+@router.post("/schedule/full")
+def schedule_full_sync(
+    request: ScheduleFullSyncRequest,
+    orchestrator: SynchronizationOrchestrator = Depends(get_orchestrator),
+    session: Session = Depends(get_db),
+) -> dict:
+    """Schedule full synchronization for multiple domains."""
+    try:
+        domains = [SyncDomain(d.lower()) for d in request.domains]
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid domain in list. Valid domains: {[d.value for d in SyncDomain]}",
+        )
+    
+    # Get integration credentials
+    from app.modules.integrations.infrastructure.models import IntegrationConnectionModel
+    integration = session.query(IntegrationConnectionModel).filter(
+        IntegrationConnectionModel.company_id == request.company_id,
+        IntegrationConnectionModel.provider == request.provider,
+        IntegrationConnectionModel.enabled == True,
+    ).first()
+    
+    if not integration:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No active integration found for company {request.company_id} and provider {request.provider}",
+        )
+    
+    # Build window_config from request or use defaults
+    window_config = request.window_config if request.window_config else {d: 30 for d in request.domains}
+    
+    # Convert priority_config strings to JobPriority enum
+    priority_config_converted = {}
+    if request.priority_config:
+        for domain, priority_str in request.priority_config.items():
+            try:
+                priority_config_converted[domain] = JobPriority(priority_str.lower())
+            except ValueError:
+                priority_config_converted[domain] = JobPriority.NORMAL
+    
+    batch = orchestrator.schedule_full_sync(
+        company_id=request.company_id,
+        provider=request.provider,
+        domains=domains,
+        encrypted_credentials=integration.credentials,
+        window_config=window_config,
+        priority_config=priority_config_converted if priority_config_converted else None,
+    )
+    
+    return {
+        "message": "Full sync scheduled",
+        "batch_id": batch.batch_id,
+        "total_jobs": len(batch.jobs),
+        "jobs": [_job_to_response(job) for job in batch.jobs],
+    }
+
+
+@router.post("/schedule/incremental")
+def schedule_incremental_sync(
+    request: ScheduleIncrementalSyncRequest,
+    orchestrator: SynchronizationOrchestrator = Depends(get_orchestrator),
+    session: Session = Depends(get_db),
+) -> dict:
+    """Schedule incremental synchronization for multiple domains."""
+    try:
+        domains = [SyncDomain(d.lower()) for d in request.domains]
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid domain in list. Valid domains: {[d.value for d in SyncDomain]}",
+        )
+    
+    # Get integration credentials
+    from app.modules.integrations.infrastructure.models import IntegrationConnectionModel
+    integration = session.query(IntegrationConnectionModel).filter(
+        IntegrationConnectionModel.company_id == request.company_id,
+        IntegrationConnectionModel.provider == request.provider,
+        IntegrationConnectionModel.enabled == True,
+    ).first()
+    
+    if not integration:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No active integration found",
+        )
+    
+    # Convert priority_config strings to JobPriority enum
+    priority_config_converted = {}
+    if request.priority_config:
+        for domain, priority_str in request.priority_config.items():
+            try:
+                priority_config_converted[domain] = JobPriority(priority_str.lower())
+            except ValueError:
+                priority_config_converted[domain] = JobPriority.NORMAL
+    
+    batch = orchestrator.schedule_incremental_sync(
+        company_id=request.company_id,
+        provider=request.provider,
+        domains=domains,
+        encrypted_credentials=integration.credentials,
+        priority_config=priority_config_converted if priority_config_converted else None,
+    )
+    
+    return {
+        "message": "Incremental sync scheduled",
+        "batch_id": batch.batch_id,
+        "total_jobs": len(batch.jobs),
+        "jobs": [_job_to_response(job) for job in batch.jobs],
+    }
+
+
+@router.post("/schedule/domain")
+def schedule_domain_sync(
+    request: ScheduleDomainSyncRequest,
+    orchestrator: SynchronizationOrchestrator = Depends(get_orchestrator),
+    session: Session = Depends(get_db),
+) -> dict:
+    """Schedule synchronization for a specific domain."""
+    try:
+        domain = SyncDomain(request.domain.lower())
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid domain: {request.domain}. Valid domains: {[d.value for d in SyncDomain]}",
+        )
+    
+    try:
+        priority = JobPriority(request.priority.upper())
+    except ValueError:
+        priority = JobPriority.NORMAL
+    
+    # Find active integration for this company and provider
+    from app.modules.integrations.infrastructure.models import IntegrationConnectionModel
+    integration = session.query(IntegrationConnectionModel).filter(
+        IntegrationConnectionModel.company_id == request.company_id,
+        IntegrationConnectionModel.provider == request.provider,
+        IntegrationConnectionModel.enabled == True,
+    ).first()
+    
+    if not integration:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No active integration found for company {request.company_id} and provider {request.provider}",
+        )
+    
+    # Create window from request dates
+    from datetime import timedelta
+    
+    if request.window_start and request.window_end:
+        window = TimeWindow(
+            start_date=request.window_start,
+            end_date=request.window_end,
+        )
+    else:
+        # Default: last 7 days
+        end_date = date.today()
+        start_date = end_date - timedelta(days=7)
+        window = TimeWindow(start_date=start_date, end_date=end_date)
+    
+    job = orchestrator.schedule_domain_sync(
+        company_id=request.company_id,
+        provider=request.provider,
+        domain=domain,
+        encrypted_credentials=integration.credentials,
+        mode=request.mode,
+        window=window,
+        priority=priority,
+    )
+    
+    return {
+        "message": "Domain sync scheduled",
+        "job": _job_to_response(job),
+    }
 
 
 @router.get("/jobs", response_model=ListJobsResponse)
@@ -186,7 +362,7 @@ def _job_to_response(job) -> dict:
             start_date=job.window.start_date,
             end_date=job.window.end_date,
             days=job.window.days,
-        ).model_dump()
+        )
 
     return SyncJobResponse(
         job_id=job.job_id,

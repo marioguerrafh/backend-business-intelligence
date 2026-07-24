@@ -18,6 +18,8 @@ from app.modules.pipeline.interfaces.api.routes import router as pipeline_router
 from app.modules.recommendation.interfaces.api.routes import router as recommendation_router
 from app.modules.rule.interfaces.api.routes import router as rule_router
 from app.modules.summary.interfaces.api.routes import router as summary_router
+from app.modules.synchronization.interfaces.api.routes import router as synchronization_router
+from app.modules.synchronization.interfaces.api.migration_endpoint import router as migration_router
 
 api_v1_router = APIRouter()
 
@@ -39,3 +41,5 @@ api_v1_router.include_router(ai_router)
 api_v1_router.include_router(notification_router)
 api_v1_router.include_router(rule_router)
 api_v1_router.include_router(summary_router)
+api_v1_router.include_router(synchronization_router)
+api_v1_router.include_router(migration_router)  # TEMPORÁRIO - REMOVER EM PRODUÇÃO
